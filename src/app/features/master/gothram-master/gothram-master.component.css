@@ -62,3 +62,10 @@
 /* Already-redesigned pmaster template keeps its own pm-* styling where applicable */
 @media(max-width:1050px){.vm-workspace{overflow:auto}.vm-layout{grid-template-columns:1fr;height:auto;min-height:100%}.vm-panel{min-height:260px}.vm-list-area{max-height:400px}}
 @media(max-width:750px){.vm-page{height:calc(100dvh - 70px)}.vm-titlebar{padding:8px 12px}.vm-title-left h1{font-size:16px}.vm-header-note{display:none}.vm-workspace{padding:10px}.vm-panel-body{padding:10px}.vm-footer-right{gap:8px}.vm-footer button{min-width:94px;padding:0 12px}}
+
+.code_center {
+    text-align: center !important;
+} 
+th {
+color: #315a87 !important;
+}
