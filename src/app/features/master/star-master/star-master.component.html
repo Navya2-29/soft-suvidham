@@ -73,12 +73,11 @@
             <mat-icon class="search-icon">search</mat-icon>
           </div>
           <div class="fixitems prathishta">
-            <table class="table">
+            <table class="table blocking">
               <thead style="border-bottom: 2px solid #223d61">
-                <!-- <th>Id</th> -->
-                <th>code</th>
-                <th>Name</th>
-                <th>Regional</th>
+                <th style="text-align: left" class="code_center">Code</th>
+                <th style="text-align: left">Name</th>
+                <th style="text-align: left">Regional</th>
                 <th></th>
               </thead>
               <tbody>
@@ -86,24 +85,38 @@
                   *ngFor="let item of filteredList; trackBy: trackById"
                   (click)="onSelect(item)"
                   [class.active]="selectedStar?.id === item.id"
+                  style="cursor: pointer"
                 >
-                  <td>{{ item.id || "-" }}</td>
-                  <td>{{ item.SM_NameEng }}</td>
-                  <td>{{ item.SM_Name }}</td>
-
-                  <td>
+                  <td
+                    class="table-cell-left code_center"
+                    style="text-align: left; padding-left: 10px"
+                  >
+                    {{ item.id || "-" }}
+                  </td>
+                  <td
+                    class="table-cell-left wrap-text"
+                    style="text-align: left"
+                  >
+                    {{ item.SM_NameEng }}
+                  </td>
+                  <td
+                    class="table-cell-left wrap-text"
+                    style="text-align: left"
+                  >
+                    {{ item.SM_Name }}
+                  </td>
+                  <td style="text-align: left; padding-left: 3px">
                     <mat-icon
                       title="Edit"
-                      class="small"
-                      style="vertical-align: middle"
+                      class="small pt-2"
                       >edit</mat-icon
                     >
                   </td>
                 </tr>
               </tbody>
-              <tfoot *ngIf="starList.length==0">
-                <tr>
-                  <td colspan="5">
+              <tfoot>
+                <tr *ngIf="!filteredList || filteredList.length === 0">
+                  <td colspan="4">
                     <div style="width: 100%" class="mt-3">
                       <h4 class="text-center">No Records found</h4>
                     </div>
