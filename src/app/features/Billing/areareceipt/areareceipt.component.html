@@ -146,11 +146,27 @@
 
                     <input type="text" appUpperCase class="field-input" id="Name-{{ i }}"
 
-                      formControlName="Name" [readonly]="multidayBooking[i]"
+                      formControlName="Name" [matAutocomplete]="devoteeAuto" [readonly]="multidayBooking[i]"
 
-                      placeholder=" " (keydown)="navigateToNext($event, i, 'starName')" />
+                      placeholder=" " (focus)="selectText($event)"
+
+                      (keydown)="navigateToNext($event, i, 'starName')" />
 
                     <label for="Name-{{ i }}">{{ 'PLACEHOLDER.NAME' | translate }}</label>
+
+                    <mat-autocomplete #devoteeAuto="matAutocomplete"
+
+                      class="large-autocomplete-panel modern-autocomplete-panel"
+
+                      (optionSelected)="onDevoteeNameSelect($event, i)">
+
+                      <mat-option *ngFor="let option of devoteeNameFilteredOption[i]" [value]="option.Name">
+
+                        <span class="option-name">{{ option.Name }}</span>
+
+                      </mat-option>
+
+                    </mat-autocomplete>
 
                   </div>
 
