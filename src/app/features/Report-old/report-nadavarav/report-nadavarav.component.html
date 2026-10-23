@@ -1,0 +1,104 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+
+  <div class="icon-container">
+    <button mat-icon-button matTooltip="Back to previous page" (click)="goBack()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+      <button mat-icon-button matTooltip="Export to Excel" (click)="exportToExcel()">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.NADAVARAVU BOOKING REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr>
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content" *ngIf="data.length > 0">
+
+        <div *ngFor="let category of groupedData | keyvalue">
+          <h3 class="tabble-heading fee feetable">{{ category.key | titlecase }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "BILL NO" | translate }}</th>
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th>{{"Counter" | translate }}</th>
+                <th>{{ "VAZHIPAD" | translate }}</th>
+                <th class="fwname">{{ "NAME" | translate }}</th>
+                <th>{{ "STAR" | translate }}</th>
+                <th>{{ "QUANTITY" | translate }}</th>
+
+                <th class="number">{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of category.value">
+                <td>{{ item.BillNo }}</td>
+                <td>{{ item.BillDate }}</td>
+                <td>{{item.CounterId}}({{item.UName}})
+
+                </td>
+                <td>
+                  <span *ngIf="lang == 'en'"> {{ item.NM_Name }}</span><span *ngIf="lang == 'ml'">{{ item.NM_RName
+                    }}</span>
+                </td>
+                <td class="fwname">{{ item.Name }}
+                  <br *ngIf="item.Address">{{item.Address}}
+                  <!-- <br *ngIf="item.Address1">{{item.Address1}} -->
+
+
+
+                </td>
+                <td>{{ item.Star || "N/A" }}</td>
+
+                <td>{{ item.Qty }}</td>
+
+                <td class="number">
+                  {{ item.Receipt_Amt | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="7" class="total">{{"Report Name.TOTAL" | translate}}</td>
+                <td class="total">
+                  {{ getGrandTotalForTrnsMode(category.key) | number : "1.2-2" }}
+                </td>
+              </tr>
+
+            </tbody>
+
+
+          </table>
+
+        </div>
+      </div>
+      <div *ngIf="data.length >0">
+        <p class="grandtotal"> {{"Report Name.Total Collection" | translate}}:{{ getTotalAmount() | number : "1.2-2" }}
+        </p>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

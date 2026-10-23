@@ -1,0 +1,302 @@
+p.transaction {
+  margin: 14px 0 6px 0;
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  font-weight: 700;
+  color: rgb(8, 8, 49);
+}
+
+/* TIMESLOT HEADER ROW WITH PER-REPORT COLUMN PICKER */
+.timeslot-header-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 10px 0 6px 0 !important;
+  padding: 0 !important;
+  gap: 12px;
+}
+
+.timeslot-title-wrap {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  flex: 1 1 auto !important;
+  flex-wrap: wrap !important;
+}
+
+p.category {
+  font-family: inherit;
+  font-size: 12.5px;
+  margin: 0 !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1e293b;
+}
+
+.timeslot-records {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  white-space: nowrap !important;
+}
+
+.timeslot-column-picker {
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+}
+
+.timeslot-columns-btn {
+  padding: 4px 10px !important;
+  font-size: 11.5px !important;
+  border-radius: 6px !important;
+  height: 28px !important;
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.timeslot-columns-btn:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+}
+
+.timeslot-columns-btn.has-custom-columns {
+  border-color: #029fb0 !important;
+  background: rgba(2, 159, 176, 0.06) !important;
+  color: #04418c !important;
+}
+
+.custom-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 100%);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 2px;
+}
+
+.timeslot-dropdown-panel {
+  min-width: 190px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.timeslot-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.timeslot-dropdown-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 110px;
+}
+
+.reset-common-btn {
+  background: none;
+  border: none;
+  color: #029fb0;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.12s;
+}
+
+.reset-common-btn:hover {
+  color: #04418c;
+}
+
+.timeslot-dropdown-body {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+.transactionTable {
+  width: 100%;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+}
+
+.transactionTable th {
+  font-size: 11px !important;
+  padding: 7px 10px !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.transactionTable td {
+  font-size: 11px !important;
+  padding: 6px 10px !important;
+}
+
+.number {
+  text-align: right;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
+  font-size: 11.5px;
+}
+
+.transactionTotal {
+  font-family: inherit;
+  font-weight: bold;
+  margin-top: 8px;
+  text-align: right;
+  margin-bottom: 4px;
+  font-size: 13.5px;
+}
+
+.grandtotal {
+  text-align: right;
+  font-family: inherit;
+  font-weight: bolder;
+  color: red;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+td, th {
+  word-wrap: break-word; 
+  white-space: normal;   
+  overflow-wrap: break-word; 
+  max-width: 200px;
+}
+
+/* Bottom spacing after each timeslot & vazhipad report */
+.timeslot-category-block {
+  margin-bottom: 28px;
+}
+
+.timeslot-category-block .table-pagination-bar {
+  margin-top: 8px;
+  margin-bottom: 22px;
+  padding: 6px 12px;
+}
+
+.timeslot-category-block .pagination-info,
+.timeslot-category-block .rows-label,
+.timeslot-category-block .showing-label,
+.timeslot-category-block .page-size-select {
+  font-size: 11px;
+}
+
+.timeslot-category-block .page-btn {
+  min-width: 26px;
+  height: 26px;
+  font-size: 11px;
+}
+
+.vazhipad-group-block {
+  margin-bottom: 36px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.vazhipad-group-block:last-child {
+  border-bottom: none;
+  margin-bottom: 24px;
+}
+
+.body-print {
+  padding-bottom: 40px;
+}
+
+.row-count-text {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.column-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.column-dropdown-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.column-dropdown-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.column-dropdown-body {
+  padding: 6px 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.column-item-label {
+  font-size: 12px;
+  color: #334155;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .column-picker-wrapper,
+  .icon-container {
+    display: none !important;
+  }
+
+  .timeslot-category-block {
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+  }
+
+  .vazhipad-group-block {
+    border-bottom: none;
+    margin-bottom: 24px;
+  }
+}

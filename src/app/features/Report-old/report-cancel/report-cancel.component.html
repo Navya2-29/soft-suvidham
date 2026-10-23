@@ -1,0 +1,157 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+
+  <div class="icon-container">
+    <button mat-icon-button matTooltip="Back to previous page" (click)="goBack()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button mat-icon-button matTooltip="Export to Excel" (click)="exportToExcel()">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.VAZHIPAD BOOKING CANCEL REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr>
+    </div>
+
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div class="vazhipad-cancel" *ngIf="data.length > 0">
+          <h3 class="tabble-heading fee">{{"VAZHIPAD" | translate}}</h3>
+
+
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "BILL NO" | translate }}</th>
+                <th>{{"BILLDATE" |translate}}</th>
+                <th>{{"VAZHIPAD" | translate}}</th>
+                <th>{{"NAME" | translate }}</th>
+                <th>{{"QUANTITY" |translate }}</th>
+                <!-- <th>{{"RATE" | translate }}</th> -->
+                <th class="number">{{"AMOUNT" |translate}}</th>
+                <th>{{ "CANCEL DATE" | translate }}</th>
+                <th>{{ "REMARKS" | translate }}</th>
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data">
+                <td>{{ item.BillNo }}</td>
+                <td>{{ item.BillDate }}</td>
+                <td>{{item.Vazhipad}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{ item.Qty }}</td>
+                <td class="number">{{ item.Rate | number: '1.2-2' }}</td>
+                <!-- <td style="text-align: right;" >{{ item.Amount | number: '1.2-2'}}</td> -->
+                <td>{{item.Canceldt}}</td>
+                <td>{{ item.Remarks }}</td>
+                <!-- <td>{{ item.Remarks }}</td> -->
+              </tr>
+              <tr>
+                <td class="total" colspan="7">{{"Report Name.TOTAL" | translate}}</td>
+
+                <td class="total">
+                  {{getTotalAmount() | number: '1.2-2'}}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <!-- <tr>
+          <td colspan="6" style="text-align: right;"><strong>Grand Total:</strong></td>
+          <td style="font-weight: bold;text-align: right;">{{ getTotalAmount() | number: '1.2-2' }}</td>
+          <td colspan="2"></td>
+        </tr> -->
+            </tfoot>
+          </table>
+        </div>
+        <div class="page-break"></div>
+        <div class="nadavaravu-Cancel" *ngIf="nadavaravuDatat.length>0">
+          <h3 class="tabble-heading fee">{{"Nadavaravu" | translate }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>{{"BILL NO" | translate}}</th>
+                <th>{{"BILLDATE" | translate }}</th>
+                <th>{{"VAZHIPAD" | translate }}</th>
+                <th>{{"NAME" | translate }}</th>
+                <th>{{"QUANTITY" | translate }}</th>
+                <th>{{"AMOUNT" |translate}}</th>
+                <th>{{ "CANCEL DATE" | translate }}</th>
+
+                <th>{{"REMARKS" | translate }}</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of nadavaravuDatat">
+                <td>{{ item.BillNo }}</td>
+                <td>{{ item.BillDate }}</td>
+                <td><span *ngIf="lang=='en'">{{item.NM_Name}}</span><span *ngIf="lang!='en'">{{item.NM_RName}}</span>
+                </td>
+                <td>{{item.Name}}</td>
+                <td>{{ item.Qty }}</td>
+                <td style="text-align: right;">{{ item.Receipt_Amt | number: '1.2-2' }}</td>
+                <td>{{item.Canceldt}}</td>
+                <td>{{ item.Reason }}</td>
+
+
+
+
+
+                <!-- <td>{{ item.Remarks }}</td> -->
+              </tr>
+
+              <tr>
+                <td class="total" colspan="7">{{"Report Name.TOTAL" | translate}}</td>
+                <td class="total">
+                  {{getNadavaravuTotalAmount() | number: '1.2-2'}}
+                </td>
+              </tr>
+
+            </tbody>
+
+            <!-- <tr>
+          <td colspan="5" style="text-align: right;"><strong>Grand Total:</strong></td>
+          <td style="font-weight: bold;text-align: right;">{{ getTotalAmount() | number: '1.2-2' }}</td>
+         <td colspan="2"></td> -->
+            <!-- </tr>  -->
+
+
+          </table>
+<div>
+        <p class="grandtotal">{{"Report Name.GrandTotal" | translate}}:{{ getTotalAmount() +getNadavaravuTotalAmount() |
+          number: '1.2-2' }}</p>
+      </div>
+        </div>
+
+
+      </div>
+      
+      <div class="nodataFound" *ngIf="data.length == 0 && nadavaravuDatat.length==0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

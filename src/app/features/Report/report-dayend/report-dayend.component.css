@@ -1,0 +1,99 @@
+.main-container {
+    display: grid;
+    grid-template-columns:  1fr; 
+    gap: 20px;
+    margin: 50px 50px;
+    /* background-color: red; */
+    
+  }
+  .first-column {
+    /* display: grid; */
+    /* grid-template-rows: 1fr 1fr;
+    gap: 20px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  height:60vh;
+  display: flex;            /* Add flex */
+  flex-direction: column;   /* Stack vertically */
+  align-items: center;      /* Center horizontally */
+  justify-content: center;
+  
+  }
+  .date-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 320px;
+    margin: auto;
+    text-align: left;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    font-weight: 800;
+     color: rgb(131, 129, 129);
+    flex: 1; 
+    text-align: left;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family:Manjari;
+  
+  }
+  
+  .form-group input {
+    flex: 1; 
+    text-align: right;
+    max-width: 150px; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  .button-group{
+    text-align: right;
+  }
+  .submit-btn{
+    background-color: rgb(32, 59, 94);
+    color: white;
+    margin-right: 3px;
+  }
+  
+  .form-group input:focus {
+    border-color: rgb(32, 59, 94);
+    box-shadow: 0 0 5px rgba(5, 28, 53, 0.5);
+  }
+  select:focus{
+    border-color: rgb(32, 59, 94);
+    box-shadow: 0 0 5px rgba(5, 28, 53, 0.5);
+    font-family: Manjari;
+  }
+  select option {
+   font-family: Manjari;
+  }
+  
+  select:focus option:checked {
+    background-color:rgb(32, 59, 94);
+    color: white;
+    font-family: Manjari;
+  }
+  select option:checked {
+    background-color:rgb(32, 59, 94);
+    color: white;
+    font-family: Manjari;
+  }
+  select option:hover {
+    background-color: rgb(32, 59, 94) !important; 
+    color: white;
+    font-family: Manjari;
+  } 
+  

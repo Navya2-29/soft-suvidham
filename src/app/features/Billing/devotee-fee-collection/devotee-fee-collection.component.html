@@ -1,0 +1,360 @@
+<!-- Fee Collection. Shared header and tabs are rendered by the parent Mattinangal component. -->
+<main class="fc-page">
+  <header class="fc-titlebar">
+    <div class="fc-title-left">
+      <span class="fc-title-symbol"><mat-icon>payments</mat-icon></span>
+      <div class="fc-heading">
+        <h1>{{ 'FeeCollection' | translate }}</h1>
+        <p>Counter Management · Devotee Fees and Collection Records</p>
+      </div>
+    </div>
+    <span class="fc-header-note">TEMPLE MANAGEMENT</span>
+  </header>
+
+  <section class="fc-workspace">
+    <!-- LEFT: 4 / 12 COLUMN -->
+    <section class="fc-panel fc-entry-panel">
+      <div class="fc-panel-title">
+        <span class="fc-panel-heading"><mat-icon>edit_note</mat-icon> Fee Collection Details</span>
+        <span class="fc-panel-subtitle">New Receipt</span>
+      </div>
+      <div class="fc-form-scroll">
+        <form [formGroup]="feeCollctionForm" class="fc-form">
+          <div class="fc-section-label">DEVOTEE INFORMATION</div>
+          <div class="fc-form-grid">
+            <div class="fc-field">
+              <label for="fc-mobile">{{ 'feecollection.Mobile Number' | translate }} <span class="fc-required">*</span></label>
+              <div class="fc-input-with-button">
+                <input id="fc-mobile" type="text" formControlName="Mobile"
+                  [placeholder]="'feecollection.Mobile Number' | translate"
+                  (keyup.enter)="search()" />
+                <button type="button" (click)="search()" aria-label="Search devotee" title="Search devotee">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="fc-field">
+              <label for="fc-memberid">{{ 'feecollection.Member ID' | translate }} <span class="fc-required">*</span></label>
+              <input id="fc-memberid" type="text" formControlName="MemberId" readonly
+                [placeholder]="'feecollection.Member ID' | translate" />
+            </div>
+            <div class="fc-field fc-span-2">
+              <label for="fc-name">{{ 'PLACEHOLDER.NAME' | translate }}</label>
+              <input id="fc-name" type="text" formControlName="Name" readonly
+                [placeholder]="'PLACEHOLDER.NAME' | translate" />
+            </div>
+            <div class="fc-field fc-span-2">
+              <label for="fc-address">{{ 'PLACEHOLDER.ADDRESS' | translate }}</label>
+              <textarea id="fc-address" formControlName="Address" rows="2" readonly
+                [placeholder]="'PLACEHOLDER.ADDRESS' | translate"></textarea>
+            </div>
+          </div>
+
+          <div class="fc-section-label fc-divider-label">FEE &amp; PERIOD DETAILS</div>
+          <div class="fc-form-grid">
+            <div class="fc-field fc-span-2">
+              <label for="fc-item">{{ 'feecollection.Item' | translate }} <span class="fc-required">*</span></label>
+              <select id="fc-item" formControlName="ItemType">
+                <option value="">{{ 'feecollection.Item' | translate }}</option>
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let item of itemList" [value]="item.NM_Id">{{ item.NM_Name }}</option>
+                </ng-container>
+                <ng-container *ngIf="lang != 'en'">
+                  <option *ngFor="let item of itemList" [value]="item.NM_Id">{{ item.NM_RName }}</option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="fc-field">
+              <label for="fc-from">{{ 'FROMDATE' | translate }} <span class="fc-required">*</span></label>
+              <input id="fc-from" type="date" formControlName="fdate" />
+            </div>
+            <div class="fc-field">
+              <label for="fc-to">{{ 'TODATE' | translate }} <span class="fc-required">*</span></label>
+              <input id="fc-to" type="date" formControlName="tdate" />
+            </div>
+            <div class="fc-field">
+              <label for="fc-amount">{{ 'feecollection.Amount' | translate }} <span class="fc-required">*</span></label>
+              <input id="fc-amount" type="text" formControlName="Amount"
+                [readOnly]="feeCollctionForm.get('Amount')?.value > 0"
+                [placeholder]="'Report Name.TOTAL' | translate" />
+            </div>
+            <div class="fc-field">
+              <label for="fc-total">{{ 'feecollection.Total Amount' | translate }} <span class="fc-required">*</span></label>
+              <input id="fc-total" type="text" formControlName="totalAmount"
+                [placeholder]="'feecollection.Total Amount' | translate" />
+            </div>
+          </div>
+
+          <div class="fc-section-label fc-divider-label">PAYMENT DETAILS</div>
+          <div class="fc-form-grid">
+            <div class="fc-field fc-span-2">
+              <label for="fc-payment">{{ 'feecollection.Payment' | translate }}</label>
+              <select id="fc-payment" formControlName="TransMode">
+                <option value="CS">{{ 'Cash' | translate }}</option>
+                <option value="UP">{{ 'UPI' | translate }}</option>
+                <option value="DE">{{ 'Debit' | translate }}</option>
+                <option value="CH">{{ 'Cheque' | translate }}</option>
+                <option value="ON">{{ 'Online' | translate }}</option>
+              </select>
+            </div>
+            <div class="fc-field fc-span-2" *ngIf="feeCollctionForm.get('TransMode')?.value != 'CS'">
+              <label for="fc-instrument">{{ 'feecollection.UPI ID/ Cheque ID' | translate }}</label>
+              <input id="fc-instrument" type="text" formControlName="Instano"
+                [placeholder]="'feecollection.UPI ID/ Cheque ID' | translate" />
+            </div>
+            <ng-container *ngIf="feeCollctionForm.get('TransMode')?.value === 'CH'">
+              <div class="fc-field">
+                <label for="fc-cheque-date">{{ 'feecollection.Cheque Date' | translate }}</label>
+                <input id="fc-cheque-date" type="date" formControlName="Instdate" />
+              </div>
+              <div class="fc-field">
+                <label for="fc-bank">{{ 'feecollection.Bank Name' | translate }}</label>
+                <input id="fc-bank" type="text" formControlName="InstBank"
+                  [placeholder]="'feecollection.Bank Name' | translate" />
+              </div>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- RIGHT: 8 / 12 COLUMN -->
+    <section class="fc-panel fc-record-panel">
+      <div class="fc-panel-title">
+        <span class="fc-panel-heading"><mat-icon>list_alt</mat-icon> Fee Collection List</span>
+        <span class="fc-panel-subtitle">Collection Records</span>
+      </div>
+      <div class="fc-search">
+        <div class="fc-search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" [(ngModel)]="DevoteemobileNumber"
+            [placeholder]="'Search by Mobile number' | translate"
+            (keyup.enter)="searchByDevoteeByMobileNumber()"
+            aria-label="Search by mobile number" />
+        </div>
+        <button class="fc-search-button" type="button" (click)="searchByDevoteeByMobileNumber()">
+          <mat-icon>search</mat-icon> Search
+        </button>
+        <span class="fc-record-count">{{ devoteeFeeeCollectiondetails?.length || 0 }} records</span>
+      </div>
+      <div class="fc-table-scroll">
+        <table class="fc-table">
+          <thead>
+            <tr>
+              <th>{{ 'Report Name.SINO' | translate }}</th>
+              <th>{{ 'BILLDATE' | translate }}</th>
+              <th>{{ 'BILL NO' | translate }}</th>
+              <th>{{ 'feecollection.Item' | translate }}</th>
+              <th>{{ 'feecollection.Month' | translate }}</th>
+              <th>{{ 'feecollection.Year' | translate }}</th>
+              <th class="fc-numeric">{{ 'AMOUNT' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of devoteeFeeeCollectiondetails; let i = index">
+              <td><span class="fc-index">{{ i + 1 }}</span></td>
+              <td>{{ item.BillDate }}</td>
+              <td><strong>{{ item.BillNo }}</strong></td>
+              <td>{{ item.NM_Name }}</td>
+              <td>{{ item.Month }}</td>
+              <td>{{ item.Year }}</td>
+              <td class="fc-numeric">{{ item.Amount }}</td>
+            </tr>
+            <tr *ngIf="!devoteeFeeeCollectiondetails || devoteeFeeeCollectiondetails.length === 0">
+              <td colspan="7" class="fc-empty">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <footer class="fc-action-footer">
+    <span class="fc-footer-hint">Fee Collection · Counter Transactions</span>
+    <div class="fc-footer-buttons">
+      <button type="button" class="fc-cancel-btn" (click)="Reset()">
+        <mat-icon>close</mat-icon> Cancel
+      </button>
+      <button type="button" class="fc-save-btn" (click)="onSubmit()"
+        [disabled]="role == 'admin' || role == 'audit' || role == 'super'">
+        <mat-icon>save</mat-icon> Save
+      </button>
+    </div>
+  </footer>
+</main>
+
+<!-- ORIGINAL RECEIPT PRINT TEMPLATES: unchanged -->
+<div
+  id="receipts"
+  style="
+    width: 6in;
+    height: 4in;
+    display: none;
+    position: relative;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+  "
+>
+  <div
+    style="
+      position: absolute;
+      left: 2cm;
+      top: 3.4cm;
+      max-width: 8cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    "
+  >
+    {{ feeCollctionForm.get("BillNo")?.value }}
+  </div>
+  <div style="position: absolute; left: 10.8cm; top: 3.4cm">
+    {{ formatDateToDDMMYYYY(todayDate) }}
+  </div>
+
+  <div style="position: absolute; left: 1cm; top: 5.1cm">
+    {{ getItemNameById(feeCollctionForm.get("ItemType")?.value) }}
+
+    <div style="position: absolute; margin-top: 0px; margin-bottom: 0px">
+      {{ feeCollctionForm.get("Name")?.value }}
+    </div>
+    <p>{{ feeCollctionForm.get("Address")?.value }}</p>
+    <p *ngIf="monthString; else noMonths">
+      {{ "feecollection.Month" | translate }}:{{ monthString }}
+    </p>
+    <ng-template #noMonths>
+      <p>No months Selected</p>
+    </ng-template>
+    <p>
+      {{ "feecollection.Year" | translate }}:{{
+        feeCollctionForm.get("Year")?.value
+      }}
+    </p>
+  </div>
+  <div style="position: absolute; left: 12cm; top: 5.1cm">
+    {{ feeCollctionForm.get("Amount")?.value }}
+  </div>
+  <div style="position: absolute; left: 10.8cm; top: 8cm">
+    {{ feeCollctionForm.get("totalAmount")?.value }}
+  </div>
+  <div style="position: absolute; left: 1.5cm; top: 8.4cm; font-size: 8pt">
+    User:{{ this.name }}(
+    {{ getTransactionType(feeCollctionForm.get("TransMode")?.value) }}),(CNTR:{{
+      this.CounterId
+    }})
+  </div>
+</div>
+
+<div
+  id="receipt"
+  style="
+    width: 6in;
+    min-height: 4in;
+    display: none;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    padding: 0; /* 1 cm side & bottom margins */
+    border: none; /* no border for real print */
+    position: relative;
+    box-sizing: border-box;
+  "
+>
+  <!-- Shift content down by 2.5 cm to skip pre-printed header -->
+  <div
+    style="
+      position: relative;
+      top: 3.5cm;
+      margin-left: 0.5cm;
+      margin-right: 2cm;
+    "
+  >
+    <!-- Bill Info -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px">
+      <tr>
+        <td>
+          <strong>Bill No:</strong> {{ feeCollctionForm.get("BillNo")?.value }}
+        </td>
+        <td style="text-align: right">
+          <strong>Bill Date:</strong> {{ formatDateToDDMMYYYY(todayDate) }}
+        </td>
+      </tr>
+    </table>
+
+    <!-- Heading -->
+    <h3 style="text-align: center; margin: 4px 0; text-transform: uppercase">
+      Fee collection
+    </h3>
+    <hr style="border: 1px solid black; margin: 4px 0" />
+
+    <!-- Devotee Details -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px">
+      <tr>
+        <td>
+          <strong>Name:</strong> {{ feeCollctionForm.get("Name")?.value }}
+        </td>
+        <!-- <td><strong>Star:</strong> {{getStarNameById(dupliacteBillData?.Star) }}</td> -->
+      </tr>
+      <tr>
+        <td colspan="2">
+          <strong>Address:</strong> {{ feeCollctionForm.get("Address")?.value }}
+        </td>
+      </tr>
+    </table>
+
+    <!-- Nadavaravu Table -->
+    <table
+      style="width: 100%; border-collapse: collapse; margin-top: 10px"
+      border="1"
+    >
+      <thead>
+        <tr style="background-color: #f0f0f0">
+          <th style="text-align: left; padding: 4px">Item</th>
+          <th colspan="2" style="text-align: left; padding: 4px">Month</th>
+          <th style="text-align: left; padding: 4px">Year</th>
+          <!-- <th style="text-align: center; padding: 4px;">Qty</th> -->
+          <th style="text-align: right; padding: 4px">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 4px">
+            {{ getItemNameById(feeCollctionForm.get("ItemType")?.value) }}
+          </td>
+          <td style="padding: 4px" colspan="2">
+            <p *ngIf="monthString; else noMonths">
+              {{ monthString }}
+            </p>
+            <ng-template #noMonths>
+              <p>No months Selected</p>
+            </ng-template>
+          </td>
+          <td style="padding: 4px">
+            {{ feeCollctionForm.get("Year")?.value }}
+          </td>
+          <!-- <td style="text-align: center; padding: 4px;">{{dupliacteBillData?.Qty }}</td> -->
+          <td style="text-align: right; padding: 4px">
+            {{ feeCollctionForm.get("Amount")?.value }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" style="text-align: right; padding: 4px">
+            <strong>Total:</strong>
+          </td>
+          <td style="text-align: right; padding: 4px">
+            <strong>{{ feeCollctionForm.get("totalAmount")?.value }}</strong>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Footer -->
+    <div style="margin-top: 10px; font-size: 10pt">
+      User: {{ this.name }} ({{
+        getTransactionType(feeCollctionForm.get("TransMode")?.value)
+      }})
+      <span style="float: right">Counter: {{ this.CounterId }}</span>
+    </div>
+  </div>
+</div>

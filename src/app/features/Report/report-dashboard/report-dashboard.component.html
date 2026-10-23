@@ -1,0 +1,459 @@
+<app-header></app-header>
+<app-spinner *ngIf="isloading"></app-spinner>
+
+<!-- Top Subheader Banner -->
+<div class="reports-page-header">
+  <div class="header-content">
+    <div class="header-title-wrap">
+      <!-- Temple Gopuram Icon in Gradient -->
+      <div class="temple-icon-wrapper">
+        <svg class="temple-svg-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="templeGopuramGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#029fb0" />
+              <stop offset="50%" stop-color="#04418c" />
+              <stop offset="100%" stop-color="#536aed" />
+            </linearGradient>
+            <linearGradient id="templeAccentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#029fb0" />
+              <stop offset="100%" stop-color="#04418c" />
+            </linearGradient>
+          </defs>
+          <path d="M24 3L21.5 8.5H26.5L24 3Z" fill="url(#templeGopuramGradient)" />
+          <path d="M21 8.5L15 15H33L27 8.5H21Z" fill="url(#templeAccentGradient)" />
+          <path d="M12 15L9 19H39L36 15H12Z" fill="url(#templeGopuramGradient)" />
+          <rect x="7" y="19" width="34" height="4" rx="1" fill="url(#templeAccentGradient)" />
+          <!-- Pillars -->
+          <rect x="10" y="23" width="4" height="14" rx="1" fill="url(#templeGopuramGradient)" />
+          <rect x="18" y="23" width="4" height="14" rx="1" fill="url(#templeGopuramGradient)" />
+          <rect x="26" y="23" width="4" height="14" rx="1" fill="url(#templeGopuramGradient)" />
+          <rect x="34" y="23" width="4" height="14" rx="1" fill="url(#templeGopuramGradient)" />
+          <!-- Base tiers -->
+          <rect x="7" y="37" width="34" height="3" rx="1" fill="url(#templeAccentGradient)" />
+          <rect x="4" y="40" width="40" height="4" rx="1.5" fill="url(#templeGopuramGradient)" />
+        </svg>
+      </div>
+      <div class="header-titles">
+        <h1 class="page-title">Reports</h1>
+        <p class="page-subtitle">Generate and review temple administration reports</p>
+      </div>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumbs">
+      <a class="breadcrumb-link" (click)="onBack()">
+        <svg class="bc-home-icon" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <span class="bc-separator">/</span>
+      <span class="bc-current">Reports</span>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Area -->
+<form [formGroup]="searchForm" class="reports-body-form" (ngSubmit)="onSearch()">
+  <div class="reports-main-layout">
+
+    <!-- LEFT COLUMN: Choose a report Grid -->
+    <div class="reports-selection-section">
+      <!-- Section Header with Realtime Search -->
+      <div class="selection-header-bar">
+        <h2 class="section-heading">Choose a report</h2>
+        <div class="search-input-box">
+          <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search reports..."
+            [(ngModel)]="searchQuery"
+            [ngModelOptions]="{standalone: true}"
+            class="report-search-field"
+          />
+        </div>
+      </div>
+
+      <!-- 2 Columns Layout for Cards -->
+      <div class="cards-columns">
+
+        <!-- LEFT COLUMN: Card 1 & Card 3 -->
+        <div class="cards-column">
+
+          <!-- CARD 1: Transaction & Collection Reports -->
+          <div class="report-card">
+            <div class="card-header" (click)="toggleSection('transaction', $event)">
+              <div class="card-title-group">
+                <span class="category-icon-badge cat-doc">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="badge-svg">
+                    <path d="M4 4C4 2.89543 4.89543 2 6 2H18C19.1046 2 20 2.89543 20 4V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V4ZM7 6H17V8H7V6ZM7 11H17V13H7V11ZM7 16H14V18H7V16Z" />
+                  </svg>
+                </span>
+                <h3 class="card-title">Transaction & Collection Reports</h3>
+              </div>
+              <button type="button" class="collapse-toggle-btn" [class.is-open]="isSectionOpen('transaction')" (click)="toggleSection('transaction', $event)" aria-label="Toggle section">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="card-content" *ngIf="isSectionOpen('transaction')">
+              <div class="report-options-list">
+                <!-- All Vazhipad List -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'Poornam'" *ngIf="matchesSearch('Report.All Vazhipad List')">
+                  <input type="radio" formControlName="vazhipadOption" value="Poornam" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.All Vazhipad List' | translate }}</span>
+                </label>
+
+                <!-- Daily Statement(Transaction) -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'DailyStmt'" *ngIf="matchesSearch('Report.Daily Statement(Transaction)')">
+                  <input type="radio" formControlName="vazhipadOption" value="DailyStmt" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Daily Statement(Transaction)' | translate }}</span>
+                </label>
+
+                <!-- Daily Statement(Detailed) -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'DailyStmtDetaild'" *ngIf="matchesSearch('Report.Daily Statement (Detailed)')">
+                  <input type="radio" formControlName="vazhipadOption" value="DailyStmtDetaild" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Daily Statement (Detailed)' | translate }}</span>
+                </label>
+
+                <!-- Advance Booking -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'AdvanceBook'" *ngIf="matchesSearch('Report.Advance Booking')">
+                  <input type="radio" formControlName="vazhipadOption" value="AdvanceBook" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Advance Booking' | translate }}</span>
+                </label>
+
+                <!-- Daily Statement(Counter) + inline checkbox -->
+                <div class="report-option-item option-with-inline-cb" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'counter'" *ngIf="matchesSearch('Report.Daily Statement (Counter)') || matchesSearch('Report.All Counter')">
+                  <label class="inline-radio-label">
+                    <input type="radio" formControlName="vazhipadOption" value="counter" class="custom-radio" />
+                    <span class="radio-label-text">{{ 'Report.Daily Statement (Counter)' | translate }}</span>
+                  </label>
+                  <label class="inline-checkbox-label">
+                    <input type="checkbox" formControlName="countercheckbox" class="custom-checkbox" />
+                    <span class="checkbox-label-text">{{ 'Report.All Counter' | translate }}</span>
+                  </label>
+                </div>
+
+                <!-- Daily Collection -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'datewise'" *ngIf="matchesSearch('Daily Collection')">
+                  <input type="radio" formControlName="vazhipadOption" value="datewise" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Daily Collection' | translate }}</span>
+                </label>
+
+                <!-- Devotee-ledger -->
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'devoteeledger'" *ngIf="matchesSearch('Devotee-ledger')">
+                  <input type="radio" formControlName="vazhipadOption" value="devoteeledger" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Devotee-ledger' | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: Collection & Donation Reports -->
+          <div class="report-card">
+            <div class="card-header" (click)="toggleSection('collection', $event)">
+              <div class="card-title-group">
+                <span class="category-icon-badge cat-receipt">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="badge-svg">
+                    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2ZM13 3.5L18.5 9H13V3.5ZM8 12H16V14H8V12ZM8 16H16V18H8V16Z" />
+                  </svg>
+                </span>
+                <h3 class="card-title">Collection & Donation Reports</h3>
+              </div>
+              <button type="button" class="collapse-toggle-btn" [class.is-open]="isSectionOpen('collection')" (click)="toggleSection('collection', $event)" aria-label="Toggle section">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="card-content" *ngIf="isSectionOpen('collection')">
+              <div class="report-options-list">
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'devotee-creditcollection'" *ngIf="matchesSearch('Report.Credit Collection')">
+                  <input type="radio" formControlName="vazhipadOption" value="devotee-creditcollection" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Credit Collection' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'feecollection'" *ngIf="matchesSearch('Report.FEE COLLECTION REPORT')">
+                  <input type="radio" formControlName="vazhipadOption" value="feecollection" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.FEE COLLECTION REPORT' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'duplicate'" *ngIf="matchesSearch('Report.report-duplicate')">
+                  <input type="radio" formControlName="vazhipadOption" value="duplicate" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.report-duplicate' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'donation'" *ngIf="matchesSearch('Report Name.DONATION REPORT')">
+                  <input type="radio" formControlName="vazhipadOption" value="donation" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report Name.DONATION REPORT' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'cancel'" *ngIf="matchesSearch('Report.Cancel Report')">
+                  <input type="radio" formControlName="vazhipadOption" value="cancel" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Cancel Report' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'timeslot'" *ngIf="matchesSearch('Time Slot Based Report')">
+                  <input type="radio" formControlName="vazhipadOption" value="timeslot" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Time Slot Based Report' | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Card 2 & Card 4 -->
+        <div class="cards-column">
+
+          <!-- CARD 2: Payment & Banking Reports -->
+          <div class="report-card">
+            <div class="card-header" (click)="toggleSection('payment', $event)">
+              <div class="card-title-group">
+                <span class="category-icon-badge cat-card">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="badge-svg">
+                    <path d="M2 5C2 3.89543 2.89543 3 4 3H20C21.1046 3 22 3.89543 22 5V7H2V5ZM2 9H22V19C22 20.1046 21.1046 21 20 21H4C2.89543 21 2 20.1046 2 19V9ZM5 15C4.44772 15 4 15.4477 4 16C4 16.5523 4.44772 17 5 17H9C9.55228 17 10 16.5523 10 16C10 15.4477 9.55228 15 5 15Z" />
+                  </svg>
+                </span>
+                <h3 class="card-title">Payment & Banking Reports</h3>
+              </div>
+              <button type="button" class="collapse-toggle-btn" [class.is-open]="isSectionOpen('payment')" (click)="toggleSection('payment', $event)" aria-label="Toggle section">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="card-content" *ngIf="isSectionOpen('payment')">
+              <div class="report-options-list">
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'debit'" *ngIf="matchesSearch('Report.Debit/Credit Card')">
+                  <input type="radio" formControlName="vazhipadOption" value="debit" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Debit/Credit Card' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'moneyorder'" *ngIf="matchesSearch('Report.Money Order')">
+                  <input type="radio" formControlName="vazhipadOption" value="moneyorder" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Money Order' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'upi'" *ngIf="matchesSearch('Report.UPI')">
+                  <input type="radio" formControlName="vazhipadOption" value="upi" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.UPI' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'online'" *ngIf="matchesSearch('Bank Transaction Statement')">
+                  <input type="radio" formControlName="vazhipadOption" value="online" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Bank Transaction Statement' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'cheque'" *ngIf="matchesSearch('Report.Cheque Statement')">
+                  <input type="radio" formControlName="vazhipadOption" value="cheque" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Cheque Statement' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'credit'" *ngIf="matchesSearch('Report.Due/Credit')">
+                  <input type="radio" formControlName="vazhipadOption" value="credit" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Due/Credit' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'report-endowment'" *ngIf="matchesSearch('Report.Endowment')">
+                  <input type="radio" formControlName="vazhipadOption" value="report-endowment" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Endowment' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'online-transaction'" *ngIf="matchesSearch('Online-Transaction')">
+                  <input type="radio" formControlName="vazhipadOption" value="online-transaction" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Online-Transaction' | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: Offering & Other Reports -->
+          <div class="report-card">
+            <div class="card-header" (click)="toggleSection('offering', $event)">
+              <div class="card-title-group">
+                <span class="category-icon-badge cat-temple">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="badge-svg">
+                    <path d="M12 2L10 5H14L12 2ZM9 5L5 9H19L15 5H9ZM4 10V11H20V10H4ZM6 12V18H8V12H6ZM11 12V18H13V12H11ZM16 12V18H18V12H16ZM4 19V21H20V19H4Z" />
+                  </svg>
+                </span>
+                <h3 class="card-title">Offering & Other Reports</h3>
+              </div>
+              <button type="button" class="collapse-toggle-btn" [class.is-open]="isSectionOpen('offering')" (click)="toggleSection('offering', $event)" aria-label="Toggle section">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="card-content" *ngIf="isSectionOpen('offering')">
+              <div class="report-options-list">
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'offering'" *ngIf="matchesSearch('Report.Offering Only')">
+                  <input type="radio" formControlName="vazhipadOption" value="offering" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Offering Only' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'prathistaall'" *ngIf="matchesSearch('Report Name.allprathishta')">
+                  <input type="radio" formControlName="vazhipadOption" value="prathistaall" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report Name.allprathishta' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'nadavaravu'" *ngIf="matchesSearch('Report.Nadavaravu Booking')">
+                  <input type="radio" formControlName="vazhipadOption" value="nadavaravu" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Nadavaravu Booking' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'mattinamgal'" *ngIf="matchesSearch('Report.MATTINAM REPORT')">
+                  <input type="radio" formControlName="vazhipadOption" value="mattinamgal" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.MATTINAM REPORT' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'salesitem'" *ngIf="matchesSearch('Report.SALES ITEM REPORT')">
+                  <input type="radio" formControlName="vazhipadOption" value="salesitem" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.SALES ITEM REPORT' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'vihidham'" *ngIf="matchesSearch('Report.VIHIDHAM REPORT')">
+                  <input type="radio" formControlName="vazhipadOption" value="vihidham" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.VIHIDHAM REPORT' | translate }}</span>
+                </label>
+
+                <label class="report-option-item" [class.is-selected]="searchForm.get('vazhipadOption')?.value === 'billregister'" *ngIf="matchesSearch('Report.Bill Register')">
+                  <input type="radio" formControlName="vazhipadOption" value="billregister" class="custom-radio" />
+                  <span class="radio-label-text">{{ 'Report.Bill Register' | translate }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Report filters Sidebar Card -->
+    <aside class="filters-sidebar-section">
+      <div class="filter-card">
+
+        <!-- Filter Card Header -->
+        <div class="filter-card-header">
+          <svg class="filter-funnel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          <h2 class="filter-card-title">Report filters</h2>
+        </div>
+
+        <!-- Filter Card Body -->
+        <div class="filter-card-body">
+
+          <!-- PRATHISTA Field -->
+          <div class="filter-field-group">
+            <label class="field-label" for="prathishta">{{ 'PRATHISTA' | translate }}</label>
+            <div class="select-wrapper">
+              <select
+                class="filter-select"
+                formControlName="prathista"
+                id="prathishta"
+                (change)="onPrathistaChange($event)"
+              >
+                <option value="">{{ "Select Diety" | translate }}</option>
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let item of pmaster" [value]="item.PM_ID">
+                    {{ item.PM_Name }}
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="lang != 'en'">
+                  <option *ngFor="let item of pmaster" [value]="item.PM_ID">
+                    {{ item.PM_RegName }}
+                  </option>
+                </ng-container>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- VAZHIPAD Field -->
+          <div class="filter-field-group">
+            <label class="field-label" for="vazhipad">{{ 'VAZHIPAD' | translate }}</label>
+            <div class="select-wrapper">
+              <select class="filter-select" formControlName="vazhipad" id="vazhipad">
+                <option value="">{{ "Select Vazhipad" | translate }}</option>
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let item of Vmaster" [value]="item.VM_Id">
+                    {{ item.VM_Name }}
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="lang != 'en'">
+                  <option *ngFor="let item of Vmaster" [value]="item.VM_Id">
+                    {{ item.VM_RName }}
+                  </option>
+                </ng-container>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- FROM DATE Field -->
+          <div class="filter-field-group">
+            <label class="field-label" for="from-date">{{ 'FROMDATE' | translate }}</label>
+            <div class="date-input-wrapper">
+              <input
+                type="date"
+                id="from-date"
+                formControlName="fromDate"
+                class="filter-date-input"
+              />
+            </div>
+          </div>
+
+          <!-- TO DATE Field -->
+          <div class="filter-field-group">
+            <label class="field-label" for="to-date">{{ 'TODATE' | translate }}</label>
+            <div class="date-input-wrapper">
+              <input
+                type="date"
+                id="to-date"
+                formControlName="toDate"
+                class="filter-date-input"
+              />
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="filter-actions-group">
+            <button type="submit" class="btn-generate-report" (click)="onSearch()">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Generate report</span>
+            </button>
+
+            <button type="button" class="btn-back" (click)="onBack()">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Back</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</form>

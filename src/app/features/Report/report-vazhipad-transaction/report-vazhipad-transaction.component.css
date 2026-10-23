@@ -1,0 +1,10 @@
+.body-print table{
+    margin:10px 0;
+  }
+  .name{
+    white-space: normal;      /* Allow text to wrap */
+  word-wrap: break-word;    /* Break long words if needed */
+  word-break: break-word;   /* Force-break long words */
+  max-width: 300px; 
+   
+  }

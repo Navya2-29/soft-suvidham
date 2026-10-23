@@ -1,0 +1,18 @@
+#pdf-content{
+    margin: 20px 0;
+    /* padding: 20px 0; */
+}
+td, th {
+    word-wrap: break-word; 
+    white-space: normal;   
+    overflow-wrap: break-word; 
+    max-width: 200px;
+}
+.styled-search {
+  width: 300px;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}

@@ -1,0 +1,759 @@
+/* Nadavaravu — Prathishta Master / Vazhipad Master visual system */
+:host {
+  display: block;
+  min-width: 0;
+  font-family: Arial, 'Manjari', sans-serif;
+  color: #28394c
+}
+
+:host,
+:host * {
+  box-sizing: border-box
+}
+
+.nv-page {
+  height: calc(100dvh - 90px);
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7fc;
+  overflow: hidden
+}
+
+.nv-titlebar {
+  flex: 0 0 auto;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 23px;
+  background: #fff;
+  border-bottom: 1px solid #e1e7ef
+}
+
+.nv-title-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0
+}
+
+.nv-back {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #f2f7fc;
+  color: #1c5f99;
+  border: 1px solid #d2dae4;
+  border-radius: 10px;
+  text-decoration: none
+}
+
+.nv-back mat-icon {
+  width: 23px;
+  height: 23px;
+  font-size: 23px
+}
+
+.nv-title-symbol {
+  height: 39px;
+  width: 39px;
+  display: grid;
+  place-items: center;
+  background: #1d86b2;
+  color: white;
+  border-radius: 9px;
+  flex-shrink: 0
+}
+
+.nv-title-symbol mat-icon {
+  font-size: 23px;
+  width: 23px;
+  height: 23px
+}
+
+.nv-heading {
+  min-width: 0
+}
+
+.nv-heading h1 {
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.25;
+  color: #151515;
+  margin: 0
+}
+
+.nv-heading p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #454545;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.nv-header-note {
+  font-size: 10px;
+  font-weight: 800;
+  color: #7186a6;
+  letter-spacing: .09em;
+  white-space: nowrap
+}
+
+.nv-workspace {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 13px;
+  padding: 14px;
+  overflow: hidden
+}
+
+.nv-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: #fff;
+  border: 1px solid #dbe7f8;
+  border-radius: 13px;
+  box-shadow: 0 3px 15px #183c6c0b;
+  overflow: hidden
+}
+
+.nv-panel-title {
+  flex: 0 0 auto;
+  min-height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 10px 15px;
+  background: #e9f2ff;
+  border-bottom: 1px solid #dbe7f8;
+  color: #18538e;
+  font-size: 14px;
+  font-weight: 750
+}
+
+.nv-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px
+}
+
+.nv-panel-heading mat-icon {
+  font-size: 19px;
+  width: 19px;
+  height: 19px
+}
+
+.nv-panel-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b87a9
+}
+
+.nv-form-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #b3cae9 transparent
+}
+
+.nv-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px
+}
+
+.nv-section-label {
+  font-size: 11px;
+  color: #7286a4;
+  font-weight: 800;
+  letter-spacing: .06em;
+  margin: 2px 0 14px
+}
+
+.nv-divider-label {
+  border-top: 1px solid #e3eaf4;
+  margin: 20px 0 16px;
+  padding-top: 16px
+}
+
+.nv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0
+}
+
+.nv-span-2 {
+  grid-column: 1/-1
+}
+
+.nv-field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3369a9;
+  margin: 0
+}
+
+.nv-required {
+  color: #e84161
+}
+
+.nv-field input,
+.nv-field select,
+.nv-field textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #293e57;
+  border: 1px solid #d4e0f3;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  box-shadow: none;
+  transition: border-color .18s, box-shadow .18s
+}
+
+.nv-field textarea {
+  min-height: 70px;
+  resize: vertical;
+  line-height: 1.4
+}
+
+.nv-field input:focus,
+.nv-field select:focus,
+.nv-field textarea:focus {
+  border-color: #2772c9;
+  box-shadow: 0 0 0 3px #2772c91b
+}
+
+.nv-field input[readonly] {
+  background: #f3f6fb;
+  color: #6d7f95
+}
+
+.nv-field input::placeholder,
+.nv-field textarea::placeholder {
+  color: #8998ab
+}
+
+.nv-field .is-invalid {
+  border-color: #e35a6a
+}
+
+.nv-search {
+  flex: 0 0 auto;
+  min-height: 72px;
+  padding: 12px 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #e7eef8
+}
+
+.nv-search-box {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid #d4e0f3;
+  border-radius: 9px;
+  background: #fff
+}
+
+.nv-search-box mat-icon {
+  flex-shrink: 0;
+  color: #7596bf;
+  font-size: 23px;
+  width: 23px;
+  height: 23px
+}
+
+.nv-search-box input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 13px;
+  color: #293e57
+}
+
+.nv-search-box:focus-within {
+  border-color: #2772c9;
+  box-shadow: 0 0 0 3px #2772c91b
+}
+
+.nv-record-count {
+  white-space: nowrap;
+  color: #6b87a9;
+  font-size: 11px;
+  font-weight: 700
+}
+
+.nv-table-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b8d0ed transparent
+}
+
+.nv-table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+  white-space: nowrap;
+  background: white
+}
+
+.nv-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f3f7fd;
+  color: #315a87;
+  font-size: 11px;
+  text-align: left;
+  padding: 15px 10px;
+  border-bottom: 1px solid #dbe7f8;
+  font-weight: 750
+}
+
+.nv-table td {
+  color: #43556e;
+  padding: 13px 10px;
+  border-bottom: 1px solid #e7eef8;
+  font-size: 11px;
+  vertical-align: middle
+}
+
+.nv-table tr:hover td {
+  background: #f2f7ff
+}
+
+.nv-table td strong {
+  font-weight: 750;
+  color: #284260
+}
+
+.nv-table .nv-cancelled td {
+  color: #ca4358;
+  text-decoration: line-through
+}
+
+.nv-index {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 25px;
+  border-radius: 5px;
+  background: #e8f1ff;
+  color: #155a9f;
+  font-weight: 750
+}
+
+.nv-numeric {
+  text-align: right;
+  font-weight: 750
+}
+
+.nv-actions {
+  white-space: nowrap
+}
+
+.nv-icon-action {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: #e7f0fc;
+  color: #2067aa;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-right: 4px
+}
+
+.nv-icon-action mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px
+}
+
+.nv-delete {
+  background: #fff0f2;
+  color: #d64661
+}
+
+.nv-icon-action:disabled {
+  opacity: .35;
+  cursor: not-allowed
+}
+
+.nv-empty {
+  text-align: center;
+  padding: 35px 10px !important;
+  color: #8196af !important
+}
+
+.nv-action-footer {
+  flex: 0 0 auto;
+  min-height: 63px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 15px;
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%)
+}
+
+.nv-footer-hint {
+  color: #daedff;
+  font-size: 11px
+}
+
+.nv-footer-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.nv-cancel-btn,
+.nv-save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 41px;
+  min-width: 115px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer
+}
+
+.nv-cancel-btn {
+  background: #d2dcf7;
+  color: #145b99
+}
+
+.nv-save-btn {
+  background: white;
+  color: #135ab0
+}
+
+.nv-cancel-btn mat-icon,
+.nv-save-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px
+}
+
+.nv-save-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed
+}
+
+@media(max-width:1100px) {
+  .nv-workspace {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr)
+  }
+}
+
+@media(max-width:800px) {
+  .nv-page {
+    height: calc(100dvh - 80px)
+  }
+
+  .nv-workspace {
+    display: flex;
+    flex-direction: column;
+    overflow: auto
+  }
+
+  .nv-panel {
+    flex: 0 0 auto;
+    min-height: 320px
+  }
+
+  .nv-form-scroll {
+    overflow: visible
+  }
+
+  .nv-table-scroll {
+    max-height: 360px;
+    overflow: auto
+  }
+
+  .nv-header-note {
+    display: none
+  }
+
+  .nv-footer-hint {
+    display: none
+  }
+}
+
+@media(max-width:480px) {
+  .nv-titlebar {
+    min-height: 65px;
+    padding: 8px 11px
+  }
+
+  .nv-title-left {
+    gap: 8px
+  }
+
+  .nv-heading h1 {
+    font-size: 16px
+  }
+
+  .nv-heading p {
+    font-size: 10px
+  }
+
+  .nv-workspace {
+    padding: 9px;
+    gap: 9px
+  }
+
+  .nv-form-scroll {
+    padding: 12px
+  }
+
+  .nv-form-grid {
+    gap: 10px
+  }
+
+  .nv-field input,
+  .nv-field select,
+  .nv-field textarea {
+    font-size: 12px
+  }
+
+  .nv-panel-title {
+    padding: 9px 11px
+  }
+
+  .nv-panel-subtitle {
+    font-size: 9px
+  }
+
+  .nv-search {
+    padding: 8px
+  }
+
+  .nv-record-count {
+    display: none
+  }
+
+  .nv-action-footer {
+    padding: 8px 10px
+  }
+
+  .nv-cancel-btn,
+  .nv-save-btn {
+    min-width: 100px
+  }
+}
+
+
+/* ==============================================================
+   SCROLLING + ACTION BAR FIX — OVERRIDES
+   The header and bottom buttons remain visible on desktop.
+   Both panel bodies scroll independently. On compact screens,
+   the whole Nadavaravu page can scroll instead of clipping.
+   ============================================================== */
+:host {
+  display: block;
+  min-height: 0;
+  min-width: 0;
+}
+
+.nv-page {
+  /* Reserve height for shared app-header AND parent layout spacing.
+     Set --nv-top-offset on a parent if your shell uses a different height. */
+  --nv-top-offset: 155px;
+  height: calc(100dvh - var(--nv-top-offset));
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.nv-titlebar {
+  flex: 0 0 auto;
+}
+
+.nv-workspace {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.nv-panel {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.nv-form-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nv-table-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nv-action-footer {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 5;
+  min-height: 63px;
+}
+
+.nv-footer-buttons {
+  flex-shrink: 0;
+}
+
+.nv-form-scroll::-webkit-scrollbar,
+.nv-table-scroll::-webkit-scrollbar,
+.nv-workspace::-webkit-scrollbar,
+.nv-page::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.nv-form-scroll::-webkit-scrollbar-thumb,
+.nv-table-scroll::-webkit-scrollbar-thumb,
+.nv-workspace::-webkit-scrollbar-thumb,
+.nv-page::-webkit-scrollbar-thumb {
+  background: #b3cae9;
+  border-radius: 12px;
+}
+
+.nv-form-scroll::-webkit-scrollbar-track,
+.nv-table-scroll::-webkit-scrollbar-track,
+.nv-workspace::-webkit-scrollbar-track,
+.nv-page::-webkit-scrollbar-track {
+  background: #f2f7fd;
+}
+
+/* On tablet and phone, scroll the content region containing both
+   panels while keeping the action footer outside the scroller. */
+@media (max-width: 800px) {
+  .nv-page {
+    --nv-top-offset: 100px;
+  }
+
+  .nv-workspace {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nv-panel {
+    flex: 0 0 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .nv-form-scroll {
+    flex: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .nv-table-scroll {
+    flex: none;
+    min-height: 0;
+    max-height: 360px;
+    overflow: auto;
+  }
+
+  .nv-action-footer {
+    min-height: 59px;
+  }
+}
+
+/* Small/short viewports: retain a usable form and footer. */
+@media (max-height: 600px) and (min-width: 801px) {
+  .nv-page {
+    --nv-top-offset: 125px;
+  }
+
+  .nv-titlebar {
+    min-height: 55px;
+    padding: 7px 15px;
+  }
+
+  .nv-workspace {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .nv-panel-title {
+    min-height: 40px;
+    padding: 7px 11px;
+  }
+
+  .nv-action-footer {
+    min-height: 51px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nv-page {
+    --nv-top-offset: 95px;
+  }
+
+  .nv-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nv-action-footer {
+    min-height: 56px;
+  }
+
+  .nv-cancel-btn,
+  .nv-save-btn {
+    min-height: 38px;
+  }
+}

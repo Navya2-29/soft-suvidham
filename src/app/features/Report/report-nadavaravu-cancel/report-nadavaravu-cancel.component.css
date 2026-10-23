@@ -1,0 +1,256 @@
+.table-container {
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+}
+.icon-container {
+  display: flex;
+  justify-content: flex-end; 
+  margin-bottom: 16px; 
+  padding-right: 16px; 
+}
+
+.icon-container button {
+  margin-left: 8px; 
+  margin-top: 3px;
+}
+.report-table {
+margin: 0 100px; 
+}
+
+.icon-container {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+justify-content: flex-end;
+margin: 10px 0;
+}
+
+.report-table {
+max-width: 100%;
+margin: 0 auto;
+overflow-x: auto;
+padding: 0 10px;
+box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+.report-table {
+  max-width: 90%;
+  padding: 0 20px;
+}
+}
+
+.mat-cell, .mat-header-cell {
+white-space: normal;
+word-break: break-word;
+padding: 8px 12px;
+}
+
+@media (max-width: 600px) {
+.mat-cell, .mat-header-cell {
+  font-size: 12px;
+  padding: 6px 8px;
+}
+}
+mat-paginator {
+display: flex;
+justify-content: center;
+margin-bottom: 16px;
+padding: 0 10px;
+}
+
+@media (max-width: 600px) {
+mat-paginator .mat-paginator-range-label,
+mat-paginator .mat-button-wrapper {
+  font-size: 12px;
+}
+
+mat-paginator .mat-mdc-button-base {
+  padding: 4px 8px;
+}
+}
+h1{
+margin-left: 50%;
+}
+
+
+.a4-sheet {
+  width: 210mm;
+  height: auto;
+  padding: 20mm;
+  padding-top: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+}
+
+th, td {
+  /* border: 1px solid #000; */
+  padding: 5px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* TOTALS AND ROW COUNTS */
+.row-count-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.overall-subtotal {
+  font-size: 11px;
+  font-weight: normal;
+  margin-left: 6px;
+  color: #475569;
+}
+
+/* COMMON COLUMN DROPDOWN */
+.column-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.column-dropdown-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.column-dropdown-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.column-dropdown-body {
+  padding: 6px 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.column-item-label {
+  font-size: 12px;
+  color: #334155;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* PAGINATION TOOLBAR */
+.table-pagination-bar {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 6px 12px;
+}
+
+/* EMPTY STATE MESSAGE CARD */
+.no-data-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  margin: 32px auto;
+  max-width: 520px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+
+.no-data-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.no-data-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+  color: #64748b;
+}
+
+.no-data-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.no-data-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0;
+}
+
+.no-data-print-text {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+  margin: 30px 0;
+  font-style: italic;
+}
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .overall-subtotal,
+  .column-picker-wrapper,
+  .no-data-card,
+  .icon-container {
+    display: none !important;
+  }
+
+  .a4-sheet {
+    box-shadow: none;
+    page-break-after: always;
+  }
+}

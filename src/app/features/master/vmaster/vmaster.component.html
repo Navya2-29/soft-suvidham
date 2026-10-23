@@ -1,0 +1,239 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="vm-page">
+  <header class="vm-titlebar">
+    <div class="vm-title-left">
+      <button type="button" class="vm-back" (click)="gotoDashBoard()"
+        aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></button>
+      <span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span>
+      <div>
+        <h1>Vazhipad Master</h1>
+        <p>{{ templeName }}</p>
+      </div>
+    </div>
+    <span class="vm-header-note">Temple Management System</span>
+  </header>
+
+  <main class="vm-workspace">
+    <form id="vm-master-form" class="vm-layout" [formGroup]="vazhipadMasterForm"
+      (keydown.enter)="$event.preventDefault()">
+      <!-- LEFT: PRIMARY DETAILS -->
+      <section class="vm-panel vm-details">
+        <div class="vm-panel-title"><mat-icon>event_note</mat-icon><span>Vazhipad Details</span></div>
+        <div class="vm-panel-body vm-scroll">
+          <div class="vm-section-caption">BASIC INFORMATION</div>
+          <div class="vm-fields vm-basic-fields">
+            <div class="vm-field">
+              <label for="vm-code">Vazhipad Code <span class="vm-required">*</span></label>
+              <input id="vm-code" type="text" maxlength="10" formControlName="VM_Code" placeholder="Enter Code"
+                [readOnly]="updateFlag" />
+              <div class="vm-validation"
+                *ngIf="vmasterFormControl['VM_Code'].invalid && (vmasterFormControl['VM_Code'].dirty || vmasterFormControl['VM_Code'].touched)">
+                <span *ngIf="vmasterFormControl['VM_Code'].hasError('required')">Code is required.</span>
+                <span *ngIf="vmasterFormControl['VM_Code'].hasError('maxlength')">Invalid code length.</span>
+                <span *ngIf="vmasterFormControl['VM_Code'].hasError('pattern')">Use English letters or numbers.</span>
+                <span *ngIf="vmasterFormControl['VM_Code'].hasError('duplicateCode')">Code already exists.</span>
+              </div>
+            </div>
+            <div class="vm-field vm-span-2">
+              <label for="vm-name">Vazhipad Name <span class="vm-required">*</span></label>
+              <input id="vm-name" type="text" appUpperCase maxlength="100" formControlName="VM_Name"
+                placeholder="Enter Vazhipad Name" [readOnly]="checkVazhipadData>0" />
+              <div class="vm-validation"
+                *ngIf="vmasterFormControl['VM_Name'].invalid && (vmasterFormControl['VM_Name'].dirty || vmasterFormControl['VM_Name'].touched)">
+                <span *ngIf="vmasterFormControl['VM_Name'].hasError('required')">Name is required.</span>
+                <span *ngIf="vmasterFormControl['VM_Name'].hasError('pattern')">Invalid name.</span>
+                <span *ngIf="vmasterFormControl['VM_Name'].hasError('duplicateName')">Name already exists.</span>
+              </div>
+            </div>
+            <div class="vm-field vm-span-2">
+              <label for="vm-rname">Vazhipad Name in Regional Language <span class="vm-required">*</span></label>
+              <input id="vm-rname" type="text" formControlName="VM_RName" placeholder="Enter Regional Language Name"
+                [readOnly]="checkVazhipadData>0" />
+              <div class="vm-validation"
+                *ngIf="vmasterFormControl['VM_RName'].invalid && (vmasterFormControl['VM_RName'].dirty || vmasterFormControl['VM_RName'].touched)">
+                <span *ngIf="vmasterFormControl['VM_RName'].hasError('required')">Regional name is required.</span>
+                <span *ngIf="vmasterFormControl['VM_RName'].hasError('duplicateRName')">Name already exists.</span>
+              </div>
+            </div>
+            <div class="vm-field">
+              <label for="vm-time">Time</label>
+              <select id="vm-time" formControlName="VM_Time">
+                <option *ngFor="let time of vazhipadTime; let i = index" [value]="time.id">{{ time.name }}</option>
+              </select>
+            </div>
+            <div class="vm-field vm-span-2">
+              <label for="vm-category">Vazhipad Category <span class="vm-required">*</span></label>
+              <input id="vm-category" matInput [matAutocomplete]="vcategory" formControlName="VC_Name"
+                placeholder="Select Vazhipad Category" />
+              <mat-autocomplete #vcategory="matAutocomplete">
+                @for (category of filteredCategory | async; track category.VC_Name) {
+                <mat-option [value]="category.VC_Name">{{ category.VC_Name }}</mat-option>
+                }
+              </mat-autocomplete>
+              <div class="vm-validation"
+                *ngIf="vmasterFormControl['VC_Name'].invalid && (vmasterFormControl['VC_Name'].dirty || vmasterFormControl['VC_Name'].touched)">
+                <span *ngIf="vmasterFormControl['VC_Name'].hasError('required')">Category is required.</span>
+              </div>
+            </div>
+            <div class="vm-field">
+              <label>Prathishta <span class="vm-required">*</span></label>
+              <mat-select class="vm-prathishta-select" [formControl]="toppings" placeholder="Select Prathishta"
+                multiple>
+                <mat-select-trigger>
+                  {{ toppings.value?.[0] || '' }}
+                  @if ((toppings.value?.length || 0) > 1) {
+                  <span class="vm-other-selection">(+{{ (toppings.value?.length || 0) - 1 }} {{ toppings.value?.length
+                    === 2 ? 'other' : 'others' }})</span>
+                  }
+                </mat-select-trigger>
+                @for (topping of deities; track topping) {
+                <mat-option [value]="topping.PM_Name">{{ topping.PM_Name }}</mat-option>
+                }
+              </mat-select>
+              <div class="vm-validation" *ngIf="toppings.invalid && toppings.touched">
+                <span *ngIf="toppings.hasError('prathistaRequired')">Select at least one Prathishta.</span>
+              </div>
+            </div>
+          </div>
+          <div class="vm-tags" *ngIf="toppings.value?.length">
+            <span class="vm-tag" *ngFor="let topping of toppings.value">{{ topping }}</span>
+          </div>
+
+          <div class="vm-section-caption vm-separated">RATE &amp; LIMITS</div>
+          <div class="vm-fields vm-rate-fields">
+            <div class="vm-field"><label for="vm-amount">Rate <span class="vm-required">*</span></label><input
+                id="vm-amount" type="text" formControlName="VM_Amt" placeholder="Enter Rate" />
+              <div class="vm-validation"
+                *ngIf="vmasterFormControl['VM_Amt'].invalid && (vmasterFormControl['VM_Amt'].dirty || vmasterFormControl['VM_Amt'].touched)">
+                <span *ngIf="vmasterFormControl['VM_Amt'].hasError('pattern')">Invalid rate.</span>
+              </div>
+            </div>
+            <div class="vm-field"><label for="vm-max">No Limit</label><input id="vm-max" type="number"
+                formControlName="VM_MaxNo" placeholder="0" min="0" /></div>
+            <div class="vm-field"><label for="vm-timelimit">Time Limit</label><input id="vm-timelimit" type="number"
+                formControlName="VM_TimeLimit" placeholder="In Hours" min="0" /></div>
+          </div>
+
+          <div class="vm-section-caption vm-separated">VAZHIPAD OPTIONS</div>
+          <div class="vm-checkbox-grid">
+            <label><input type="checkbox" formControlName="VM_MultiName" />Multi Name</label>
+            <label><input type="checkbox" formControlName="VM_Booking" />Booking</label>
+            <label><input type="checkbox" formControlName="VM_Seasonal" />Seasonal</label>
+            <label><input type="checkbox" formControlName="VM_SMS" />SMS</label>
+            <label><input type="checkbox" formControlName="VM_Whatsapp" />Whatsapp</label>
+            <label><input type="checkbox" formControlName="VM_Receipt" />Receipt</label>
+            <label><input type="checkbox" formControlName="VM_Blocking" />Blocking</label>
+            <label><input type="checkbox" formControlName="VM_Rate_Change" />Rate Change</label>
+            <label><input type="checkbox" formControlName="VM_Device" />Machine</label>
+            <label><input type="checkbox" formControlName="VM_Mobileapp" />APP</label>
+            <label><input type="checkbox" formControlName="DisplayMode" />Online</label>
+            <label><input type="checkbox" formControlName="VM_Active" />Active</label>
+            <label><input type="checkbox" formControlName="VM_Special" />Special Vazhipad</label>
+            <label><input type="checkbox" formControlName="VM_Mattinam" />Mattinangal</label>
+            <label><input type="checkbox" formControlName="VM_Sales" />Sales Item</label>
+            <label><input type="checkbox" formControlName="VM_Donation" />Donation</label>
+            <label><input type="checkbox" formControlName="VM_TimeSlot" />Time slot</label>
+            <label><input type="checkbox" formControlName="VM_CurrentDay" />Online current day</label>
+            <label><input type="checkbox" formControlName="VM_Token" />Token</label>
+            <label><input type="checkbox" formControlName="LifeTime" />LifeTime</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- MIDDLE: ACCOUNT AND COMMUNICATION -->
+      <section class="vm-panel vm-settings">
+        <div class="vm-panel-title"><mat-icon>tune</mat-icon><span>Account &amp; Other Details</span></div>
+        <div class="vm-panel-body vm-scroll">
+          <div class="vm-section-caption">ACCOUNT SETTINGS</div>
+          <div class="vm-fields">
+            <div class="vm-field"><label for="vm-ahead">Account Head</label>
+              <input id="vm-ahead" matInput formControlName="ACHeadCode" [matAutocomplete]="accountHead"
+                placeholder="Select Account Head" />
+              <mat-autocomplete #accountHead="matAutocomplete">
+                @for (ahead of filteredAccountHead | async; track ahead) {
+                <mat-option [value]="ahead">{{ ahead }}</mat-option>
+                }
+              </mat-autocomplete>
+            </div>
+            <div class="vm-field"><label for="vm-subhead">Account Sub Head</label>
+              <input id="vm-subhead" matInput formControlName="ACSubCode" [matAutocomplete]="accountSubHead"
+                placeholder="Select Account Sub Head" />
+              <mat-autocomplete #accountSubHead="matAutocomplete">
+                @for (accountSubHead of filteredAccountSubHead | async; track accountSubHead) {
+                <mat-option [value]="accountSubHead">{{ accountSubHead }}</mat-option>
+                }
+              </mat-autocomplete>
+            </div>
+          </div>
+          <div class="vm-section-caption vm-separated">ADDITIONAL INFORMATION</div>
+          <div class="vm-fields">
+            <div class="vm-field"><label for="vm-description">Description</label><textarea id="vm-description" rows="5"
+                formControlName="VM_Description" placeholder="Enter Description"></textarea></div>
+            <div class="vm-field"><label for="vm-alert">Alert Message</label><textarea id="vm-alert" rows="5"
+                formControlName="VM_AlertMsg" placeholder="Enter Alert Message"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: VAZHIPAD LIST -->
+      <section class="vm-panel vm-list-panel">
+        <div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Vazhipad List</span></div>
+        <div class="vm-list-tools">
+          <div class="vm-search-box">
+            <mat-icon>search</mat-icon>
+            <input type="text" name="searchQuery" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchQuery"
+              (input)="onSearch(searchQuery)" placeholder="Search by Code or Name" aria-label="Search Vazhipad" />
+          </div>
+          <button type="button" class="vm-list-button"
+            (click)="gotoPrintPage()"><mat-icon>print</mat-icon><span>List</span></button>
+        </div>
+        <div class="vm-list-scroll">
+          <table class="vm-table">
+            <thead>
+              <tr>
+                <th class="code_center">Code</th>
+                <th>Name</th>
+                <th class="vm-rate-cell">Rate</th>
+                <th class="vm-actions-cell">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!showNoRecordsMessage && Vmaster && Vmaster.length > 0">
+              <tr *ngFor="let data of filteredVmaster; let i = index" [class.vm-blocked]="data.VM_Blocking === 'Y'">
+                <td class="code_center">{{ data.VM_Code }}</td>
+                <td class="vm-name-cell"><strong>{{ data.VM_Name }}</strong><small *ngIf="data.VM_RName">{{
+                    data.VM_RName }}</small></td>
+                <td class="vm-rate-cell">{{ data.VM_Amt }}</td>
+                <td class="vm-actions-cell">
+                  <button type="button" class="vm-icon-button" title="Edit" aria-label="Edit Vazhipad"
+                    (click)="onEdit(data)"><mat-icon>edit</mat-icon></button>
+                  <button type="button" class="vm-icon-button vm-delete" title="Delete" aria-label="Delete Vazhipad"
+                    [attr.aria-disabled]="checkBillingVazjipad"
+                    (click)="onDeleteCheck(data.VM_Id)"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="vm-empty" *ngIf="!Vmaster || Vmaster.length === 0 || showNoRecordsMessage">
+            <mat-icon>search_off</mat-icon><span>No Records found</span></div>
+        </div>
+        <div class="vm-list-footer">Vazhipad Records <span>{{ filteredVmaster?.length || 0 }}</span></div>
+      </section>
+    </form>
+  </main>
+
+  <footer class="vm-footer">
+    <!-- <button type="button" class="vm-cancel-btn" (click)="onReset()">Cancel</button> -->
+    <span></span>
+    <div class="vm-footer-right">
+      <!-- <span class="vm-footer-hint">{{ updateFlag ? 'Edit Vazhipad' : 'New Vazhipad' }}</span> -->
+      <button type="button" class="vm-cancel-btn" (click)="onReset()">Cancel</button>
+
+      <button type="button" class="vm-save-btn" *ngIf="!updateFlag"
+        (click)="onSubmit(vazhipadMasterForm.value)"><mat-icon>save</mat-icon>Save</button>
+      <button type="button" class="vm-save-btn" *ngIf="updateFlag"
+        (click)="onUpdate(vazhipadMasterForm.value)"><mat-icon>check_circle</mat-icon>Update</button>
+    </div>
+  </footer>
+</div>

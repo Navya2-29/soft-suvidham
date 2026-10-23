@@ -1,0 +1,21 @@
+.body-print {
+    margin :20px 0;
+  }
+  
+  .tabble-heading{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: Manjari;
+    text-transform: uppercase;
+    color: rgb(8, 8, 49);
+    /* text-decoration: underline; */
+  }
+  .vazhipad-cancel{
+    margin: 0;
+    padding: 0;
+  }
+  table{
+    margin-top: 10px;
+  }

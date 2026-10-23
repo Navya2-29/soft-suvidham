@@ -1,0 +1,367 @@
+<app-header class="app-header no-print"></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="preview-page-container report-container">
+  <!-- TOP PREVIEW HEADER & ACTION BAR -->
+  <div class="preview-header-bar no-print">
+    <div class="preview-title-area">
+      <nav class="report-breadcrumb" aria-label="Breadcrumb">
+        <a class="breadcrumb-link" (click)="goBack()">Reports</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ "Report Name.VAZHIPAD BOOKING CANCEL REPORT" | translate }}</span>
+      </nav>
+      <span class="report-badge no-print" *ngIf="(data && data.length > 0) || (nadavaravuDatat && nadavaravuDatat.length > 0)">
+        {{ data.length + nadavaravuDatat.length }} {{ (data.length + nadavaravuDatat.length) === 1 ? 'record' : 'records' }}
+      </span>
+    </div>
+
+    <div class="preview-actions">
+      <!-- Common Columns Dropdown -->
+      <div class="column-picker-wrapper common-column-picker">
+        <button
+          type="button"
+          class="columns-btn"
+          (click)="toggleColumnDropdown($event)"
+          aria-label="Toggle Common Columns"
+        >
+          <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span class="columns-btn-text">Common Columns ({{ visibleColumnCount }}/{{ totalColumnCount }})</span>
+          <svg class="chevron-icon" [class.rotated]="showColumnDropdown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="column-menu-dropdown" *ngIf="showColumnDropdown" (click)="$event.stopPropagation()">
+          <div class="column-dropdown-header">
+            <span class="column-dropdown-title">Common Columns</span>
+            <span class="column-dropdown-count">{{ visibleColumnCount }}/{{ totalColumnCount }}</span>
+          </div>
+          <div class="column-dropdown-body">
+            <label class="column-menu-item" *ngFor="let col of columnList">
+              <input
+                type="checkbox"
+                [checked]="columns[col.key]"
+                (change)="toggleColumn(col.key)"
+              />
+              <span class="column-item-label">{{ col.label }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Back to previous page"
+        (click)="goBack()"
+        aria-label="Back"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="action-btn-text">Back</span>
+      </button>
+
+      <!-- Print Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Make PDF"
+        (click)="generatePDF()"
+        aria-label="Print"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span class="action-btn-text">Print</span>
+      </button>
+
+      <!-- Export to Excel Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Export to Excel"
+        (click)="exportToExcel()"
+        aria-label="Export to Excel"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        </svg>
+        <span class="action-btn-text">Excel</span>
+      </button>
+    </div>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.VAZHIPAD BOOKING CANCEL REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr>
+    </div>
+
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div class="vazhipad-cancel" *ngIf="data.length > 0">
+          <h3 class="tabble-heading fee">{{"VAZHIPAD" | translate}}</h3>
+
+
+          <table>
+            <thead>
+              <tr>
+                <th *ngIf="columns['billNo']">{{ "BILL NO" | translate }}</th>
+                <th *ngIf="columns['billDate']">{{"BILLDATE" |translate}}</th>
+                <th *ngIf="columns['vazhipad']">{{"VAZHIPAD" | translate}}</th>
+                <th *ngIf="columns['name']">{{"NAME" | translate }}</th>
+                <th *ngIf="columns['qty']">{{"QUANTITY" |translate }}</th>
+                <th *ngIf="columns['amount']" class="number">{{"AMOUNT" |translate}}</th>
+                <th *ngIf="columns['canceldt']">{{ "CANCEL DATE" | translate }}</th>
+                <th *ngIf="columns['remarks']">{{ "REMARKS" | translate }}</th>
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (isPrinting ? data : getPaginatedEntries('vazhipad', data))">
+                <td *ngIf="columns['billNo']">{{ item.BillNo }}</td>
+                <td *ngIf="columns['billDate']">{{ item.BillDate }}</td>
+                <td *ngIf="columns['vazhipad']">{{item.Vazhipad}}</td>
+                <td *ngIf="columns['name']">{{item.Name}}</td>
+                <td *ngIf="columns['qty']">{{ item.Qty }}</td>
+                <td *ngIf="columns['amount']" class="number">{{ item.Rate | number: '1.2-2' }}</td>
+                <td *ngIf="columns['canceldt']">{{item.Canceldt}}</td>
+                <td *ngIf="columns['remarks']">{{ item.Remarks }}</td>
+              </tr>
+              <tr>
+                <td class="total" [attr.colspan]="getLeadingColspan()">
+                  {{"Report Name.TOTAL" | translate}}:
+                  <span class="row-count-text no-print" *ngIf="data.length > 0">
+                    (Showing {{ getRangeStart('vazhipad', data) }}–{{ getRangeEnd('vazhipad', data) }} of {{ data.length }} records)
+                  </span>
+                </td>
+
+                <td *ngIf="columns['amount']" class="total">
+                  {{getTotalAmount() | number: '1.2-2'}}
+                  <span *ngIf="!isPrinting && data.length > getPageSize('vazhipad')" class="overall-subtotal">
+                    (Overall: {{ getAllTotalAmount() | number: '1.2-2' }})
+                  </span>
+                </td>
+                <td *ngIf="getTrailingColspan() > 0" [attr.colspan]="getTrailingColspan()"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+          </table>
+
+          <!-- Pagination Toolbar for Vazhipad Cancel Table -->
+          <div class="table-pagination-bar no-print" *ngIf="data.length > 0">
+            <div class="pagination-info">
+              <span class="rows-label">Rows per page:</span>
+              <div class="select-container">
+                <select
+                  class="page-size-select"
+                  [value]="getPageSize('vazhipad')"
+                  (change)="onPageSizeChange('vazhipad', $any($event.target).value)"
+                  aria-label="Rows per page"
+                >
+                  <option [value]="5">5</option>
+                  <option [value]="10">10</option>
+                  <option [value]="25">25</option>
+                  <option [value]="50">50</option>
+                  <option [value]="100">100</option>
+                  <option [value]="200">200</option>
+                </select>
+              </div>
+              <span class="pagination-divider">|</span>
+              <span class="showing-label">
+                Showing {{ getRangeStart('vazhipad', data) }}–{{ getRangeEnd('vazhipad', data) }} of {{ data.length }} records
+              </span>
+            </div>
+
+            <div class="pagination-buttons">
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="getCurrentPage('vazhipad') === 1"
+                (click)="prevPage('vazhipad')"
+                aria-label="Previous Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              <button
+                *ngFor="let p of getPages('vazhipad', data)"
+                type="button"
+                class="page-btn page-num-btn"
+                [class.active]="p === getCurrentPage('vazhipad')"
+                (click)="goToPage('vazhipad', p)"
+              >
+                {{ p }}
+              </button>
+
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="getCurrentPage('vazhipad') === getTotalPages('vazhipad', data)"
+                (click)="nextPage('vazhipad', data)"
+                aria-label="Next Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="page-break"></div>
+        <div class="nadavaravu-Cancel" *ngIf="nadavaravuDatat.length>0">
+          <h3 class="tabble-heading fee">{{"Nadavaravu" | translate }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th *ngIf="columns['billNo']">{{"BILL NO" | translate}}</th>
+                <th *ngIf="columns['billDate']">{{"BILLDATE" | translate }}</th>
+                <th *ngIf="columns['vazhipad']">{{"VAZHIPAD" | translate }}</th>
+                <th *ngIf="columns['name']">{{"NAME" | translate }}</th>
+                <th *ngIf="columns['qty']">{{"QUANTITY" | translate }}</th>
+                <th *ngIf="columns['amount']">{{"AMOUNT" |translate}}</th>
+                <th *ngIf="columns['canceldt']">{{ "CANCEL DATE" | translate }}</th>
+                <th *ngIf="columns['remarks']">{{"REMARKS" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (isPrinting ? nadavaravuDatat : getPaginatedEntries('nadavaravu', nadavaravuDatat))">
+                <td *ngIf="columns['billNo']">{{ item.BillNo }}</td>
+                <td *ngIf="columns['billDate']">{{ item.BillDate }}</td>
+                <td *ngIf="columns['vazhipad']"><span *ngIf="lang=='en'">{{item.NM_Name}}</span><span *ngIf="lang!='en'">{{item.NM_RName}}</span>
+                </td>
+                <td *ngIf="columns['name']">{{item.Name}}</td>
+                <td *ngIf="columns['qty']">{{ item.Qty }}</td>
+                <td *ngIf="columns['amount']" style="text-align: right;">{{ item.Receipt_Amt | number: '1.2-2' }}</td>
+                <td *ngIf="columns['canceldt']">{{item.Canceldt}}</td>
+                <td *ngIf="columns['remarks']">{{ item.Reason }}</td>
+              </tr>
+
+              <tr>
+                <td class="total" [attr.colspan]="getLeadingColspan()">
+                  {{"Report Name.TOTAL" | translate}}:
+                  <span class="row-count-text no-print" *ngIf="nadavaravuDatat.length > 0">
+                    (Showing {{ getRangeStart('nadavaravu', nadavaravuDatat) }}–{{ getRangeEnd('nadavaravu', nadavaravuDatat) }} of {{ nadavaravuDatat.length }} records)
+                  </span>
+                </td>
+                <td *ngIf="columns['amount']" class="total">
+                  {{getNadavaravuTotalAmount() | number: '1.2-2'}}
+                  <span *ngIf="!isPrinting && nadavaravuDatat.length > getPageSize('nadavaravu')" class="overall-subtotal">
+                    (Overall: {{ getAllNadavaravuTotalAmount() | number: '1.2-2' }})
+                  </span>
+                </td>
+                <td *ngIf="getTrailingColspan() > 0" [attr.colspan]="getTrailingColspan()"></td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          <!-- Pagination Toolbar for Nadavaravu Cancel Table -->
+          <div class="table-pagination-bar no-print" *ngIf="nadavaravuDatat.length > 0">
+            <div class="pagination-info">
+              <span class="rows-label">Rows per page:</span>
+              <div class="select-container">
+                <select
+                  class="page-size-select"
+                  [value]="getPageSize('nadavaravu')"
+                  (change)="onPageSizeChange('nadavaravu', $any($event.target).value)"
+                  aria-label="Rows per page"
+                >
+                  <option [value]="5">5</option>
+                  <option [value]="10">10</option>
+                  <option [value]="25">25</option>
+                  <option [value]="50">50</option>
+                  <option [value]="100">100</option>
+                  <option [value]="200">200</option>
+                </select>
+              </div>
+              <span class="pagination-divider">|</span>
+              <span class="showing-label">
+                Showing {{ getRangeStart('nadavaravu', nadavaravuDatat) }}–{{ getRangeEnd('nadavaravu', nadavaravuDatat) }} of {{ nadavaravuDatat.length }} records
+              </span>
+            </div>
+
+            <div class="pagination-buttons">
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="getCurrentPage('nadavaravu') === 1"
+                (click)="prevPage('nadavaravu')"
+                aria-label="Previous Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              <button
+                *ngFor="let p of getPages('nadavaravu', nadavaravuDatat)"
+                type="button"
+                class="page-btn page-num-btn"
+                [class.active]="p === getCurrentPage('nadavaravu')"
+                (click)="goToPage('nadavaravu', p)"
+              >
+                {{ p }}
+              </button>
+
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="getCurrentPage('nadavaravu') === getTotalPages('nadavaravu', nadavaravuDatat)"
+                (click)="nextPage('nadavaravu', nadavaravuDatat)"
+                aria-label="Next Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="data.length > 0 || nadavaravuDatat.length > 0">
+          <p class="grandtotal">
+            {{"Report Name.GrandTotal" | translate}}: {{ getTotalAmount() + getNadavaravuTotalAmount() | number: '1.2-2' }}
+            <span *ngIf="!isPrinting && (data.length > getPageSize('vazhipad') || nadavaravuDatat.length > getPageSize('nadavaravu'))" class="overall-total">
+              (Overall Total: {{ getAllTotalAmount() + getAllNadavaravuTotalAmount() | number: '1.2-2' }})
+            </span>
+          </p>
+        </div>
+
+
+      </div>
+      
+      <div class="nodataFound" *ngIf="data.length == 0 && nadavaravuDatat.length==0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

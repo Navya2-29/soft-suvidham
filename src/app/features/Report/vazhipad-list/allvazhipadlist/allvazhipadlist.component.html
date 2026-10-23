@@ -1,0 +1,38 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+
+<div class="button-container">
+  <div><button class="back-button" (click)="goBack()">
+    {{ "Back" | translate }}
+  </button> </div>
+  <div>
+    <button class="print-button" (click)="printPage()">
+      {{ "Report Name.Print" | translate }}
+    </button>
+  </div>
+
+</div>
+<div id="print-section" class="table-container"> 
+  <div *ngFor="let group of groupedData | keyvalue" class="group-container">
+    <h2>{{ group.key }}</h2> <!-- This is the Prathista name -->
+    <table class="responsive-table">
+      <thead>
+        <tr>
+          <th>{{"Report Name.SINO" | translate}}</th>
+          <th class="code-column">{{"Report Name.Vazhipad Code" | translate}}</th>
+          <th class="amount-column">{{"Report Name.Vazhipad Name" | translate}}</th>
+          <th class="amount-column">{{"Report Name.Amount" | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of group.value; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td class="code-column">{{ item.VCode }}</td>
+          <td class="amount-column">{{ item.VName }}</td>
+          <td class="amount-column" style="text-align: right;">₹{{ item.VAmount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

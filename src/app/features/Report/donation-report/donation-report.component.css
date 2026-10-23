@@ -1,0 +1,81 @@
+h3.tabble-heading {
+  margin-top: 18px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  text-align: left;
+}
+
+.transmode-heading {
+  margin: 14px 0 6px 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.vazhipad-group-section {
+  margin-bottom: 24px;
+}
+
+.transmode-group-section {
+  margin-bottom: 18px;
+}
+
+.vazhipad-subtotal-wrap,
+.grand-total-wrap {
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.row-count-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.nodataFound {
+  text-align: center;
+  padding: 36px 20px;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Hide toolbar elements on print */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .column-picker-wrapper,
+  .icon-container,
+  app-header,
+  .app-header {
+    display: none !important;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-header {
+    display: none !important;
+  }
+}

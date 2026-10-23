@@ -1,0 +1,99 @@
+<div class="booking-page">
+
+  <h2 class="main-title">Temple Hall Booking</h2>
+
+  <!-- 🔷 NEW BOOKING -->
+  <div class="card">
+
+    <h3>New Booking (Advance Payment)</h3>
+
+    <div class="row">
+      <input placeholder="Customer Name" [(ngModel)]="form.name">
+      <input placeholder="Mobile" [(ngModel)]="form.mobile">
+    </div>
+
+    <div class="row">
+      <select [(ngModel)]="form.hall">
+        <option value="">Select Hall</option>
+        <option *ngFor="let h of halls">{{h.name}}</option>
+      </select>
+      <input type="date" [(ngModel)]="form.date">
+    </div>
+
+    <div class="row">
+      <input type="number" placeholder="Total Amount" [(ngModel)]="form.total">
+      <input type="number" placeholder="Advance Paid"
+        [(ngModel)]="form.advance"
+        (input)="calc()">
+    </div>
+
+    <div class="row">
+      <input placeholder="Balance Amount" [value]="balance" readonly>
+    </div>
+
+    <button (click)="saveBooking()">Save Booking</button>
+  </div>
+
+  <!-- 🔷 COLLECT BALANCE -->
+  <div class="card">
+
+    <h3>Collect Balance Payment</h3>
+
+    <div class="row">
+      <input placeholder="Search by Mobile / Booking ID"
+        [(ngModel)]="searchText">
+      <button (click)="search()">Search</button>
+    </div>
+
+    <div class="details" *ngIf="selectedBooking">
+
+      <p><b>Name:</b> {{selectedBooking.name}}</p>
+      <p><b>Hall:</b> {{selectedBooking.hall}}</p>
+      <p><b>Total:</b> ₹{{selectedBooking.total}}</p>
+      <p><b>Advance:</b> ₹{{selectedBooking.advance}}</p>
+      <p><b>Balance:</b> ₹{{selectedBooking.balance}}</p>
+      <p><b>Status:</b> {{selectedBooking.status}}</p>
+
+      <div class="row">
+        <input type="number" placeholder="Enter Amount"
+          [(ngModel)]="payAmount">
+      </div>
+
+      <button (click)="collect()">Collect Payment</button>
+    </div>
+  </div>
+
+  <!-- 🔷 ALL BOOKINGS TABLE -->
+  <div class="card">
+
+    <h3>All Bookings (Dummy Data)</h3>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Hall</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Advance</th>
+        <th>Balance</th>
+        <th>Status</th>
+      </tr>
+
+      <tr *ngFor="let b of bookings">
+        <td>{{b.id}}</td>
+        <td>{{b.name}}</td>
+        <td>{{b.mobile}}</td>
+        <td>{{b.hall}}</td>
+        <td>{{b.date}}</td>
+        <td>{{b.total}}</td>
+        <td>{{b.advance}}</td>
+        <td>{{b.balance}}</td>
+        <td>{{b.status}}</td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>

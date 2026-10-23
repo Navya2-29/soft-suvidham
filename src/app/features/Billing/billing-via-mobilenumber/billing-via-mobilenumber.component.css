@@ -1,0 +1,55 @@
+*{
+font-family: Manjari;
+}
+table {
+    width: 100%;
+  }
+  
+  th.mat-header-cell {
+    text-align: left;
+  }
+  
+  td.mat-cell {
+    text-align: left;
+  }
+
+  .dialog-header {
+    background-color: rgb(0, 9, 38);
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+  }
+  mat-checkbox :checked{
+    background-color: rgb(0, 9, 38);
+
+  }
+  .dialog-footer {
+    background-color: rgb(0, 9, 38);
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .dialog-body {
+    padding: 20px;
+  }
+  
+  button {
+    color: white;
+  }
+  
+  .dialog-body {
+    padding: 20px;
+    max-height: 400px; /* Adjust the height according to your needs */
+    overflow-y: auto;  /* Enable vertical scrolling */
+  }
+  .no-data-message {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+    margin-top: 20px;
+  }
+ 

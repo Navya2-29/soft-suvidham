@@ -1,0 +1,2084 @@
+:host {
+
+  --ink: #192c43;
+
+  --muted: #7c8a9b;
+
+  --accent: #1766e9;
+
+  --accent2: #24bbd2;
+
+  --border: #d9e2ee;
+
+  --danger: #dc4258;
+
+  --surface: #fff;
+
+  display: block;
+
+  font-family: Manjari, Arial, sans-serif;
+
+}
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+.vazhipad-page {
+
+  height: 100%;
+
+  padding: 6px;
+
+  border:0px solid red;
+
+  box-shadow: none !important;
+
+  background: linear-gradient(120deg, rgba(239, 246, 255, .97), rgba(247, 251, 255, .95)), url('/assets/images/bgadmin.jpg') center / cover;
+
+}
+
+.booking-shell {
+
+  width: 100%;
+
+  min-width: 0;
+
+  background: var(--surface);
+
+  border: 1px solid #e6edf6;
+
+  border-radius: 18px;
+
+  box-shadow: 0 15px 45px rgba(18, 47, 81, .07);
+
+  overflow: hidden;
+
+}
+
+.booking-header {
+
+  padding: 18px 22px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  align-items: center;
+
+  /* border-bottom: 1px solid #e6edf6; */
+
+  background: linear-gradient(115deg, #fff, #f7faff);
+
+}
+
+.heading-group {
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+
+}
+
+.heading-symbol {
+
+  display: grid;
+
+  place-items: center;
+
+  flex: 0 0 42px;
+
+  height: 42px;
+
+  color: #fff;
+
+  border-radius: 12px;
+
+  background: linear-gradient(140deg, #1955c8, #20a1d9);
+
+  box-shadow: 0 6px 14px rgba(23, 102, 233, .2);
+
+}
+
+.heading-symbol mat-icon {
+
+  width: 23px;
+
+  height: 23px;
+
+  font-size: 23px;
+
+}
+
+.eyebrow {
+
+  color: #5381bb;
+
+  font: 700 9px Arial, sans-serif;
+
+  letter-spacing: 2px;
+
+}
+
+.booking-header h2 {
+
+  font-size: 19px;
+
+  line-height: 1.25;
+
+  color: var(--ink);
+
+  font-weight: 800;
+
+  margin: 3px 0;
+
+}
+
+.booking-header p {
+
+  color: var(--muted);
+
+  font: 12px Arial, sans-serif;
+
+  margin: 0;
+
+}
+
+.header-accent {
+
+  color: #307454;
+
+  background: #eaf8f0;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  font: 600 11px Arial, sans-serif;
+
+  white-space: nowrap;
+
+}
+
+.pulse-dot {
+
+  display: inline-block;
+
+  width: 7px;
+
+  height: 7px;
+
+  margin-right: 5px;
+
+  border-radius: 50%;
+
+  background: #26a568;
+
+  box-shadow: 0 0 0 4px #d3f0df;
+
+}
+
+.booking-content {
+
+  min-width: 0;
+
+}
+
+.table-scroll {
+
+  width: 100%;
+
+  max-height: min(68vh, 650px);
+
+  overflow: auto;
+
+  overscroll-behavior: contain;
+
+  scrollbar-color: #b8cbe2 #f5f8fc;
+
+  scrollbar-width: thin;
+
+}
+
+.table-scroll::-webkit-scrollbar {
+
+  height: 8px;
+
+  width: 7px;
+
+}
+
+.table-scroll::-webkit-scrollbar-track {
+
+  background: #f5f8fc;
+
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+
+  background: #b8cbe2;
+
+  border-radius: 20px;
+
+}
+
+.booking-table {
+
+  width: 100%;
+
+  min-width: 1420px;
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+
+  table-layout: fixed;
+
+  margin: 0;
+
+  background: white;
+
+}
+
+.booking-table thead {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 3;
+
+}
+
+.booking-table th {
+
+  height: 44px;
+
+  padding: 11px 10px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  text-transform: uppercase;
+
+  letter-spacing: .75px;
+
+  color: white;
+
+  background: rgb(4, 106, 137);
+
+  /* background: #435872; */
+
+  border-bottom: 1px solid #dbe6f1;
+
+  font: 700 10px Arial, sans-serif;
+
+}
+
+.booking-table th:first-child {
+
+  padding-left: 20px;
+
+}
+
+.booking-table td {
+
+  padding: 12px 10px;
+
+  vertical-align: middle;
+
+  border-bottom: 0px solid #ecf1f7;
+
+  background: #fff;
+
+}
+
+.booking-table td:nth-child(2) {
+
+  padding-left: 20px;
+
+}
+
+.booking-row {
+
+  transition: background-color .18s ease;
+
+}
+
+.booking-row:hover td {
+
+  background: #fbfdff;
+
+}
+
+.booking-row:focus-within td {
+
+  background: #f9fcff;
+
+}
+
+.booking-table .hidden-field {
+
+  display: none;
+
+}
+
+.numeric-heading {
+
+  text-align: center !important;
+
+}
+
+.actions-heading {
+
+  text-align: center !important;
+
+}
+
+.field {
+
+  position: relative;
+
+  height: 44px;
+
+  min-width: 0;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  border-bottom: 1.5px solid var(--border);
+
+  border-radius: 6px 6px 0 0;
+
+  transition: background .2s ease;
+
+}
+
+.field::after {
+
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+
+  right: 50%;
+
+  bottom: -1.5px;
+
+  height: 2px;
+
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+
+  transition: left .23s ease, right .23s ease;
+
+  pointer-events: none;
+
+}
+
+.field:focus-within {
+
+  background: #f2f8ff;
+
+}
+
+.field:focus-within::after {
+
+  left: 0;
+
+  right: 0;
+
+}
+
+.field-input {
+
+  display: block;
+
+  width: 100%;
+
+  min-width: 0;
+
+  height: 36px;
+
+  padding: 12px 6px 3px;
+
+  border: 0 !important;
+
+  border-radius: 0 !important;
+
+  outline: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: var(--ink) !important;
+
+  font: 700 13px Manjari, Arial, sans-serif;
+
+  text-overflow: ellipsis;
+
+}
+
+.field-input:focus {
+
+  box-shadow: none !important;
+
+  outline: 0 !important;
+
+}
+
+.field-input[readonly] {
+
+  color: #8190a1 !important;
+
+  cursor: default;
+
+}
+
+.field label {
+
+  position: absolute;
+
+  top: 5px;
+
+  left: 6px;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+
+  max-width: calc(100% - 12px);
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  color: #8997a9;
+
+  font: 700 9px Manjari, Arial, sans-serif;
+
+  transition: top .18s ease, font-size .18s ease, color .18s ease, transform .18s ease;
+
+}
+
+.floating-field label {
+
+  top: 20px;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  transform: translateY(-1px);
+
+}
+
+.floating-field:focus-within label,
+
+.floating-field:has(.field-input:not(:placeholder-shown)) label,
+
+.floating-field:has(input[type='date']) label {
+
+  top: 5px;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  transform: translateY(0);
+
+}
+
+.field:focus-within label {
+
+  color: var(--accent);
+
+}
+
+.select-field label {
+
+  top: 5px;
+
+  font-size: 9px;
+
+}
+
+.select-field select {
+
+  height: 36px;
+
+  padding: 11px 22px 2px 6px;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http\://www\.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2370839a' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+
+  background-repeat: no-repeat !important;
+
+  background-position: right 6px bottom 10px !important;
+
+}
+
+.select-field select option {
+
+  background: #fff;
+
+  color: #24374d;
+
+  font: 13px Manjari, Arial, sans-serif;
+
+}
+
+.number-field .field-input {
+
+  text-align: center;
+
+  padding-left: 2px;
+
+  padding-right: 2px;
+
+}
+
+.number-field label {
+
+  left: 50%;
+
+  transform: translate(-50%, -1px);
+
+}
+
+.number-field:focus-within label,
+
+.number-field:has(.field-input:not(:placeholder-shown)) label {
+
+  transform: translateX(-50%);
+
+}
+
+.field:has(.error-border),
+
+.field:has(.ng-invalid.ng-touched) {
+
+  border-bottom-color: var(--danger);
+
+}
+
+.field:has(.error-border)::after,
+
+.field:has(.ng-invalid.ng-touched)::after {
+
+  background: var(--danger);
+
+}
+
+.supplementary-field {
+
+  margin-top: 8px;
+
+  animation: slide-field .2s ease both;
+
+}
+
+@keyframes slide-field {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(-5px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+.date-field-group {
+
+  display: flex;
+
+  align-items: end;
+
+  gap: 5px;
+
+}
+
+.date-field-group .date-field {
+
+  flex: 1;
+
+}
+
+.date-field .field-input {
+
+  font: 700 11px Arial, sans-serif;
+
+  padding-right: 0;
+
+  min-width: 0;
+
+}
+
+.date-field input::-webkit-calendar-picker-indicator {
+
+  opacity: .65;
+
+  width: 12px;
+
+  cursor: pointer;
+
+}
+
+.date-field input[readonly]::-webkit-calendar-picker-indicator {
+
+  pointer-events: none;
+
+}
+
+.row-actions {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 3px;
+
+}
+
+.icon-button {
+
+  border: 0;
+
+  background: transparent;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  display: inline-grid;
+
+  flex: 0 0 auto;
+
+  place-items: center;
+
+  width: 29px;
+
+  height: 29px;
+
+  padding: 0;
+
+  transition: color .2s ease, background .2s ease, transform .2s ease;
+
+}
+
+.icon-button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.icon-button:focus-visible,
+
+.clear-button:focus-visible {
+
+  outline: 2px solid #216be5;
+
+  outline-offset: 2px;
+
+}
+
+.icon-button mat-icon {
+
+  font-size: 20px;
+
+  width: 20px;
+
+  height: 20px;
+
+}
+
+.calendar-button {
+
+  background: #edf5ff;
+
+  color: #1c6cce;
+
+  height: 32px;
+
+  width: 32px;
+
+}
+
+.calendar-button:hover {
+
+  background: #d8eaff;
+
+}
+
+.multi-day-button {
+
+  background: #fff2e3;
+
+  color: #bb6900;
+
+}
+
+.multi-day-button:hover {
+
+  background: #ffe3bf;
+
+}
+
+.multi-day-letter {
+
+  font: 800 12px Arial, sans-serif;
+
+}
+
+.add-button {
+
+  color: #15996e;
+
+}
+
+.add-button:hover {
+
+  background: #e5f8f1;
+
+}
+
+.details-button {
+
+  color: #3977bf;
+
+}
+
+.details-button:hover {
+
+  background: #eaf2ff;
+
+}
+
+.remove-button {
+
+  color: #d15a67;
+
+}
+
+.remove-button:hover {
+
+  background: #fff0f1;
+
+}
+
+.booking-footer {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-top: 50px;
+
+  background: #fff;
+
+  border-top: 0px solid #eaf0f7 !important;
+
+}
+
+.footer-hint {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #8b99ab;
+
+  font: 11px Arial, sans-serif;
+
+}
+
+.footer-hint mat-icon {
+
+  width: 16px;
+
+  height: 16px;
+
+  font-size: 16px;
+
+}
+
+.clear-button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+ border:none;
+
+  border-radius: 9px;
+
+  background:transparent;
+
+  color: #c33c50;
+
+  padding: 9px 14px;
+
+  cursor: pointer;
+
+  font: 700 12px Arial, sans-serif;
+
+  transition: background .2s, transform .2s;
+
+}
+
+.clear-button:hover {
+
+  /* background: #ffe6e9; */
+  color:red;
+
+  transform: translateY(-1px);
+
+}
+
+.clear-button mat-icon {
+
+  height: 18px;
+
+  width: 18px;
+
+  font-size: 18px;
+
+}
+
+/* Angular Material autocomplete renders in an overlay outside the component. */
+
+::ng-deep .modern-autocomplete-panel.mat-mdc-autocomplete-panel,
+
+::ng-deep .modern-autocomplete-panel.mat-autocomplete-panel {
+
+  background: #fff !important;
+
+  border: 1px solid #e1eaf6 !important;
+
+  border-radius: 11px !important;
+
+  padding: 5px !important;
+
+  box-shadow: 0 16px 35px rgba(20, 42, 80, .16) !important;
+
+  max-height: 320px !important;
+
+}
+
+::ng-deep .modern-autocomplete-panel .mat-mdc-option,
+
+::ng-deep .modern-autocomplete-panel .mat-option {
+
+  min-height: 37px !important;
+
+  height: auto !important;
+
+  border-radius: 7px;
+
+  padding: 7px 9px !important;
+
+  margin: 0 !important;
+
+  color: #24374d !important;
+
+  font: 600 13px Manjari, Arial, sans-serif !important;
+
+}
+
+::ng-deep .modern-autocomplete-panel .mat-mdc-option:hover,
+
+::ng-deep .modern-autocomplete-panel .mat-mdc-option.mdc-list-item--selected,
+
+::ng-deep .modern-autocomplete-panel .mat-mdc-option.mat-mdc-option-active,
+
+::ng-deep .modern-autocomplete-panel .mat-option:hover,
+
+::ng-deep .modern-autocomplete-panel .mat-option.mat-active {
+
+  background: #eaf3ff !important;
+
+  color: #175ac9 !important;
+
+}
+
+::ng-deep .modern-autocomplete-panel .mdc-list-item__primary-text {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  white-space: normal;
+
+  width: 100%;
+
+}
+
+::ng-deep .modern-autocomplete-panel .option-code {
+
+  flex: 0 0 auto;
+
+  color: #3d78c4;
+
+  background: #e6f0ff;
+
+  padding: 3px 6px;
+
+  border-radius: 5px;
+
+  font: 700 10px Arial, sans-serif;
+
+}
+
+::ng-deep .modern-autocomplete-panel .option-name {
+
+  flex: 1;
+
+  min-width: 0;
+
+  line-height: 1.3;
+
+}
+
+@media (max-width: 768px) {
+
+  .vazhipad-page {
+
+    padding: 8px;
+
+  }
+
+  .booking-shell {
+
+    border-radius: 12px;
+
+  }
+
+  .booking-header {
+
+    padding: 13px;
+
+  }
+
+  .booking-header h2 {
+
+    font-size: 16px;
+
+  }
+
+  .booking-header p {
+
+    font-size: 10px;
+
+  }
+
+  .heading-symbol {
+
+    height: 36px;
+
+    flex-basis: 36px;
+
+  }
+
+  .header-accent {
+
+    display: none;
+
+  }
+
+  .table-scroll {
+
+    max-height: 65vh;
+
+  }
+
+  .booking-footer {
+
+    padding: 10px 13px;
+
+  }
+
+  .footer-hint {
+
+    max-width: 60%;
+
+    font-size: 10px;
+
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .field,
+
+  .field::after,
+
+  .field label,
+
+  .icon-button,
+
+  .clear-button {
+
+    transition: none;
+
+  }
+
+  .supplementary-field {
+
+    animation: none;
+
+  }
+
+}
+
+/* ===============================================
+
+   FAST COUNTER BILLING: NO HORIZONTAL SCROLL
+
+   All 9 columns remain visible, 1024-1400px.
+
+   Paste this section after the original styles.
+
+   \=============================================== */
+
+:host {
+
+  width: 100%;
+
+  min-width: 0;
+
+}
+
+.vazhipad-page,
+
+.booking-shell,
+
+.booking-content,
+
+.booking-content form {
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+
+}
+
+.table-scroll {
+
+  width: 100%;
+
+  max-width: 100%;
+
+  overflow-x: hidden !important;
+
+  overflow-y: auto;
+
+}
+
+.booking-table {
+
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  /* replaces old 1420px minimum */
+
+  max-width: 100%;
+
+  table-layout: fixed;
+
+}
+
+.booking-table th,
+
+.booking-table td {
+
+  min-width: 0;
+
+  padding: 7px 4px;
+
+  overflow: hidden;
+
+}
+
+.booking-table th:first-child,
+
+.booking-table td:nth-child(2) {
+
+  padding-left: 7px;
+
+}
+
+.booking-table th {
+
+  height: 34px;
+
+  padding-top: 7px;
+
+  padding-bottom: 7px;
+
+  font-size: 10px;
+
+  letter-spacing: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+.booking-table td {
+
+  vertical-align: top;
+
+}
+
+.booking-table td>.field,
+
+.booking-table td>.date-field-group,
+
+.booking-table td>.supplementary-field {
+
+  width: 100%;
+
+  min-width: 0;
+
+}
+
+.field {
+
+  height: 38px;
+
+  min-width: 0;
+
+}
+
+.field-input {
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+
+  height: 32px;
+
+  padding: 12px 4px 2px;
+
+  font-size: 12px;
+
+}
+
+.field label {
+
+  left: 4px;
+
+  max-width: calc(100% - 8px);
+
+}
+
+.floating-field label {
+
+  font-size: 11px;
+
+}
+
+.select-field select {
+
+  height: 32px;
+
+  padding: 10px 15px 2px 4px;
+
+  background-position: right 2px bottom 8px !important;
+
+  font-size: 11px;
+
+}
+
+.date-field-group {
+
+  gap: 2px;
+
+  width: 100%;
+
+  min-width: 0;
+
+  align-items: center;
+
+}
+
+.date-field-group .date-field {
+
+  flex: 1 1 0;
+
+  min-width: 0;
+
+}
+
+.date-field .field-input {
+
+  font-size: 10px;
+
+  padding-left: 1px;
+
+  padding-right: 0;
+
+  letter-spacing: -.45px;
+
+}
+
+.date-field input::-webkit-calendar-picker-indicator {
+
+  width: 10px;
+
+  margin: 0;
+
+}
+
+.row-actions {
+
+  width: 100%;
+
+  flex-wrap: nowrap;
+
+  gap: 0;
+
+  justify-content: space-between;
+
+}
+
+.row-actions .icon-button {
+
+  width: 22px;
+
+  min-width: 0;
+
+  height: 26px;
+
+  flex: 0 1 22px;
+
+  border-radius: 5px;
+
+}
+
+.row-actions .icon-button mat-icon {
+
+  font-size: 17px;
+
+  width: 17px;
+
+  height: 17px;
+
+}
+
+.calendar-button {
+
+  width: 23px;
+
+  height: 29px;
+
+  flex: 0 0 23px;
+
+}
+
+.calendar-button mat-icon {
+
+  font-size: 17px;
+
+  width: 17px;
+
+  height: 17px;
+
+}
+
+.action-cell {
+
+  vertical-align: middle !important;
+
+}
+
+.supplementary-field {
+
+  margin-top: 4px;
+
+}
+
+@media (max-width: 1300px) {
+
+  .booking-table th {
+
+    font-size: 9px;
+
+  }
+
+  .booking-table th,
+
+  .booking-table td {
+
+    padding-left: 3px;
+
+    padding-right: 3px;
+
+  }
+
+  .field-input {
+
+    font-size: 11px;
+
+  }
+
+  .field label {
+
+    font-size: 9px;
+
+  }
+
+  .floating-field label {
+
+    font-size: 10px;
+
+  }
+
+  .select-field select {
+
+    font-size: 10px;
+
+  }
+
+  .booking-table td:nth-child(2),
+
+  .booking-table th:first-child {
+
+    padding-left: 4px;
+
+  }
+
+}
+
+@media (max-width: 1100px) {
+
+  .booking-table th {
+
+    font-size: 8px;
+
+  }
+
+  .booking-table th,
+
+  .booking-table td {
+
+    padding-left: 2px;
+
+    padding-right: 2px;
+
+  }
+
+  .field-input {
+
+    font-size: 10px;
+
+    padding-left: 2px;
+
+    padding-right: 2px;
+
+  }
+
+  .date-field .field-input {
+
+    font-size: 9px;
+
+    letter-spacing: -.6px;
+
+  }
+
+  .calendar-button {
+
+    width: 20px;
+
+    flex-basis: 20px;
+
+  }
+
+  .row-actions .icon-button {
+
+    height: 23px;
+
+    width: 19px;
+
+    flex-basis: 19px;
+
+  }
+
+  .row-actions .icon-button mat-icon {
+
+    font-size: 15px;
+
+    height: 15px;
+
+    width: 15px;
+
+  }
+
+  .field label {
+
+    left: 2px;
+
+    max-width: calc(100% - 4px);
+
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .vazhipad-page {
+
+    padding: 0;
+
+  }
+
+  .booking-shell {
+
+    border-radius: 0;
+
+  }
+
+  .booking-table th {
+
+    font-size: 7px;
+
+  }
+
+  .booking-table th,
+
+  .booking-table td {
+
+    padding-left: 1px;
+
+    padding-right: 1px;
+
+  }
+
+  .field-input,
+
+  .select-field select {
+
+    font-size: 9px;
+
+  }
+
+  .date-field .field-input {
+
+    font-size: 8px;
+
+  }
+
+  .calendar-button {
+
+    width: 17px;
+
+    flex-basis: 17px;
+
+  }
+
+  .row-actions .icon-button {
+
+    width: 16px;
+
+    flex-basis: 16px;
+
+  }
+
+  .row-actions .icon-button mat-icon {
+
+    font-size: 13px;
+
+    width: 13px;
+
+    height: 13px;
+
+  }
+
+  .booking-footer {
+
+    flex-wrap: wrap;
+
+  }
+
+}
+
+/* ==========================================================
+
+   TRANSPARENT CONTAINER - VISUAL CHANGE ONLY
+
+   Preserves compact billing table sizes and Angular behavior.
+
+   \\\========================================================== */
+
+:host,
+
+.vazhipad-page,
+
+.booking-shell,
+
+.booking-content,
+
+.table-scroll,
+
+.booking-table,
+
+.booking-table tbody,
+
+.booking-table tr,
+
+.booking-table td,
+
+.booking-footer {
+
+  background: transparent !important;
+
+  background-color: transparent !important;
+
+  background-image: none !important;
+
+}
+
+.booking-shell {
+
+  border: none !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+}
+
+.booking-footer {
+
+  border: none !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+}
+
+/* Keep existing table heading color and useful field underlines. */
+
+@media (max-width: 768px) {
+
+  .booking-shell {
+
+    border-radius: 0 !important;
+
+  }
+
+}
+
+/* ===== Dropdown readability enhancements (no layout changes) ===== */
+
+/* Material autocomplete is rendered in the CDK overlay, outside the table.
+
+   Its width is content-sized instead of being limited to the input width. */
+
+::ng-deep .cdk-overlay-pane:has(.modern-autocomplete-panel) {
+
+  width: max-content !important;
+
+  min-width: 260px;
+
+  max-width: calc(100vw - 24px) !important;
+
+}
+
+::ng-deep .modern-autocomplete-panel.mat-mdc-autocomplete-panel,
+
+::ng-deep .modern-autocomplete-panel.mat-autocomplete-panel {
+
+  width: max-content !important;
+
+  min-width: 100%;
+
+  max-width: 100% !important;
+
+  box-sizing: border-box;
+
+  overflow-x: auto;
+
+}
+
+::ng-deep .modern-autocomplete-panel .mat-mdc-option,
+
+::ng-deep .modern-autocomplete-panel .mat-option {
+
+  white-space: nowrap !important;
+
+  min-width: max-content;
+
+}
+
+::ng-deep .modern-autocomplete-panel .mdc-list-item__primary-text,
+
+::ng-deep .modern-autocomplete-panel .option-name {
+
+  white-space: nowrap !important;
+
+  flex-wrap: nowrap;
+
+  width: max-content;
+
+}
+
+/* Native select popup sizing is controlled by the browser/operating system. */
+
+.booking-table .select-field select option {
+
+  white-space: nowrap;
+
+}
+
+/* Quantity and Rate labels must remain legible in their narrow columns. */
+
+.booking-table td:nth-child(6) .number-field label,
+
+.booking-table td:nth-child(7) .number-field label {
+
+  left: 0 !important;
+
+  right: 0 !important;
+
+  width: 100% !important;
+
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  text-overflow: clip !important;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  transform: none !important;
+
+  font-size: clamp(8px, 0.68vw, 10px) !important;
+
+  letter-spacing: -0.2px;
+
+}
+
+.booking-table td:nth-child(6) .number-field:focus-within label,
+
+.booking-table td:nth-child(7) .number-field:focus-within label {
+
+  transform: none !important;
+
+}
+
+th {
+
+  font-size: clamp(12px, 0.68vw, 10px) !important;
+
+}
+
+/* =========================================================
+
+   FINAL REQUEST: VERTICAL BILLING SCROLL + CLEAN FOOTER
+
+   Existing columns, fields, autocomplete, and handlers unchanged.
+
+   \========================================================= */
+
+/* Do not lock the booking page to a parent height. */
+
+:host,
+
+.vazhipad-page,
+
+.booking-shell,
+
+.booking-content,
+
+.booking-content form {
+
+  min-height: 0;
+
+}
+
+.vazhipad-page {
+
+  height: auto;
+
+  min-height: 0;
+
+}
+
+/* Rows scroll inside the grid; sticky headings stay in place. */
+
+.table-scroll {
+
+  display: block;
+
+  position: relative;
+
+  width: 100%;
+
+  max-height: max(240px, calc(100vh - 235px));
+
+  max-height: max(240px, calc(100dvh - 235px));
+
+  overflow-y: auto !important;
+
+  overflow-x: hidden !important;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
+
+  padding-bottom: 12px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #9bb5d5 transparent;
+
+}
+
+.booking-table thead {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 5;
+
+}
+
+.booking-table thead th {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 5;
+
+}
+
+/* Remove the empty line/spacing under the Clear all area. */
+
+.booking-footer {
+
+  margin: 0 !important;
+
+  padding: 8px 12px 0 !important;
+
+  justify-content: flex-end;
+
+  border: 0 !important;
+
+  border-top: none !important;
+
+  border-bottom: none !important;
+
+  box-shadow: none !important;
+
+  background: transparent !important;
+
+  min-height: 0;
+
+}
+
+.booking-footer::before,
+
+.booking-footer::after {
+
+  content: none !important;
+
+}
+
+@media (max-width: 900px) {
+
+  .table-scroll {
+
+    max-height: max(240px, calc(100dvh - 195px));
+
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .table-scroll {
+
+    max-height: max(220px, calc(100dvh - 175px));
+
+  }
+
+}
+
+/* ============================================================
+
+   BILLING ROWS: ALWAYS-AVAILABLE VERTICAL SCROLL
+
+   Visual/layout changes only. No Angular handlers modified.
+
+   Reserve room for the main app header and 100px billing footer.
+
+   ============================================================ */
+
+:host,
+
+.vazhipad-page,
+
+.booking-shell,
+
+.booking-content,
+
+.booking-content form {
+
+  min-height: 0 !important;
+
+  min-width: 0;
+
+}
+
+/* The table wrapper, not the entire page, scrolls. */
+
+.table-scroll {
+
+  display: block !important;
+
+  position: relative;
+
+  width: 100%;
+
+  height: calc(100vh - 250px) !important;
+
+  height: calc(100dvh - 250px) !important;
+
+  min-height: 160px;
+
+  max-height: none !important;
+
+  overflow-y: scroll !important;
+
+  overflow-x: hidden !important;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #93accd #eff4fb;
+
+  padding-bottom: 18px;
+
+}
+
+/* Headings remain visible as new billing rows are entered. */
+
+.booking-table thead,
+
+.booking-table thead th {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 5;
+
+}
+
+.booking-table {
+
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+}
+
+.table-scroll::-webkit-scrollbar { width: 9px; }
+
+.table-scroll::-webkit-scrollbar-track { background: #eff4fb; }
+
+.table-scroll::-webkit-scrollbar-thumb {
+
+  background: #93accd;
+
+  border: 2px solid #eff4fb;
+
+  border-radius: 10px;
+
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover { background: #688ebc; }
+
+/* Clear All stays outside the scrolling table with no divider line. */
+
+.booking-footer {
+
+  margin: 0 !important;
+
+  /* padding: 8px 12px 0 !important; */
+
+  justify-content: flex-end;
+
+  border: 0 !important;
+
+  box-shadow: none !important;
+
+  background: transparent !important;
+
+}
+
+.booking-footer::before,
+
+.booking-footer::after { content: none !important; }
+
+@media (max-width: 900px) {
+
+  .table-scroll {
+
+    height: calc(100vh - 225px) !important;
+
+    height: calc(100dvh - 225px) !important;
+
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .table-scroll {
+
+    height: calc(100vh - 205px) !important;
+
+    height: calc(100dvh - 205px) !important;
+
+  }
+
+}
+
+
+/* ===========================================================
+   FINAL: FILL AVAILABLE BILLING SPACE WITH FIXED CLEAR ALL
+   Header and 100px global payment footer remain unaffected.
+   Only the booking row region scrolls.
+   =========================================================== */
+:host {
+  display: block !important;
+  width: 100%;
+  min-width: 0;
+  height: calc(100vh - 205px) !important;
+  height: calc(100dvh - 205px) !important;
+  min-height: 160px;
+  overflow: hidden !important;
+}
+.vazhipad-page,
+.booking-shell,
+.booking-content,
+.booking-content form {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.table-scroll {
+  display: block !important;
+  flex: 1 1 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  padding-bottom: 10px;
+}
+.booking-table thead th {
+  position: sticky !important;
+  top: 0;
+  z-index: 6;
+}
+.booking-footer {
+  display: flex !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  flex: 0 0 52px !important;
+  min-height: 52px !important;
+  height: 52px !important;
+  width: 100%;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  margin: 0 !important;
+  padding: 5px 14px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  z-index: 2;
+}
+.booking-footer .clear-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  visibility: visible !important;
+  opacity: 1 !important;
+  flex: 0 0 auto;
+  height: 36px;
+  white-space: nowrap;
+  margin-bottom:10px;
+  padding:0px;
+}
+/* Keep compact horizontal layout and existing floating inputs. */
+.booking-table { width: 100% !important; min-width: 0 !important; }
+@media (max-width: 900px) {
+  :host { height: calc(100dvh - 195px) !important; }
+}
+@media (max-width: 480px) {
+  :host { height: calc(100dvh - 185px) !important; }
+  .booking-footer { flex-basis: 50px !important; min-height: 50px !important; height: 50px !important; }
+}

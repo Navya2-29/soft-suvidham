@@ -1,0 +1,1138 @@
+
+/* ==========================================
+   MODERN COUNTER MANAGEMENT
+   ANGULAR 17 RESPONSIVE DESIGN
+========================================== */
+
+:host {
+  display: block;
+
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+
+  --primary: #154a81;
+  --primary-dark: #10375e;
+
+  --text: #263f5b;
+  --muted: #8090a1;
+  --border: #e2eaf3;
+
+  font-family: "Manjari", Arial, sans-serif;
+}
+
+:host,
+:host * {
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   SHARED HEADER
+========================================== */
+
+app-header {
+  display: block;
+  width: 100%;
+}
+
+/* ==========================================
+   PAGE BACKGROUND
+========================================== */
+
+.counter-page {
+  width: 100%;
+  height: calc(100dvh - 70px);
+  min-height: 0;
+
+  padding: clamp(10px, 1.6vw, 24px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244,248,253,.96),
+      rgba(232,241,251,.95)
+    ),
+    url('/assets/images/bgadmin.jpg');
+
+  background-size: cover;
+  background-position: center;
+}
+
+/* ==========================================
+   PAGE CONTAINER
+========================================== */
+
+.counter-container {
+  width: 100%;
+  max-width: 1240px;
+
+  flex: 1 0 auto;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  gap: 18px;
+
+  min-height: 0;
+}
+
+/* ==========================================
+   PAGE HEADING
+========================================== */
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  flex-shrink: 0;
+}
+
+.heading-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.heading-line {
+  width: 4px;
+  height: 49px;
+
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    180deg,
+    #15a8b6,
+    #13528a
+  );
+
+  border-radius: 8px;
+}
+
+.heading-eyebrow {
+  margin-bottom: 5px;
+
+  font-family: Arial, sans-serif;
+
+  color: #7e97b1;
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.6px;
+}
+
+.page-heading h1 {
+  margin: 0;
+
+  color: #173a5e;
+
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 800;
+
+  line-height: 1.25;
+}
+
+.page-heading p {
+  margin: 5px 0 0;
+
+  color: #8394a6;
+  font-size: 12px;
+}
+
+/* ==========================================
+   VERSION BADGE
+========================================== */
+
+.version-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  background: #fff;
+  color: #52708e;
+
+  border: 1px solid #dae5f1;
+  border-radius: 30px;
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.version-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: #25aa85;
+}
+
+/* ==========================================
+   MAIN MANAGEMENT PANEL
+========================================== */
+
+.management-panel {
+  width: 100%;
+  min-height: 0;
+
+  display: grid;
+  grid-template-columns: 38% minmax(0, 1fr);
+
+  background: white;
+
+  border: 1px solid #e0e8f2;
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 14px 45px rgba(32,72,115,.09);
+}
+
+/* ==========================================
+   LEFT TEMPLE SECTION
+========================================== */
+
+.temple-section {
+  position: relative;
+
+  min-height: 440px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 35px 25px;
+
+  overflow: hidden;
+
+ background: linear-gradient(90deg,rgb(0, 82, 91) 0%, #04418c 50%, #04418c 100%);
+
+  color: #fff;
+}
+
+/* BACKGROUND DECORATIONS */
+
+.temple-decoration {
+  position: absolute;
+
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.decor-one {
+  width: 350px;
+  height: 350px;
+
+  top: -190px;
+  right: -160px;
+}
+
+.decor-two {
+  width: 350px;
+  height: 350px;
+
+  bottom: -230px;
+  left: -180px;
+}
+
+/* ==========================================
+   TEMPLE CONTENT
+========================================== */
+
+.temple-content {
+  width: 100%;
+
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+/* TEMPLE LOGO */
+
+.temple-logo-box {
+  width: 145px;
+  height: 145px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px;
+
+  /* background: rgba(255,255,255,.98); */
+
+  border-radius: 28px;
+
+  /* box-shadow:
+    0 12px 34px rgba(0,0,0,.14); */
+
+  margin-bottom: 26px;
+}
+
+.temple-logo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+/* TEMPLE INFORMATION */
+
+.temple-label {
+  color: #a9cced;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+.temple-name {
+  max-width: 380px;
+
+  margin: 15px 0 0;
+
+  color: #fff;
+
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 800;
+
+  line-height: 1.45;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+.temple-divider {
+  width: 60px;
+  height: 3px;
+
+  margin: 21px 0;
+
+  background: #65c8db;
+  border-radius: 10px;
+}
+
+.temple-description {
+  margin: 0;
+
+  color: #c8dff1;
+  font-size: 13px;
+}
+
+/* FEATURE LABEL */
+
+.temple-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 25px;
+
+  padding: 9px 15px;
+
+  background: rgba(255,255,255,.1);
+
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 30px;
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+
+  color: #e1f0fc;
+}
+
+.feature-dot {
+  width: 7px;
+  height: 7px;
+
+  background: #58d9a3;
+  border-radius: 50%;
+}
+
+/* TEMPLE BOTTOM */
+
+.temple-bottom {
+  position: absolute;
+
+  bottom: 20px;
+  left: 15px;
+  right: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  color: rgba(255,255,255,.5);
+
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+
+  letter-spacing: 1.2px;
+}
+
+.bottom-line {
+  width: 25px;
+  height: 1px;
+
+  background: rgba(255,255,255,.25);
+}
+
+/* ==========================================
+   RIGHT MODULE SECTION
+========================================== */
+
+.modules-section {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: clamp(22px, 3vw, 45px);
+
+  background: #fff;
+}
+
+/* SECTION HEADING */
+
+.modules-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 25px;
+}
+
+.module-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #5796ba;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.modules-heading h2 {
+  margin: 0;
+
+  color: #223f5e;
+
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 800;
+}
+
+.modules-heading p {
+  margin: 7px 0 0;
+
+  color: #8a9aad;
+  font-size: 12px;
+}
+
+.module-number {
+  padding: 7px 10px;
+
+  flex-shrink: 0;
+
+  background: #eef5fb;
+  color: #4f789b;
+
+  border-radius: 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: .6px;
+}
+
+/* ==========================================
+   MODULE LIST
+========================================== */
+
+.module-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+/* MODULE CARD */
+
+.module-item {
+  --module-color: #237abe;
+  --module-bg: #e8f3ff;
+
+  position: relative;
+
+  min-width: 0;
+  min-height: 93px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 16px 18px;
+
+  background: #fff;
+
+  border: 1px solid #e4ebf3;
+  border-radius: 14px;
+
+  text-decoration: none;
+  color: inherit;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 12px rgba(30,70,110,.035);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+.module-item:hover {
+  transform: translateX(5px);
+
+  border-color: var(--module-color);
+
+  background: #fcfdff;
+
+  box-shadow:
+    0 9px 25px rgba(30,70,110,.09);
+}
+
+.module-item:focus-visible {
+  outline: 3px solid var(--module-color);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   MODULE ICON
+========================================== */
+
+.module-icon {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--module-bg);
+  color: var(--module-color);
+
+  border-radius: 13px;
+
+  transition: transform .25s ease;
+}
+
+.module-icon svg {
+  width: 29px;
+  height: 29px;
+}
+
+.module-item:hover .module-icon {
+  transform: scale(1.07);
+}
+
+/* ==========================================
+   MODULE TEXT
+========================================== */
+
+.module-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.module-details h3 {
+  margin: 0;
+
+  color: #284460;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  line-height: 1.4;
+}
+
+.module-details p {
+  margin: 5px 0 0;
+
+  color: #8a9aab;
+  font-size: 11px;
+}
+
+/* ==========================================
+   MODULE ACTION ARROW
+========================================== */
+
+.module-action {
+  width: 29px;
+  height: 29px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #8da1b4;
+  background: #f3f6fa;
+
+  border-radius: 50%;
+
+  transition:
+    background .25s ease,
+    color .25s ease,
+    transform .25s ease;
+}
+
+.module-action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.module-item:hover .module-action {
+  background: var(--module-bg);
+  color: var(--module-color);
+
+  transform: translateX(3px);
+}
+
+/* ==========================================
+   MODULE COLORS
+========================================== */
+
+.billing-module {
+  --module-color: #1679bf;
+  --module-bg: #e6f3ff;
+}
+
+.reports-module {
+  --module-color: #159b87;
+  --module-bg: #e5f8f2;
+}
+
+.miscellaneous-module {
+  --module-color: #815ac3;
+  --module-bg: #f0eafe;
+}
+
+/* ==========================================
+   BOTTOM ACTIONS
+========================================== */
+
+.modules-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 12px 17px;
+
+  background: #edf3f9;
+  color: #315879;
+
+  border: 1px solid #dbe6f0;
+  border-radius: 10px;
+
+  font-family: "Manjari", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    transform .2s ease;
+}
+
+.back-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.back-button:hover {
+  background: #dfeaf5;
+  transform: translateX(-2px);
+}
+
+.back-button:focus-visible {
+  outline: 3px solid #1679bf;
+  outline-offset: 2px;
+}
+
+/* COMPANY LOGO */
+
+.company-logo {
+  width: 118px;
+  max-height: 48px;
+
+  object-fit: contain;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.counter-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  flex-shrink: 0;
+
+  padding: 0 3px;
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+
+  color: #8191a3;
+}
+
+.footer-copyright strong {
+  color: #466582;
+}
+
+.footer-update {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.update-dot {
+  width: 7px;
+  height: 7px;
+
+  background: #2aaf8e;
+  border-radius: 50%;
+}
+
+/* ==========================================
+   MEDIUM DESKTOP
+========================================== */
+
+@media (max-width: 1100px) {
+
+  .management-panel {
+    grid-template-columns: 37% minmax(0, 1fr);
+  }
+
+  .modules-section {
+    padding: 25px;
+  }
+
+  .temple-section {
+    padding: 24px 15px;
+  }
+
+  .temple-logo-box {
+    width: 115px;
+    height: 115px;
+
+    margin-bottom: 18px;
+  }
+
+  .temple-name {
+    font-size: 22px;
+  }
+
+  .module-item {
+    min-height: 80px;
+    padding: 12px;
+  }
+
+  .modules-heading {
+    margin-bottom: 17px;
+  }
+
+  .module-list {
+    gap: 11px;
+  }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 768px) {
+
+  .counter-page {
+    height: calc(100dvh - 70px);
+    padding: 12px;
+  }
+
+  .counter-container {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .management-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .temple-section {
+    min-height: 0;
+    padding: 22px 18px;
+  }
+
+  .temple-logo-box {
+    width: 85px;
+    height: 85px;
+
+    padding: 7px;
+    margin-bottom: 12px;
+
+    border-radius: 17px;
+  }
+
+  .temple-label {
+    font-size: 9px;
+  }
+
+  .temple-name {
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  .temple-divider {
+    margin: 12px 0;
+  }
+
+  .temple-description {
+    font-size: 11px;
+  }
+
+  .temple-feature,
+  .temple-bottom {
+    display: none;
+  }
+
+  .modules-section {
+    padding: 22px;
+  }
+
+  .modules-heading {
+    margin-bottom: 18px;
+  }
+
+  .modules-bottom {
+    padding-top: 20px;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+  .counter-page {
+    padding: 8px;
+  }
+
+  .page-heading {
+    gap: 8px;
+  }
+
+  .heading-line {
+    height: 35px;
+  }
+
+  .heading-eyebrow {
+    font-size: 8px;
+    letter-spacing: .7px;
+  }
+
+  .page-heading h1 {
+    font-size: 17px;
+  }
+
+  .page-heading p {
+    font-size: 10px;
+  }
+
+  .version-badge {
+    font-size: 9px;
+    padding: 6px 8px;
+  }
+
+  .management-panel {
+    border-radius: 14px;
+  }
+
+  .temple-section {
+    padding: 17px 12px;
+  }
+
+  .temple-logo-box {
+    width: 70px;
+    height: 70px;
+
+    margin-bottom: 10px;
+  }
+
+  .temple-name {
+    font-size: 17px;
+  }
+
+  .temple-label {
+    font-size: 8px;
+  }
+
+  .temple-description {
+    font-size: 10px;
+  }
+
+  .temple-divider {
+    margin: 9px 0;
+  }
+
+  .modules-section {
+    padding: 16px 12px;
+  }
+
+  .modules-heading h2 {
+    font-size: 17px;
+  }
+
+  .modules-heading p {
+    font-size: 10px;
+  }
+
+  .module-number {
+    font-size: 8px;
+    padding: 6px 7px;
+  }
+
+  .module-list {
+    gap: 9px;
+  }
+
+  .module-item {
+    min-height: 72px;
+
+    padding: 10px;
+    gap: 10px;
+
+    border-radius: 11px;
+  }
+
+  .module-icon {
+    width: 47px;
+    height: 47px;
+
+    border-radius: 10px;
+  }
+
+  .module-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .module-details h3 {
+    font-size: 13px;
+  }
+
+  .module-details p {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .module-action {
+    width: 23px;
+    height: 23px;
+  }
+
+  .module-action svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .modules-bottom {
+    padding-top: 15px;
+  }
+
+  .back-button {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .company-logo {
+    width: 75px;
+    max-height: 35px;
+  }
+
+  .counter-footer {
+    flex-direction: column;
+    gap: 5px;
+
+    text-align: center;
+    font-size: 9px;
+
+    padding-bottom: 8px;
+  }
+}
+
+/* ==========================================
+   SHORT SCREENS
+========================================== */
+
+@media (max-height: 700px) and (min-width: 769px) {
+
+  .counter-page {
+    padding: 8px 15px;
+  }
+
+  .counter-container {
+    gap: 9px;
+  }
+
+  .temple-section {
+    min-height: 365px;
+  }
+
+  .temple-logo-box {
+    width: 95px;
+    height: 95px;
+
+    margin-bottom: 12px;
+  }
+
+  .temple-name {
+    font-size: 21px;
+    margin-top: 9px;
+  }
+
+  .temple-divider {
+    margin: 13px 0;
+  }
+
+  .temple-feature {
+    margin-top: 12px;
+  }
+
+  .modules-section {
+    padding: 17px 25px;
+  }
+
+  .modules-heading {
+    margin-bottom: 13px;
+  }
+
+  .module-list {
+    gap: 8px;
+  }
+
+  .module-item {
+    min-height: 68px;
+    padding: 8px 12px;
+  }
+
+  .module-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .module-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .modules-bottom {
+    padding-top: 12px;
+  }
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.counter-page::-webkit-scrollbar {
+  width: 5px;
+}
+
+.counter-page::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.counter-page::-webkit-scrollbar-thumb {
+  background: #bacbdc;
+  border-radius: 12px;
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .module-item,
+  .module-icon,
+  .module-action,
+  .back-button {
+    transition: none;
+  }
+
+  .module-item:hover,
+  .module-item:hover .module-icon,
+  .module-item:hover .module-action,
+  .back-button:hover {
+    transform: none;
+  }
+}

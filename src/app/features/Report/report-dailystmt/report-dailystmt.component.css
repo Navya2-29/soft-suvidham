@@ -1,0 +1,141 @@
+#pdf-content {
+  margin: 20px 0;
+}
+
+td, th {
+  word-wrap: break-word; 
+  white-space: normal;   
+  overflow-wrap: break-word; 
+  max-width: 200px;
+}
+
+.styled-search {
+  width: 300px;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-page-cell {
+  text-align: right;
+  padding: 8px 12px;
+}
+
+.row-count-text {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* PAGINATION TOOLBAR */
+.table-pagination-bar {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 7px 14px;
+  margin-top: 18px;
+  box-sizing: border-box;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.rows-label {
+  font-weight: 400;
+  color: #475569;
+  font-size: 12px;
+}
+
+.select-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.page-size-select {
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background: #ffffff;
+  cursor: pointer;
+  outline: none;
+}
+
+.pagination-divider {
+  color: #cbd5e1;
+  margin: 0 4px;
+  font-weight: 300;
+}
+
+.showing-label {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 400;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-btn {
+  min-width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0 6px;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.page-btn.active {
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%);
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-nav-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+@media print {
+  .no-print,
+  .table-pagination-bar,
+  .row-count-text {
+    display: none !important;
+  }
+}

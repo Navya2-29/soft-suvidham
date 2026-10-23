@@ -1,0 +1,117 @@
+*
+*{
+  font-family: Manjari;
+}
+table {
+  width: 100%;
+}
+
+.menuend {
+  background: #223d61;
+  display:flex;
+  align-content:center;
+  justify-content: center;
+  justify-content: space-between;
+  
+}
+
+.close {
+  background:white;
+  color:#6206ca;
+}
+
+.proceed {
+  background: #046ef8;;
+  color:white;
+  letter-spacing:0pt;
+  border: none;
+  box-shadow: none; 
+  letter-spacing:0pt;
+}
+.cancel{
+  width: 100px;
+  margin-right: 10px;
+  /* margin-right: 3%; */
+  border: none;
+  background: #046ef8;;
+  color:white;
+  letter-spacing:0pt;
+  box-shadow: none;
+}
+.status{
+  margin-left: 3%; 
+}
+.cancel-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  width: 100%;  
+}
+
+.status.success {
+  color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+.input-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  gap: 10px; 
+  flex-wrap: nowrap; 
+}
+
+.input-section .form-control {
+  flex: 1 1 auto; 
+  min-width: 120px; 
+}
+
+.input-section select {
+  flex: 1 1 auto; 
+  min-width: 120px; 
+}
+
+.input-section button {
+  margin-left: 10px; 
+  white-space: nowrap; 
+}
+
+
+@media (max-width: 768px) {
+  .input-section {
+    flex-direction: row; 
+    align-items: center; 
+  }
+
+  .input-section .form-control,
+  .input-section select {
+    width: 150px; 
+  }
+
+  .input-section button {
+    margin-left: 10px; 
+  }
+}
+
+.is-invalid {
+  border: 2px solid red !important;
+  border-radius: 4px;
+}
+
+.billbottom{
+  display:flex;
+}
+@media screen {
+  #print-section {
+    display: none !important;
+  }
+}
+
+@media print {
+  #print-section {
+    display: block !important;
+  }
+}

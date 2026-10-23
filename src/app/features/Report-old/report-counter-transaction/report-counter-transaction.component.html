@@ -1,0 +1,81 @@
+<app-header></app-header>
+
+<div class="icon-container">
+  <button mat-icon-button matTooltip="Back to previous page" (click)="goBack()">
+    <span class="material-icons">arrow_back</span>
+  </button>
+  <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+    <span class="material-icons">print</span>
+  </button>
+</div>
+
+<div id="print-section">
+  <div>
+    <h3 style="text-align: center; font-family: 'Times New Roman', Times, serif; font-weight: bold;">
+      {{ templeName }}
+    </h3>
+    <h4 style="text-align: center; font-family: 'Times New Roman', Times, serif; font-weight: bold;">
+      {{ templeAddress }}
+    </h4>
+    <h5 style="text-align: center; font-family: 'Times New Roman', Times, serif; font-weight: bold;">
+      {{"Report Name.DAILY STATEMENT REPORT" | translate}}
+    </h5>
+    <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-weight: bold;">
+      {{ formatDateToDDMMYYYY(fromDate) }} to {{ formatDateToDDMMYYYY(toDate) }}
+    </p>
+  </div>
+
+  <div>
+    <table border="1" width="100%" cellspacing="0" cellpadding="5">
+      <tbody>
+        <ng-container *ngFor="let counter of (groupedData | keyvalue)">
+          <!-- Counter Heading -->
+          <tr style="background-color: #2196F3; color: rgb(14, 12, 12);">
+            <th colspan="5"><u>Counter ID: {{ counter.key }}</u></th>
+          </tr>
+    
+          <ng-container *ngFor="let user of (counter.value.users | keyvalue)">
+            <!-- User Heading -->
+            <tr style="background-color: #64B5F6; color: rgb(8, 7, 7);">
+              <th colspan="5"><u>User: {{ user.key }}</u></th>
+            </tr>
+    
+            <!-- Table Headers -->
+            <tr style="background-color: #f2f2f2;">
+              <th>Vazhipad</th>
+              <th>Qty</th>
+              <th>Rate</th>
+              <th>Amount</th>
+              <th>Bill Date</th>
+            </tr>
+    
+            <!-- Table Rows -->
+            <tr *ngFor="let item of user.value.transactions">
+              <td>{{ item.vazhipad }}</td>
+              <td>{{ item.Qty }}</td>
+              <td>{{ item.Rate }}</td>
+              <td style="text-align: right;">{{ item.Amount }}</td>
+              <td>{{ item.BillDate }}</td>
+            </tr>
+            <tr>
+              <td colspan="3" ><b>Total Amount for {{ user.key }}</b></td>
+              <td style="text-align: right;"> <b>{{ user.value.totalAmount | number: '1.2-2' }}</b> </td>
+              <td></td>
+            </tr>
+          
+
+          </ng-container>
+         
+<tr>
+  <td style="color: red;" colspan="3">Total Amount for Counter {{ counter.key }}</td>
+  <td style="text-align: right;color: red;">{{ counter.value.counterTotalAmount | number: '1.2-2' }}</td>
+</tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-left: 100px; margin-right: 350px; text-align: right; font-weight: bold;">
+    Grand Total: {{ getTotalAmount() | number: '1.2-2' }}
+  </div>
+</div>

@@ -1,0 +1,160 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="pm-page">
+  <header class="pm-topbar">
+    <div class="pm-heading">
+      <a routerLink="/dashboard" class="pm-back" aria-label="Back to dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+      <span class="pm-heading-icon"><mat-icon>temple_buddhist</mat-icon></span>
+      <div>
+        <h1>Prathishta Master</h1>
+        <p>{{ templeName }}</p>
+      </div>
+    </div>
+
+  </header>
+
+  <main class="pm-content">
+    <div class="pm-grid">
+      <!-- FORM: existing form controls and handlers retained -->
+      <section class="pm-panel pm-editor">
+        <div class="pm-panel-title">
+          <span><mat-icon>edit_note</mat-icon> Prathishta Details</span>
+          <span class="pm-mode">{{ updateFlag ? 'Edit Prathishta' : 'New Prathishta' }}</span>
+        </div>
+        <form [formGroup]="pmasterForm" (keydown.enter)="$event.preventDefault()" class="pm-form">
+          <div class="pm-form-grid">
+            <div class="pm-field pm-code">
+              <label for="PM_Code">Prathishta Code <span class="pm-required">*</span></label>
+              <input id="PM_Code" type="text" [readonly]="updateFlag" appUpperCase formControlName="PM_Code"
+                maxlength="3" required class="pm-input" placeholder="Enter Code" />
+              <div class="pm-error"
+                *ngIf="pmasterFormFormControl['PM_Code'].invalid && (pmasterFormFormControl['PM_Code'].dirty || pmasterFormFormControl['PM_Code'].touched)">
+                <div *ngIf="pmasterFormFormControl['PM_Code'].hasError('required')">Code is required.</div>
+                <div *ngIf="pmasterFormFormControl['PM_Code'].hasError('maxlength')">Code must be 3 characters long.
+                </div>
+                <div *ngIf="pmasterFormFormControl['PM_Code'].hasError('pattern')">Code must contain English letters or
+                  numbers.</div>
+                <div *ngIf="pmasterFormFormControl['PM_Code'].hasError('duplicateCode')">Code already exists.</div>
+              </div>
+            </div>
+            <div class="pm-field">
+              <label for="PM_Name">Prathishta Name <span class="pm-required">*</span></label>
+              <input id="PM_Name" type="text" matInput formControlName="PM_Name" maxlength="50" class="pm-input"
+                placeholder="Enter Prathishta Name" appUpperCase />
+              <div class="pm-error"
+                *ngIf="pmasterFormFormControl['PM_Name'].invalid && (pmasterFormFormControl['PM_Name'].dirty || pmasterFormFormControl['PM_Name'].touched)">
+                <div *ngIf="pmasterFormFormControl['PM_Name'].hasError('required')">Name is required.</div>
+                <div *ngIf="pmasterFormFormControl['PM_Name'].hasError('duplicateName')">Name already exists.</div>
+                <div *ngIf="pmasterFormFormControl['PM_Name'].hasError('pattern')">Name must contain English letters and
+                  spaces only.</div>
+              </div>
+            </div>
+            <div class="pm-field pm-span-all">
+              <label for="PM_RegName">Prathishta Name (Regional Language) <span class="pm-required">*</span></label>
+              <input id="PM_RegName" type="text" matInput formControlName="PM_RegName" class="pm-input"
+                placeholder="Enter Name in Regional Language" />
+              <div class="pm-error"
+                *ngIf="pmasterFormFormControl['PM_RegName'].invalid && (pmasterFormFormControl['PM_RegName'].dirty || pmasterFormFormControl['PM_RegName'].touched)">
+                <div *ngIf="pmasterFormFormControl['PM_RegName'].hasError('required')">Name in your regional language is
+                  required.</div>
+                <div *ngIf="pmasterFormFormControl['PM_RegName'].hasError('duplicateRName')">Name already exists.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pm-section-heading"><mat-icon>image</mat-icon> Image &amp; Availability</div>
+          <div class="pm-image-layout">
+            <div class="pm-upload-area">
+              <label for="pm-image-upload" class="pm-upload-label">Prathishta Image <span class="pm-file-hint">PNG
+                  only</span></label>
+              <div class="pm-file-wrapper">
+                <input id="pm-image-upload" type="file" #fileInput accept="image/png" class="pm-file-input"
+                  (change)="previewImage($event)" />
+                <button type="button" class="pm-remove" *ngIf="imagePreview" (click)="removeImagePreview()"
+                  aria-label="Remove image preview"><mat-icon>close</mat-icon></button>
+              </div>
+              <div *ngIf="errorMessage" class="pm-error">{{ errorMessage }}</div>
+              <label class="pm-active-toggle"><mat-checkbox class="example-margin"
+                  formControlName="PM_Active">Active</mat-checkbox></label>
+            </div>
+            <div class="pm-image-preview">
+              <img [src]="imagePreview" *ngIf="imagePreview" alt="Prathishta image preview" />
+              <div *ngIf="!imagePreview" class="pm-empty-preview"><mat-icon>add_photo_alternate</mat-icon><span>Image
+                  preview</span></div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- SEARCH & RECORDS -->
+      <section class="pm-panel pm-list-panel">
+        <div class="pm-panel-title"><span><mat-icon>list_alt</mat-icon> Prathishta List</span><span
+            class="pm-mode">Master Records</span></div>
+        <div class="pm-search-bar">
+          <div class="pm-search-box">
+            <mat-icon>search</mat-icon>
+            <input type="text" aria-label="Search Prathishta by code or name" placeholder="Search by Code or Name"
+              [(ngModel)]="searchQuery" (input)="onSearch()" />
+          </div>
+          <button type="button" class="pm-search-button"
+            (click)="onSearch()"><mat-icon>search</mat-icon><span>Search</span></button>
+        </div>
+        <div class="pm-record-scroll">
+          <table class="pm-records">
+            <thead>
+              <tr>
+                <th class="code_center">Code</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th class="pm-actions-heading">Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!showNoRecordsMessage && pmaster && pmaster.length > 0">
+              <tr *ngFor="let data of filteredPmaster; let i = index">
+                <td class="code_center"><span class="pm-code-pill">{{ data.PM_Code }}</span></td>
+                <td>
+                  <div class="pm-record-name">{{ data.PM_Name }}</div>
+                  <div class="pm-regional-name">{{ data.PM_RegName }}</div>
+                </td>
+                <td><img class="pm-thumb" *ngIf="data.PM_Image" [src]="data.PM_Image" alt="Prathishta" /><span
+                    class="pm-no-image" *ngIf="!data.PM_Image">No image</span></td>
+                <td class="pm-actions">
+                  <button type="button" class="pm-icon-btn pm-edit" title="Edit" aria-label="Edit Prathishta"
+                    (click)="onEdit(data)"><mat-icon>edit</mat-icon></button>
+                  <button type="button" class="pm-icon-btn pm-delete" title="Delete" aria-label="Delete Prathishta"
+                    (click)="onDeleteCheck(data.PM_ID)"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              *ngIf="!pmaster || pmaster.length === 0 || showNoRecordsMessage || (filteredPmaster && filteredPmaster.length === 0)">
+              <tr>
+                <td colspan="4" class="pm-no-results"><mat-icon>search_off</mat-icon>
+                  <p>No records found</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pm-list-footer"><span>Prathishta Records</span><strong>{{ filteredPmaster ? filteredPmaster.length :
+            0 }}</strong></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="pm-footer">
+    <!-- <button type="button" class="pm-footer-cancel" (click)="onReset()"><mat-icon>close</mat-icon> Cancel</button> -->
+    <span></span>
+    <div class="pm-footer-right">
+      <!-- <span class="pm-footer-caption">{{ updateFlag ? 'Editing Prathishta' : 'Create Prathishta' }}</span> -->
+      <button type="button" class="pm-footer-cancel" (click)="onReset()"><mat-icon>close</mat-icon> Cancel</button>
+      <button type="button" class="pm-footer-submit" *ngIf="!updateFlag" (click)="onSubmit()"><mat-icon>save</mat-icon>
+        Save</button>
+      <button type="button" class="pm-footer-submit" *ngIf="updateFlag"
+        (click)="onUpdate(pmasterForm.value)"><mat-icon>check</mat-icon> Update</button>
+    </div>
+  </footer>
+</div>

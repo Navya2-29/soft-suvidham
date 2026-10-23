@@ -1,0 +1,99 @@
+<app-header></app-header>
+
+<main class="endo-page">
+  <div class="endo-shell">
+    <header class="endo-heading">
+      <div class="endo-heading-left">
+        <div class="endo-heading-icon"><mat-icon>volunteer_activism</mat-icon></div>
+        <div><h1>Endowment Booking</h1><p>Counter Management · Endowment Receipts and Transactions</p></div>
+      </div>
+      <span class="endo-heading-caption">TEMPLE MANAGEMENT</span>
+    </header>
+
+    <div class="endo-body">
+      <section class="endo-panel endo-booking">
+        <div class="endo-panel-title"><span><mat-icon>edit_note</mat-icon> Endowment Details</span><small>New Receipt</small></div>
+        <div class="endo-panel-content">
+          <div class="endo-section-label">DEVOTEE INFORMATION</div>
+          <div class="endo-member-row">
+            <div class="endo-field endo-mobile"><label>Mobile Number</label><input type="text" class="form-control" [placeholder]="'PLACEHOLDER.MOBILENUMBER' | translate" [(ngModel)]="mobileNumber" /></div>
+            <label class="endo-check"><input type="checkbox" [(ngModel)]="memberDevoteeCheck" /><span>{{ 'Member' | translate }}</span></label>
+            <button type="button" class="endo-btn endo-btn-search" (click)="getNameAndStarByMobilenumber()"><mat-icon>search</mat-icon> Search for Devotee</button>
+          </div>
+
+          <form [formGroup]="form">
+            <div class="endo-section-label">ENDOWMENT / VAZHIPAD DETAILS</div>
+            <div class="endo-grid endo-main-fields">
+              <div class="endo-field endo-vazhipad"><label>{{ 'VAZHIPAD' | translate }}</label>
+                <input type="text" matInput class="form-control" formControlName="Vazhipad" [placeholder]="'PLACEHOLDER.VAZHIPAD' | translate" [matAutocomplete]="auto" [ngClass]="{'invalid-control': form.get('Vazhipad')?.invalid && form.get('Vazhipad')?.touched}" />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+                  @for (option of filteredOptions | async; track option) {
+                    <mat-option *ngIf="lang=='en'" [value]="option.VM_Name">{{ option.VM_Code }} - {{ option.VM_Name }}</mat-option>
+                    <mat-option *ngIf="lang!='en'" [value]="option.VM_RName">{{ option.VM_Code }} - {{ option.VM_RName }}</mat-option>
+                  }
+                </mat-autocomplete>
+              </div>
+              <div class="endo-field"><label>{{ 'RATE' | translate }}</label><input type="text" class="form-control" formControlName="Rate" appNumber [placeholder]="'PLACEHOLDER.RATE' | translate" [readOnly]="rateChange==='N'" [ngClass]="{'invalid-control': form.get('Rate')?.invalid && form.get('Rate')?.touched}" /></div>
+              <div class="endo-field"><label>{{ 'PRATHISTA' | translate }}</label>
+                <select class="form-control" formControlName="Prethista" [ngClass]="{'invalid-control': form.get('Prethista')?.invalid && form.get('Prethista')?.touched}">
+                  <ng-container *ngIf="lang=='en'"><option *ngFor="let prathishta of prathishtaOptions" [value]="prathishta.PM_Name">{{prathishta.PM_Name}}</option></ng-container>
+                  <ng-container *ngIf="lang=='ml'"><option *ngFor="let prathishta of prathishtaOptions" [value]="prathishta.PM_RegName">{{prathishta.PM_RegName}}</option></ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="endo-grid endo-date-fields">
+              <div class="endo-field"><label>{{ 'START DATE' | translate }}</label><input type="date" class="form-control" [attr.min]="minDate" [readOnly]="form.get('VM_Receipt')?.value==='Y'" formControlName="VazhipadDate" /></div>
+              <div class="endo-field"><label>{{ 'NUMBER OF DAYS' | translate }}</label><input type="number" class="form-control" formControlName="NoOfDays" [min]="1" appNumber /></div>
+              <div class="endo-field"><label>{{ 'QUANTITY' | translate }}</label><input type="number" class="form-control" formControlName="Qty" [min]="1" appNumber [readonly]="VM_MaxNo > 0" /></div>
+              <div class="endo-field"><label>{{ 'END DATE' | translate }}</label><input type="text" class="form-control" formControlName="EndDate" readonly /></div>
+              <div class="endo-field"><label>{{ 'TIME' | translate }}</label><select class="form-control" formControlName="VTime"><option *ngFor="let time of vazhipadtime" [value]="time.id">{{ 'OPTIONS.' + time.key | translate }}</option></select></div>
+            </div>
+            <div class="endo-subheading"><span>DEVOTEE LIST</span><button type="button" class="endo-add" (click)="addDevotee()" [disabled]="VM_MaxNo>0"><mat-icon>person_add</mat-icon> Add Devotee</button></div>
+            <div class="endo-table-scroll">
+              <table class="endo-devotee-table"><thead><tr><th>Action</th><th>{{ 'PLACEHOLDER.NAME' | translate }}</th><th>Star</th><th *ngIf="form.get('multiName')?.value === 'Y'">Name 2</th><th *ngIf="form.get('multiName')?.value === 'Y'">Star 2</th></tr></thead>
+                <tbody formArrayName="devotees">
+                  <tr *ngFor="let devotee of devotees.controls; let i = index" [formGroupName]="i">
+                    <td><button type="button" class="endo-remove" (click)="removeDevotee(i)" title="Remove devotee"><mat-icon>delete_outline</mat-icon></button></td>
+                    <td><input type="text" class="form-control" appUpperCase formControlName="Name" [placeholder]="'PLACEHOLDER.NAME' | translate" (blur)="validateDevoteeName()" [ngClass]="{'invalid-control': devotee.get('Name')?.invalid && devotee.get('Name')?.touched}" /></td>
+                    <td><select class="form-control select-star" formControlName="Star" [ngClass]="{'invalid-control': devotee.get('Star')?.invalid && devotee.get('Star')?.touched}"><option value="">{{ 'Select' | translate }}</option><ng-container *ngIf="lang=='en'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{nakshtra.SM_NameEng}}</option></ng-container><ng-container *ngIf="lang=='ml'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{nakshtra.SM_Name}}</option></ng-container></select></td>
+                    <td *ngIf="form.get('multiName')?.value === 'Y'"><input type="text" class="form-control" formControlName="Name2" [placeholder]="'Name2' | translate" /></td>
+                    <td *ngIf="form.get('multiName')?.value === 'Y'"><select class="form-control select-star" formControlName="Star2"><option value="">{{ 'Select' | translate }}</option><ng-container *ngIf="lang=='en'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{nakshtra.SM_NameEng}}</option></ng-container><ng-container *ngIf="lang!='en'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{nakshtra.SM_Name}}</option></ng-container></select></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="endo-panel endo-filter">
+        <div class="endo-panel-title"><span><mat-icon>filter_alt</mat-icon> {{ 'Filter Options' | translate }}</span><small>Date Rules</small></div>
+        <div class="endo-panel-content"><form [formGroup]="multidayFilterForm">
+          <div class="endo-field"><label>{{ 'starwise' | translate }}</label><select class="form-control select-star" formControlName="Star"><option value="">-{{ 'Select' | translate }}-</option><ng-container *ngIf="lang=='en'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.SM_NameEng">{{nakshtra.SM_NameEng}}</option></ng-container><ng-container *ngIf="lang!='en'"><option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.SM_NameEng">{{nakshtra.SM_Name}}</option></ng-container></select></div>
+          <div class="endo-field"><label>{{ 'Malayalam Monthwise' | translate }}</label><select class="form-control select-star" formControlName="MalMonth"><option value="">-{{ 'Select' | translate }}-</option><ng-container *ngIf="lang=='en'"><option *ngFor="let month of malayalamMonthList" [value]="month.mmonEng">{{month.mmonEng}}</option></ng-container><ng-container *ngIf="lang!='en'"><option *ngFor="let month of malayalamMonthList" [value]="month.mmonEng">{{month.mmon}}</option></ng-container></select></div>
+          <div class="endo-field"><label>{{ 'daywise' | translate }}</label><select class="form-control select-star" formControlName="EngMonth"><option value="">-{{ 'Select' | translate }}-</option><option value="SUNDAY">{{ 'Day.SUNDAY' | translate }}</option><option value="MONDAY">{{ 'Day.MONDAY' | translate }}</option><option value="TUESDAY">{{ 'Day.TUESDAY' | translate }}</option><option value="WEDNESDAY">{{ 'Day.WEDNESDAY' | translate }}</option><option value="THURSDAY">{{ 'Day.THURSDAY' | translate }}</option><option value="FRIDAY">{{ 'Day.FRIDAY' | translate }}</option><option value="SATURDAY">{{ 'Day.SATURDAY' | translate }}</option></select></div>
+          <div class="endo-field"><label>{{ 'Malayalam Datewise' | translate }}</label><select class="form-control select-star" formControlName="MalDay"><option value="">0</option><option *ngFor="let day of MlayalamDays" [value]="day">{{day}}</option></select></div>
+          <div class="endo-field"><label>{{ 'English Datewise' | translate }}</label><select class="form-control select-star" formControlName="EngishDay"><option value="">0</option><option *ngFor="let day of EnglishDays" [value]="day">{{day}}</option></select></div>
+          <div class="endo-field"><label>{{ 'Thithi' | translate }}</label><select class="form-control select-star" formControlName="Thithi"><option value="">-{{ 'Select' | translate }}-</option><ng-container *ngIf="lang=='en'"><option *ngFor="let thithi of thithiList" [value]="thithi.ThithiEng">{{thithi.ThithiEng}}</option></ng-container><ng-container *ngIf="lang!='en'"><option *ngFor="let thithi of thithiList" [value]="thithi.ThithiEng">{{thithi.Thithi}}</option></ng-container></select></div>
+          <div class="endo-filter-actions"><button type="button" class="endo-btn endo-btn-light" (click)="onCancelClick()"><mat-icon>close</mat-icon> Cancel</button><button type="button" class="endo-btn endo-btn-search" (click)="onSearchClick()"><mat-icon>search</mat-icon> Search</button></div>
+        </form></div>
+      </section>
+
+      <section class="endo-panel endo-days"><div class="endo-panel-title"><span><mat-icon>event_available</mat-icon> {{ 'Day List' | translate }}</span><small>Choose Dates</small></div>
+        <div class="endo-day-scroll"><label class="endo-day" *ngFor="let day of updatedDayList; let i = index"><input type="checkbox" [(ngModel)]="day.selected" (change)="onCheckboxChange(i)" /><span>{{day.date}}</span></label><div class="endo-empty" *ngIf="updatedDayList.length==0">No day found</div></div>
+      </section>
+    </div>
+
+    <form [formGroup]="userForm" class="endo-payment-form">
+      <div class="endo-payment-title"><mat-icon>receipt_long</mat-icon> Receipt and Customer Details</div>
+      <div class="endo-payment-grid">
+        <div class="endo-field"><label>Bill No <span *ngIf="isLockedShow" class="endo-lock">LOCK</span> <button *ngIf="isLockedShow" type="button" class="endo-unlock" (click)="vazhipadUnblocking()" title="Unlock"><mat-icon>lock_open</mat-icon></button></label><input type="text" class="form-control" readonly placeholder="Enter Bill No" formControlName="BillNo" /></div>
+        <div class="endo-field"><label>Address Line 1</label><input type="text" class="form-control" placeholder="Enter Address 1" formControlName="Address1" /></div>
+        <div class="endo-field"><label>Address Line 2</label><input type="text" class="form-control" placeholder="Enter Address 2" formControlName="Address2" /></div>
+        <div class="endo-field"><label>Pincode</label><input type="text" class="form-control" placeholder="Enter Pincode" formControlName="Pincode" /></div>
+        <div class="endo-field"><label>Mobile</label><input type="text" class="form-control" placeholder="Enter Mobile" formControlName="Mobile" /></div>
+      </div>
+      <footer class="endo-footer"><span>Endowment · Counter Transactions</span><button type="button" class="endo-btn endo-btn-pay" (click)="onSubmit()" [disabled]="role == 'admin' || role == 'audit' || role == 'super'"><mat-icon>payments</mat-icon> Pay Endowment</button></footer>
+    </form>
+  </div>
+</main>

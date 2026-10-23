@@ -1,0 +1,163 @@
+<!-- MOBILE / TABLET HEADER -->
+<header class="mobile-header">
+  <div class="mobile-header-inner">
+    <div class="mobile-menu"><app-menu></app-menu></div>
+    <div class="mobile-brand">
+      <div class="mobile-temple-name">{{ templeName }}</div>
+      <div class="mobile-subtitle">Counter Management</div>
+    </div>
+    <button type="button" class="mobile-logout" (click)="logout()" aria-label="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>
+
+<!-- DESKTOP HEADER -->
+<header class="desktop-header">
+  <div class="header-container">
+    <div class="header-left">
+      <button type="button" class="back-btn" (click)="goBack()" aria-label="Go Back">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="counter-menu-group">
+        <div class="counter-badge">
+          <span class="counter-label">COUNTER</span>
+          <span class="counter-number">{{ counterId }}</span>
+        </div>
+        <div class="menu-card"><app-menu></app-menu></div>
+      </div>
+      <div class="logo-box">
+        <a routerLink="/Home"><img [src]="getlogo()" alt="Temple Logo" /></a>
+      </div>
+      <div class="temple-info">
+        <div class="temple-caption">TEMPLE MANAGEMENT SYSTEM</div>
+        <div class="temple-name">{{ templeName }}</div>
+        <div class="temple-subtitle">Counter Management Dashboard</div>
+      </div>
+    </div>
+     <button type="button" class="back-btn" (click)="gohome()" aria-label="Go Back">
+        <mat-icon>home</mat-icon>
+      </button>
+
+    <div class="header-right">
+      <div class="date-card">
+        <div class="date-box">
+          <mat-icon>event</mat-icon>
+          <div class="date-text">
+            <div class="date-value">{{ today }}</div>
+            <div class="date-label">{{ day }}</div>
+          </div>
+        </div>
+        <div class="date-divider"></div>
+        <div class="date-box">
+          <mat-icon>calendar_month</mat-icon>
+          <div class="date-text">
+            <div class="date-value">{{ mdate }}</div>
+            <div class="date-label">{{ nal }}</div>
+          </div>
+        </div>
+      </div>
+
+      
+<!-- MODERN USER PROFILE -->
+<div class="user-section">
+
+  <button
+    type="button"
+    [matMenuTriggerFor]="userMenu"
+    #menuTrigger="matMenuTrigger"
+    class="user-btn"
+    [class.menu-open]="menuTrigger.menuOpen"
+    aria-label="User Menu"
+    [attr.aria-expanded]="menuTrigger.menuOpen"
+  >
+
+    <span class="user-avatar">
+      <mat-icon>person</mat-icon>
+      <span class="online-indicator"></span>
+    </span>
+
+    <span class="user-details">
+      <span class="user-title">Signed in</span>
+      <span class="user-name">{{ userName }}</span>
+    </span>
+
+    <span class="user-arrow-wrap">
+      <mat-icon class="user-arrow">keyboard_arrow_down</mat-icon>
+    </span>
+
+  </button>
+
+  <!-- PROFILE DROPDOWN -->
+  <mat-menu
+    #userMenu="matMenu"
+    class="modern-user-menu"
+    xPosition="before"
+    yPosition="below"
+    [overlapTrigger]="false"
+  >
+
+    <div class="profile-menu-header" (click)="$event.stopPropagation()">
+      <div class="profile-menu-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+
+      <div class="profile-menu-info">
+        <div class="profile-menu-label">SIGNED IN AS</div>
+        <div class="profile-menu-name">{{ userName }}</div>
+        <div class="profile-menu-status">
+          <span class="status-dot"></span>
+          Active
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-menu-caption">ACCOUNT SETTINGS</div>
+
+    <button
+      mat-menu-item
+      class="modern-menu-item"
+      (click)="openChangepasswordDialog()"
+    >
+      <!-- <span class="menu-item-icon password-icon">
+        <mat-icon>lock_reset</mat-icon>
+      </span> -->
+
+      <span class="menu-item-text">
+        <span class="menu-item-title">Change Password</span>
+        <span class="menu-item-subtitle">Update account security</span>
+      </span>
+
+      <mat-icon class="menu-item-chevron">chevron_right</mat-icon>
+    </button>
+
+    <div class="modern-menu-divider"></div>
+
+    <button
+      mat-menu-item
+      class="modern-menu-item logout-menu-item"
+      (click)="logout()"
+    >
+      <!-- <span class="menu-item-icon logout-icon">
+        <mat-icon>logout</mat-icon>
+      </span> -->
+
+      <span class="menu-item-text">
+        <span class="menu-item-title">Logout</span>
+        <span class="menu-item-subtitle">Sign out of your account</span>
+      </span>
+
+      <mat-icon class="menu-item-chevron">chevron_right</mat-icon>
+    </button>
+
+    <div class="profile-menu-footer">
+      TEMPLE MANAGEMENT SYSTEM
+    </div>
+
+  </mat-menu>
+
+</div>
+
+    </div>
+  </div>
+</header>

@@ -1,0 +1,52 @@
+export interface ReportData {
+    Vazhipad: string;
+    Name: string;
+    Star: string;
+    Qty: number ;
+    Rate: number;
+    Amount:number;
+    BillDate: string;
+    VazhiDate: string;
+    BillNo: string;
+    Prathista: string;
+    InstBank?:string;
+    InstDate?:string;
+    Type:string;
+    InstNo?:string;
+    TotalAmt:number;
+    TrnsMode:string;
+    Staff:string;
+    Mobile: string;
+    Name1:string;
+    Name2?: string;
+    Name3?: string;
+    Star2?: string;
+    Star3?: string;
+    TrnId:string;
+    CounterId:string
+    CancelDate?:string;
+    Cuser?:string;
+    Remarks?:string;
+    OrderId:string;
+    Address3:string;
+    MID:number;
+   Due:number;
+   Paid:number;
+Address4:string;
+    ct?:string;
+    VTime:string;
+    MobileNo?:string;
+    NM_Name?:string;
+    NM_RName?:string;
+    Receipt_Amt:number;
+    Reason?:string;
+    vazhipad?:string;
+    Canceldt?:string;
+    Address1:string;
+    Address2:string;
+    UName:string;
+    TrnStatus:string;
+    TotalAmount:number;
+    PMId:number;
+    // Receipt_Amt?:number
+  }

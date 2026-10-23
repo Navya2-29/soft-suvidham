@@ -1,0 +1,304 @@
+
+<app-header></app-header>
+
+<main class="counter-page">
+
+  <div class="counter-container">
+
+    <!-- TOP INTRO -->
+    <!-- <div class="page-heading">
+
+      <div class="heading-left">
+        <span class="heading-line"></span>
+
+        <div>
+          <div class="heading-eyebrow">
+            TEMPLE ADMINISTRATION
+          </div>
+
+          <h1>Counter Management</h1>
+
+          <p>Select a module to continue</p>
+        </div>
+      </div>
+
+      <div class="version-badge">
+        <span class="version-dot"></span>
+        Version 1.0
+      </div>
+
+    </div> -->
+
+    <!-- MAIN CARD -->
+    <section class="management-panel">
+
+      <!-- TEMPLE INFORMATION -->
+      <div class="temple-section">
+
+        <div class="temple-decoration decor-one"></div>
+        <div class="temple-decoration decor-two"></div>
+
+        <div class="temple-content">
+
+          <div class="temple-logo-box">
+            <img
+              [src]="getlogo()"
+              alt="Temple Logo"
+              class="temple-logo"
+            />
+          </div>
+
+          <div class="temple-label">
+            TEMPLE MANAGEMENT SYSTEM
+          </div>
+
+          <h2 class="temple-name">
+            <!-- {{ templeName }} -->
+              Counter Management
+          </h2>
+
+          <div class="temple-divider"></div>
+
+          <p class="temple-description">
+            Integrated Counter Operations
+          </p>
+
+          <div class="temple-feature">
+            <span class="feature-dot"></span>
+            Administration Portal
+          </div>
+
+        </div>
+
+        <div class="temple-bottom">
+          <span class="bottom-line"></span>
+          SECURE MANAGEMENT PORTAL
+          <span class="bottom-line"></span>
+        </div>
+
+      </div>
+
+      <!-- MODULE SELECTION -->
+      <div class="modules-section">
+
+        <!-- SECTION HEADER -->
+        <div class="modules-heading">
+
+          <div>
+            <span class="module-eyebrow">WORKSPACE</span>
+            <h2>Choose Your Module</h2>
+            <p>Access your counter management tools</p>
+          </div>
+
+          <div class="module-number">
+            03 MODULES
+          </div>
+
+        </div>
+
+        <!-- MODULE CARDS -->
+        <nav class="module-list" aria-label="Counter modules">
+
+          <!-- BILLING -->
+          <a
+            routerLink="/dashboard"
+            class="module-item billing-module"
+          >
+
+            <div class="module-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect
+                  x="5"
+                  y="3"
+                  width="14"
+                  height="18"
+                  rx="2"
+                />
+                <path d="M8 7h8M8 11h8M8 15h4"/>
+                <path d="M15 16l1.5 1.5L19 15"/>
+              </svg>
+            </div>
+
+            <div class="module-details">
+              <h3>{{ "BILLING" | translate }}</h3>
+              <p>Counter billing and receipts</p>
+            </div>
+
+            <span class="module-action" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </span>
+
+          </a>
+
+          <!-- REPORTS -->
+          <a
+            routerLink="/getReport"
+            class="module-item reports-module"
+          >
+
+            <div class="module-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 20V10"/>
+                <path d="M10 20V4"/>
+                <path d="M16 20v-8"/>
+                <path d="M22 20V7"/>
+                <path d="M2 20h20"/>
+              </svg>
+            </div>
+
+            <div class="module-details">
+              <h3>{{ "REPORTS" | translate }}</h3>
+              <p>View statements and reports</p>
+            </div>
+
+            <span class="module-action" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </span>
+
+          </a>
+
+          <!-- MISCELLANEOUS BILLING -->
+          <a
+            routerLink="/mattinagal"
+            class="module-item miscellaneous-module"
+          >
+
+            <div class="module-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="16"
+                  rx="2"
+                />
+                <path d="M3 9h18"/>
+                <path d="M8 14h3"/>
+                <path d="M8 17h7"/>
+                <path d="M16 13v4"/>
+                <path d="M14 15h4"/>
+              </svg>
+            </div>
+
+            <div class="module-details">
+              <h3>{{ "MISCELLANEOUS BILLING" | translate }}</h3>
+              <p>Other billing transactions</p>
+            </div>
+
+            <span class="module-action" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </span>
+
+          </a>
+
+        </nav>
+
+        <!-- BOTTOM ACTION AREA -->
+        <div class="modules-bottom">
+
+          <button
+            type="button"
+            class="back-button"
+            (click)="goBack()"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m12 19-7-7 7-7"/>
+              <path d="M19 12H5"/>
+            </svg>
+
+            Back to Dashboard
+          </button>
+
+          <img
+            src="assets/images/logo.jpg"
+            alt="Software Company Logo"
+            class="company-logo"
+          />
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="counter-footer">
+
+      <div class="footer-copyright">
+        © Copyright 2025 |
+        <strong>Cubix Software Solutions</strong>
+      </div>
+
+      <div class="footer-update">
+        <span class="update-dot"></span>
+        Last Updated:
+        {{ todayDate | date:'dd MMM yyyy' }}
+      </div>
+
+    </footer>
+
+  </div>
+
+</main>

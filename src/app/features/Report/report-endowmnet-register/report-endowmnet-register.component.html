@@ -1,0 +1,95 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="report-container">
+<div class="icon-container">
+   <button mat-icon-button matTooltip="Back to previous page" (click)="goBack()">
+    <span class="material-icons">arrow_back</span>
+  </button>
+  <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+    <span class="material-icons">print</span>
+  </button>
+</div>
+<div id="print-section">
+  <div class="header-print">
+    <div>
+      <h3
+       class="templename"  
+      >
+        {{ templeName }}
+      </h3>
+      <h4
+        
+      >
+        {{ templeAddress }}
+      </h4>
+
+      <h2
+       class="date"
+      >
+        {{ "Endowment Register" | translate }}
+      </h2>
+      <hr>
+</div>
+      <div class="body-print">
+        <div id="pdf-content" *ngIf="data.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ "Report Name.SINO" | translate }}</th>
+              <th>{{ "feecollection.Member ID" | translate }}</th>
+              <th class="member">
+                {{ "Name" | translate }} &
+                {{ "ADDRESS" | translate }}
+              </th>
+              <th class="member">
+                {{ "Report Name.Relative Details" | translate }} ({{
+                  "Name" | translate
+                }}
+                & {{ "STAR" | translate }})
+              </th>
+              <th>{{"AMOUNT" | translate}}</th>
+              <th>{{"PURPOSE" | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let memeber of data; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                {{ memeber.MID }}
+              </td>
+              <td class="member">
+                <h4 class="member">{{ memeber.Name }}</h4>
+                <p class="member">{{ memeber.Address }}</p>
+                <p class="member">{{ memeber.mobile }}</p>
+                <p class="member">{{ memeber.email }}</p>
+              </td>
+              <td>
+                <div class="sub-member-container">
+                  <div
+                    *ngFor="let subMember of memeber.additionalData"
+                    class="sub-member-row"
+                  >
+                    <span class="sub-value">{{ subMember.Name }}</span
+                    >-
+                    <span class="sub-value">{{
+                      getStarbyId(subMember.Star)
+                    }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{memeber.Amount !=0 ? memeber.Amount:"Not given"}}
+             
+              </td>
+                 <td>{{memeber.VazhId!=0?getVazhipadNAmeById(memeber.VazhId):"--"}}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+  
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+</div>
+</div>

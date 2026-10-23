@@ -1,0 +1,153 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container no-print">
+    <button mat-icon-button matTooltip="Back to previous page" (click)="goBack()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make Print" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+   <button mat-icon-button matTooltip="Export to Excel" (click)="exportToExcel()">
+      <mat-icon>grid_on</mat-icon>
+   </button>
+  </div>
+
+  <div id="print-section">
+
+    <!-- Header -->
+    <div class="header-print">
+
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "PRATHISTAWISE REPORT" | translate }}
+      </h2>
+
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }}
+        to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+
+      <hr />
+
+    </div>
+
+    <!-- Body -->
+    <div class="body-print">
+
+      <div id="pdf-content">
+
+        <!-- Prathista Loop -->
+        <div *ngFor="let p of groupedData">
+
+          <!-- Prathista Name -->
+          <h1 class="tabble-heading">
+            {{ p.prathista }}
+          </h1>
+
+          <!-- Vazhipad Loop -->
+          <div *ngFor="let v of p.vazhipads | keyvalue" class="tabble-heading">
+
+            <h2 class="tabble-heading">
+              {{ v.key }}
+            </h2>
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>{{ "Report Name.SINO" | translate }}</th>
+                  <th>{{ "BILL NO" | translate }}</th>
+                  <th>{{ "BILLDATE" | translate }}</th>
+                  <th>{{ "Report Name.VAZHIPAD DATE" | translate }}</th>
+                  <th>{{ "NAME" | translate }}</th>
+                  <th>{{ "STAR" | translate }}</th>
+                  <th>{{ "QUANTITY" | translate }}</th>
+                  <th class="number">{{ "RATE" | translate }}</th>
+                  <th class="number">{{ "AMOUNT" | translate }}</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <!-- Rows -->
+                <tr *ngFor="let row of $any(v.value).rows; let i = index">
+
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ row.BillNo }}</td>
+                  <td>{{ row.BillDate }}</td>
+                  <td>{{ row.VazhiDate }}</td>
+                  <td>{{ row.Name }}</td>
+                  <td>{{ row.Star }}</td>
+                  <td class="qty">{{ row.Qty }}</td>
+                  <td class="number">
+                    {{ row.Rate | number:'1.2-2' }}
+                  </td>
+                  <td class="number">
+                    {{ row.Amount | number:'1.2-2' }}
+                  </td>
+
+                </tr>
+
+                <!-- Vazhipad Total -->
+                <tr>
+
+                  <td class="total" colspan="8">
+                    {{ "Report Name.TOTAL" | translate }}
+                  </td>
+
+                  <td class="total">
+                    {{ $any(v.value).total | number:'1.2-2' }}
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <!-- Prathista Total -->
+          <p class="grandtotal">
+            {{ p.prathista }} Total :
+            {{ p.total | number:'1.2-2' }}
+          </p>
+
+          <hr>
+
+        </div>
+
+        <!-- Grand Total -->
+        <div *ngIf="data.length > 0">
+
+          <p class="grandtotal">
+            {{ "Report Name.GrandTotal" | translate }} :
+            {{ getTotalAmount() | number:'1.2-2' }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- No Data -->
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+
+      <hr />
+
+    </div>
+
+  </div>
+
+</div>

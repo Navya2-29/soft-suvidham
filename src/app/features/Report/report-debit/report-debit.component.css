@@ -1,0 +1,300 @@
+.body-print table {
+  margin: 10px 0 6px 0;
+  width: 100%;
+}
+
+.tabble-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: rgb(8, 8, 49);
+}
+
+.debit-section-block {
+  margin-bottom: 28px;
+}
+
+/* SECTION HEADER ROW WITH PER-REPORT COLUMN PICKER */
+.section-header-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 16px 0 6px 0 !important;
+  padding: 0 !important;
+  gap: 12px;
+}
+
+.section-title-wrap {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  flex: 1 1 auto !important;
+  flex-wrap: wrap !important;
+}
+
+.section-records {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  white-space: nowrap !important;
+}
+
+.debit-table-column-picker {
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+}
+
+.debit-columns-btn {
+  padding: 4px 10px !important;
+  font-size: 11.5px !important;
+  border-radius: 6px !important;
+  height: 28px !important;
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.debit-columns-btn:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+}
+
+.debit-columns-btn.has-custom-columns {
+  border-color: #029fb0 !important;
+  background: rgba(2, 159, 176, 0.06) !important;
+  color: #04418c !important;
+}
+
+.custom-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 100%);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 2px;
+}
+
+.debit-dropdown-panel {
+  min-width: 190px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.debit-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.debit-dropdown-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 110px;
+}
+
+.reset-common-btn {
+  background: none;
+  border: none;
+  color: #029fb0;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.12s;
+}
+
+.reset-common-btn:hover {
+  color: #04418c;
+}
+
+.debit-dropdown-body {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+/* TOTALS AND ROW COUNTS */
+.row-count-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.overall-subtotal {
+  font-size: 11px;
+  font-weight: normal;
+  margin-left: 6px;
+  color: #475569;
+}
+
+.grandtotal-section {
+  margin-top: 18px;
+}
+
+.grandtotal {
+  text-align: right;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 16px 0 10px 0;
+}
+
+.grandtotal .overall-total {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 10px;
+  color: #04418c;
+}
+
+/* COMMON COLUMN DROPDOWN */
+.column-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.column-dropdown-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.column-dropdown-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.column-dropdown-body {
+  padding: 6px 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.column-item-label {
+  font-size: 12px;
+  color: #334155;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* PAGINATION TOOLBAR */
+.table-pagination-bar {
+  margin-top: 8px;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+}
+
+/* EMPTY STATE MESSAGE CARD */
+.no-data-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  margin: 32px auto;
+  max-width: 520px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+
+.no-data-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.no-data-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+  color: #64748b;
+}
+
+.no-data-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.no-data-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0;
+}
+
+.no-data-print-text {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+  margin: 30px 0;
+  font-style: italic;
+}
+
+/* PRINT MEDIA */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .overall-subtotal,
+  .overall-total,
+  .column-picker-wrapper,
+  .debit-table-column-picker,
+  .no-data-card,
+  .icon-container {
+    display: none !important;
+  }
+
+  .debit-section-block {
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+  }
+}

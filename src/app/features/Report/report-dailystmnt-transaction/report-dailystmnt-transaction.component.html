@@ -1,0 +1,448 @@
+<app-header class="app-header no-print"></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="preview-page-container">
+
+  <!-- TOP PREVIEW HEADER & ACTION BAR -->
+  <div class="preview-header-bar no-print">
+    <div class="preview-title-area">
+      <nav class="report-breadcrumb" aria-label="Breadcrumb">
+        <a class="breadcrumb-link" (click)="goBack()">Reports</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ "Report Name.DAILY STATEMENT REPORT" | translate }}</span>
+      </nav>
+      <span class="report-badge no-print" *ngIf="data && data.length > 0">
+        {{ data.length }} records
+      </span>
+    </div>
+
+    <div class="preview-actions">
+      <!-- Columns Dropdown -->
+      <div class="column-picker-wrapper common-column-picker">
+        <button type="button" class="columns-btn" (click)="toggleColumnDropdown($event)" aria-label="Toggle Columns">
+          <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span class="columns-btn-text">Columns ({{ visibleColumnCount }}/{{ totalColumnCount }})</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="column-menu-dropdown" *ngIf="showColumnDropdown" (click)="$event.stopPropagation()">
+          <label class="column-menu-item" *ngFor="let col of columnList">
+            <input type="checkbox" [checked]="columns[col.key]" (change)="toggleColumn(col.key)" />
+            <span>{{ col.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <button type="button" class="action-btn" matTooltip="Back to previous page" (click)="goBack()" aria-label="Back">
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="action-btn-text">Back</span>
+      </button>
+
+      <!-- Print Button -->
+      <button type="button" class="action-btn" matTooltip="Print Report" (click)="generatePDF()" aria-label="Print">
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span class="action-btn-text">Print</span>
+      </button>
+
+      <!-- Export to Excel Button -->
+      <button type="button" class="action-btn" matTooltip="Export to Excel" (click)="exportToExcel()"
+        aria-label="Export to Excel">
+        <svg class="action-icon" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        </svg>
+        <span class="action-btn-text">Excel</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- DOCUMENT CANVAS -->
+  <div class="document-canvas">
+    <div id="print-section" class="document-sheet">
+
+      <!-- Header Print -->
+      <div class="header-print">
+        <h1 class="templename" *ngIf="templeName">{{ templeName }}</h1>
+        <h4 class="templeaddress" *ngIf="templeAddress">{{ templeAddress }}</h4>
+
+        <div class="report-title-wrap">
+          <h2 class="report-title">{{ "Report Name.DAILY STATEMENT REPORT" | translate }}</h2>
+          <div class="report-title-underline"></div>
+        </div>
+
+        <p class="report-date-range" *ngIf="fromDate || toDate">
+          {{ formatDateToDDMMYYYY(fromDate) }}<span *ngIf="fromDate && toDate"> to </span>{{
+          formatDateToDDMMYYYY(toDate) }}
+        </p>
+      </div>
+
+      <!-- Body Print -->
+      <div class="body-print">
+        <div id="pdf-content">
+          <ng-container *ngIf="data.length > 0">
+            <div *ngFor="let mode of groupedData | keyvalue" class="mode-section">
+              <div class="mode-header-wrap">
+                <!-- <span class="mode-label">{{ "Mode" | translate }}:</span> -->
+                <h3 class="transaction tabble-heading mode-heading">
+                  {{ getTransactionType(mode.key) | translate }}
+                </h3>
+              </div>
+
+              <div *ngFor="let category of mode.value | keyvalue" class="category-section">
+                <div class="category-header-row">
+                  <div class="category-title-wrap">
+                    <!-- <span class="category-label">{{ "VAZHIPAD" | translate }}:</span> -->
+                    <h4 class="category">{{ category.key }}</h4>
+                    <span class="vazhipad-records no-print">({{ getCategoryRowCount(category.value) }} records)</span>
+                  </div>
+
+                  <!-- Per-Table Column Visibility Button & Dropdown -->
+                  <div class="column-picker-wrapper vazhipad-column-picker no-print">
+                    <button type="button" class="columns-btn vazhipad-columns-btn"
+                      [class.has-custom-columns]="hasVazhipadCustomOverrides(getTableKey(mode.key, category.key))"
+                      (click)="toggleVazhipadDropdown(getTableKey(mode.key, category.key), $event)"
+                      aria-label="Toggle columns for this table">
+                      <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                      </svg>
+                      <span class="columns-btn-text">
+                        Columns ({{ getVazhipadVisibleColumnCount(getTableKey(mode.key, category.key)) }}/{{
+                        totalColumnCount }})
+                      </span>
+                      <span *ngIf="hasVazhipadCustomOverrides(getTableKey(mode.key, category.key))" class="custom-tag"
+                        title="Customized for this table">Custom</span>
+                      <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div class="column-menu-dropdown vazhipad-dropdown-panel"
+                      *ngIf="openVazhipadDropdownKey === getTableKey(mode.key, category.key)"
+                      (click)="$event.stopPropagation()">
+                      <div class="vazhipad-dropdown-header">
+                        <span class="vazhipad-dropdown-title">{{ category.key }}</span>
+                        <button *ngIf="hasVazhipadCustomOverrides(getTableKey(mode.key, category.key))" type="button"
+                          class="reset-common-btn"
+                          (click)="resetVazhipadColumns(getTableKey(mode.key, category.key), $event)">
+                          Reset to Common
+                        </button>
+                      </div>
+
+                      <div class="vazhipad-dropdown-body">
+                        <label class="column-menu-item" *ngFor="let col of columnList">
+                          <input type="checkbox"
+                            [checked]="isColumnVisible(getTableKey(mode.key, category.key), col.key)"
+                            (change)="toggleVazhipadColumn(getTableKey(mode.key, category.key), col.key, $event)" />
+                          <span>{{ col.label }}</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                  <table class="report-table">
+                    <thead>
+                      <tr>
+                        <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'vazhipad')" class="col-vazhipad">{{ "VAZHIPAD" |
+                          translate }}</th>
+                        <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'qty')">{{ "QUANTITY" |
+                          translate }}</th>
+                        <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'rate')" class="number">{{
+                          "RATE" | translate }}</th>
+                        <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'amount')" class="number">{{
+                          "AMOUNT" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of (isPrinting ? getCategoryList(category.value) : getPaginatedCategoryList(getTableKey(mode.key, category.key), category.value)); trackBy: trackByItem">
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'vazhipad')" class="col-vazhipad vazhipad-name">{{
+                          item.value.vazhipad }}</td>
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'qty')">{{ item.value.Qty }}
+                        </td>
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'rate')" class="number">{{
+                          item.value.Rate | number : "1.2-2" }}</td>
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'amount')" class="number">{{
+                          item.value.Amount | number : "1.2-2" }}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr class="table-footer-row">
+                        <td [attr.colspan]="getColspanForTable(getTableKey(mode.key, category.key))" class="total">
+                          {{ "Report Name.TOTAL" | translate }}
+                        </td>
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'rate')" class="total"></td>
+                        <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'amount')" class="total number">
+                          {{ getTotalForCategory(mode.key, category.key) | number : "1.2-2" }}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <!-- Per-Vazhipad Pagination Toolbar -->
+                <div class="table-pagination-bar no-print" *ngIf="getCategoryRowCount(category.value) > 0">
+                  <div class="pagination-info">
+                    <span class="rows-label">Rows per page:</span>
+                    <div class="select-container">
+                      <select
+                        class="page-size-select"
+                        [value]="getPageSize(getTableKey(mode.key, category.key))"
+                        (change)="onPageSizeChange(getTableKey(mode.key, category.key), $any($event.target).value)"
+                        aria-label="Rows per page"
+                      >
+                        <option [value]="10">10</option>
+                        <option [value]="25">25</option>
+                        <option [value]="50">50</option>
+                        <option [value]="100">100</option>
+                        <option [value]="200">200</option>
+                        <option [value]="500">500</option>
+                      </select>
+                    </div>
+                    <span class="pagination-divider">|</span>
+                    <span class="showing-label">
+                      Showing {{ getRangeStart(getTableKey(mode.key, category.key), getCategoryRowCount(category.value)) }}–{{ getRangeEnd(getTableKey(mode.key, category.key), getCategoryRowCount(category.value)) }} of {{ getCategoryRowCount(category.value) }} records
+                    </span>
+                  </div>
+
+                  <div class="pagination-buttons">
+                    <button
+                      type="button"
+                      class="page-btn page-nav-btn"
+                      [disabled]="getCurrentPage(getTableKey(mode.key, category.key)) === 1"
+                      (click)="prevPage(getTableKey(mode.key, category.key))"
+                      aria-label="Previous Page"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                    </button>
+
+                    <button
+                      *ngFor="let p of getPages(getTableKey(mode.key, category.key), getCategoryRowCount(category.value))"
+                      type="button"
+                      class="page-btn page-num-btn"
+                      [class.active]="p === getCurrentPage(getTableKey(mode.key, category.key))"
+                      (click)="goToPage(getTableKey(mode.key, category.key), p)"
+                    >
+                      {{ p }}
+                    </button>
+
+                    <button
+                      type="button"
+                      class="page-btn page-nav-btn"
+                      [disabled]="getCurrentPage(getTableKey(mode.key, category.key)) === getTotalPages(getTableKey(mode.key, category.key), getCategoryRowCount(category.value))"
+                      (click)="nextPage(getTableKey(mode.key, category.key), getCategoryRowCount(category.value))"
+                      aria-label="Next Page"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total for each transaction mode -->
+              <div class="transactionTotal">
+                {{ "Report Name.Total for" | translate }} ({{ "Mode" | translate }}: {{ getTransactionType(mode.key) |
+                translate }}):
+                {{ getTotalForTransactionMode(mode.key) | number : "1.2-2" }}
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Credit Collection Section -->
+          <div class="creditCollection" *ngIf="creditTransactionArray && creditTransactionArray.length > 0">
+            <div class="category-header-row credit-header-row">
+              <div class="category-title-wrap">
+                <span class="category-label">{{ "Mode" | translate }}:</span>
+                <h3 class="transaction tabble-heading credit-heading">{{ "Report Name.CREDIT" | translate }}</h3>
+                <span class="vazhipad-records no-print">({{ creditTransactionArray.length }} records)</span>
+              </div>
+
+              <!-- Per-Table Column Visibility Button & Dropdown for Credit -->
+              <div class="column-picker-wrapper vazhipad-column-picker no-print">
+                <button type="button" class="columns-btn vazhipad-columns-btn"
+                  [class.has-custom-columns]="hasVazhipadCustomOverrides('CREDIT_COLLECTION')"
+                  (click)="toggleVazhipadDropdown('CREDIT_COLLECTION', $event)"
+                  aria-label="Toggle columns for Credit table">
+                  <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                  </svg>
+                  <span class="columns-btn-text">
+                    Columns ({{ getVazhipadVisibleColumnCount('CREDIT_COLLECTION') }}/{{ totalColumnCount }})
+                  </span>
+                  <span *ngIf="hasVazhipadCustomOverrides('CREDIT_COLLECTION')" class="custom-tag"
+                    title="Customized for this table">Custom</span>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="column-menu-dropdown vazhipad-dropdown-panel"
+                  *ngIf="openVazhipadDropdownKey === 'CREDIT_COLLECTION'" (click)="$event.stopPropagation()">
+                  <div class="vazhipad-dropdown-header">
+                    <span class="vazhipad-dropdown-title">{{ "Report Name.CREDIT" | translate }}</span>
+                    <button *ngIf="hasVazhipadCustomOverrides('CREDIT_COLLECTION')" type="button"
+                      class="reset-common-btn" (click)="resetVazhipadColumns('CREDIT_COLLECTION', $event)">
+                      Reset to Common
+                    </button>
+                  </div>
+
+                  <div class="vazhipad-dropdown-body">
+                    <label class="column-menu-item" *ngFor="let col of columnList">
+                      <input type="checkbox" [checked]="isColumnVisible('CREDIT_COLLECTION', col.key)"
+                        (change)="toggleVazhipadColumn('CREDIT_COLLECTION', col.key, $event)" />
+                      <span>{{ col.label }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive-wrapper">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th *ngIf="isColumnVisible('CREDIT_COLLECTION', 'vazhipad')" class="col-vazhipad">{{ "VAZHIPAD" | translate }}</th>
+                    <th *ngIf="isColumnVisible('CREDIT_COLLECTION', 'qty')">{{ "QUANTITY" | translate }}</th>
+                    <th *ngIf="isColumnVisible('CREDIT_COLLECTION', 'rate')" class="number">{{ "RATE" | translate }}
+                    </th>
+                    <th *ngIf="isColumnVisible('CREDIT_COLLECTION', 'amount')" class="number">{{ "AMOUNT" | translate }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of (isPrinting ? creditTransactionArray : getPaginatedEntries('CREDIT_COLLECTION', creditTransactionArray)); trackBy: trackByItem">
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'vazhipad')" class="col-vazhipad vazhipad-name">{{ item.Vazhipad }}</td>
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'qty')">{{ item.Qty }}</td>
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'rate')" class="number">{{ item.Rate | number :
+                      "1.2-2" }}</td>
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'amount')" class="number">{{ item.Amount | number :
+                      "1.2-2" }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="table-footer-row">
+                    <td [attr.colspan]="getColspanForTable('CREDIT_COLLECTION')" class="total">
+                      {{ "Report Name.CREDITTOTAL" | translate }}
+                    </td>
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'rate')" class="total"></td>
+                    <td *ngIf="isColumnVisible('CREDIT_COLLECTION', 'amount')" class="total number">
+                      {{ getCrediTransactionTotal() | number : "1.2-2" }}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- Credit Collection Pagination Toolbar -->
+            <div class="table-pagination-bar no-print" *ngIf="creditTransactionArray.length > 0">
+              <div class="pagination-info">
+                <span class="rows-label">Rows per page:</span>
+                <div class="select-container">
+                  <select
+                    class="page-size-select"
+                    [value]="getPageSize('CREDIT_COLLECTION')"
+                    (change)="onPageSizeChange('CREDIT_COLLECTION', $any($event.target).value)"
+                    aria-label="Rows per page"
+                  >
+                    <option [value]="10">10</option>
+                    <option [value]="25">25</option>
+                    <option [value]="50">50</option>
+                    <option [value]="100">100</option>
+                    <option [value]="200">200</option>
+                    <option [value]="500">500</option>
+                  </select>
+                </div>
+                <span class="pagination-divider">|</span>
+                <span class="showing-label">
+                  Showing {{ getRangeStart('CREDIT_COLLECTION', creditTransactionArray.length) }}–{{ getRangeEnd('CREDIT_COLLECTION', creditTransactionArray.length) }} of {{ creditTransactionArray.length }} records
+                </span>
+              </div>
+
+              <div class="pagination-buttons">
+                <button
+                  type="button"
+                  class="page-btn page-nav-btn"
+                  [disabled]="getCurrentPage('CREDIT_COLLECTION') === 1"
+                  (click)="prevPage('CREDIT_COLLECTION')"
+                  aria-label="Previous Page"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+
+                <button
+                  *ngFor="let p of getPages('CREDIT_COLLECTION', creditTransactionArray.length)"
+                  type="button"
+                  class="page-btn page-num-btn"
+                  [class.active]="p === getCurrentPage('CREDIT_COLLECTION')"
+                  (click)="goToPage('CREDIT_COLLECTION', p)"
+                >
+                  {{ p }}
+                </button>
+
+                <button
+                  type="button"
+                  class="page-btn page-nav-btn"
+                  [disabled]="getCurrentPage('CREDIT_COLLECTION') === getTotalPages('CREDIT_COLLECTION', creditTransactionArray.length)"
+                  (click)="nextPage('CREDIT_COLLECTION', creditTransactionArray.length)"
+                  aria-label="Next Page"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grand Total -->
+        <div class="grandtotal" *ngIf="data.length > 0">
+          {{ "Report Name.GrandTotal" | translate }}: {{ getGrandTotal() | number : "1.2-2" }}
+        </div>
+
+        <!-- No data notice -->
+        <div *ngIf="data.length === 0 && (!creditTransactionArray || creditTransactionArray.length === 0)"
+          class="no-data-notice">
+          <p>No report records found for the selected criteria.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,41 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    font-family: Arial, 'Manjari', sans-serif
+}
+
+:host,
+:host * {
+    box-sizing: border-box
+}
+
+app-header {
+    display: block;
+    flex: 0 0 auto
+}
+
+.other-billing-page {
+    flex: 1;
+    min-height: 0;
+    background: #f4f7fc;
+    overflow: hidden
+}
+
+.other-billing-surface {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden
+}
+
+@media(max-width:850px) {
+
+    .other-billing-page,
+    .other-billing-surface {
+        overflow: auto
+    }
+}

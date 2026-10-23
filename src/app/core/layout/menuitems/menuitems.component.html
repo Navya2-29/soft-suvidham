@@ -1,0 +1,278 @@
+
+<div class="counter-menu">
+
+  <!-- HEADER -->
+  <div mat-dialog-title class="counter-header">
+    <div class="temple-icon">🛕</div>
+
+    <div class="temple-title">
+      <h2>{{ templeName }} - Counter</h2>
+      <p>Counter Management Dashboard</p>
+    </div>
+  </div>
+
+  <!-- Native tab state - No TypeScript required -->
+  <div class="counter-tabs">
+
+    <input
+      type="radio"
+      name="counter-menu-tab"
+      id="counter-tab-masters"
+      class="tab-radio"
+      checked
+    />
+
+    <input
+      type="radio"
+      name="counter-menu-tab"
+      id="counter-tab-reports"
+      class="tab-radio"
+    />
+
+    <input
+      type="radio"
+      name="counter-menu-tab"
+      id="counter-tab-utilities"
+      class="tab-radio"
+    />
+
+    <mat-dialog-content class="counter-content">
+
+      <div class="dashboard-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="menu-sidebar">
+
+          <div class="sidebar-heading">
+            MAIN MENU
+          </div>
+
+          <label
+            for="counter-tab-masters"
+            class="sidebar-item masters-tab"
+            tabindex="0">
+
+            <span class="sidebar-icon">📁</span>
+            <span class="sidebar-label">Masters</span>
+            <span class="sidebar-arrow">›</span>
+
+          </label>
+
+          <label
+            for="counter-tab-reports"
+            class="sidebar-item reports-tab"
+            tabindex="0">
+
+            <span class="sidebar-icon">📊</span>
+            <span class="sidebar-label">Reports</span>
+            <span class="sidebar-arrow">›</span>
+
+          </label>
+
+          <label
+            for="counter-tab-utilities"
+            class="sidebar-item utilities-tab"
+            tabindex="0">
+
+            <span class="sidebar-icon">⚙️</span>
+            <span class="sidebar-label">Utilities</span>
+            <span class="sidebar-arrow">›</span>
+
+          </label>
+
+          <div class="sidebar-bottom">
+            Counter Management
+          </div>
+
+        </aside>
+
+        <!-- RIGHT SIDE -->
+        <main class="menu-details">
+
+          <!-- MASTERS -->
+          <section class="tab-panel masters-panel">
+
+            <div class="panel-heading">
+              <div class="panel-title">
+
+                <span class="panel-icon">📁</span>
+
+                <div>
+                  <h3>Masters</h3>
+                  <p>Master Data Management</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="menu-items">
+
+              <ng-container
+                *ngFor="
+                  let link of masterLinks;
+                  trackBy: trackByLabel
+                ">
+
+                <a
+                  class="menu-card"
+                  [class.disabled]="role === 'staff'"
+                  (click)="navigate(link.path)">
+
+                  <span class="card-icon master-icon">
+                    📋
+                  </span>
+
+                  <span class="card-label">
+                    {{ link.label }}
+                  </span>
+
+                  <span class="card-arrow">›</span>
+
+                </a>
+
+              </ng-container>
+
+              <a
+                class="menu-card"
+                (click)="navigate('/member-master')">
+
+                <span class="card-icon devotee-icon">
+                  👥
+                </span>
+
+                <span class="card-label">
+                  Devotee Master
+                </span>
+
+                <span class="card-arrow">›</span>
+
+              </a>
+
+            </div>
+
+          </section>
+
+          <!-- REPORTS -->
+          <section class="tab-panel reports-panel">
+
+            <div class="panel-heading">
+              <div class="panel-title">
+
+                <span class="panel-icon">📊</span>
+
+                <div>
+                  <h3>Reports</h3>
+                  <p>Reports & Information</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="menu-items">
+
+              <a
+                class="menu-card"
+                (click)="navigate('getReport')">
+
+                <span class="card-icon report-icon">
+                  📈
+                </span>
+
+                <span class="card-label">Reports</span>
+
+                <span class="card-arrow">›</span>
+
+              </a>
+
+              <a
+                class="menu-card"
+                (click)="navigate('panjankam')">
+
+                <span class="card-icon calendar-icon">
+                  📅
+                </span>
+
+                <span class="card-label">
+                  Panchangam
+                </span>
+
+                <span class="card-arrow">›</span>
+
+              </a>
+
+            </div>
+
+          </section>
+
+          <!-- UTILITIES -->
+          <section class="tab-panel utilities-panel">
+
+            <div class="panel-heading">
+              <div class="panel-title">
+
+                <span class="panel-icon">⚙️</span>
+
+                <div>
+                  <h3>Utilities</h3>
+                  <p>Settings & Tools</p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="menu-items">
+
+              <ng-container
+                *ngFor="
+                  let link of utilityLinks;
+                  trackBy: trackByLabel
+                ">
+
+                <a
+                  *ngIf="hasAccess(link)"
+                  class="menu-card"
+                  (click)="navigate(link.path)">
+
+                  <span class="card-icon utility-icon">
+                    🛠️
+                  </span>
+
+                  <span class="card-label">
+                    {{ link.label }}
+                  </span>
+
+                  <span class="card-arrow">›</span>
+
+                </a>
+
+              </ng-container>
+
+            </div>
+
+          </section>
+
+        </main>
+
+      </div>
+
+    </mat-dialog-content>
+
+  </div>
+
+  <!-- FOOTER -->
+  <mat-dialog-actions
+    align="end"
+    class="counter-footer">
+
+    <button
+      mat-button
+      class="close-button"
+      [mat-dialog-close]="true">
+
+      ✕ &nbsp; Close
+
+    </button>
+
+  </mat-dialog-actions>
+
+</div>

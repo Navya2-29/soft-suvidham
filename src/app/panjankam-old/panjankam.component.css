@@ -1,0 +1,133 @@
+:host {
+  display: block;
+
+  background: #f5f7fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* MAIN LAYOUT */
+.panchangam-layout {
+  display: flex;
+  gap: 20px;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  width: 220px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.left-panel h3 {
+  margin-bottom: 10px;
+  color: #04073d;
+}
+
+/* RADIO BUTTON STYLE */
+.radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.radio-item input {
+  margin-right: 8px;
+  accent-color: #17083b;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header h2 {
+  color: #0f0554;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filters select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.filters input {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+/* BUTTONS */
+.btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #12055e;
+  color: #fff;
+  border: none;
+}
+
+.btn.outline {
+  border: 1px solid #190a4fe2;
+  background: transparent;
+  color: #050649;
+}
+
+/* TABLE */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.panchangam-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.panchangam-table th {
+  background: #1c064d;
+  color: white;
+  padding: 10px;
+}
+
+.panchangam-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.panchangam-table tr:hover {
+  background: #f9f9f9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .panchangam-layout {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    width: 100%;
+  }
+}

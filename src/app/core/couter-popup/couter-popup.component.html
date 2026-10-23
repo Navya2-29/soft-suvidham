@@ -1,0 +1,46 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Welcome!</h2>
+  <p class="dialog-message">Please enter your Counter ID to continue.</p>
+  <form [formGroup]="counterForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Counter ID</mat-label>
+      <input
+     
+        matInput
+        placeholder="Enter Counter ID"
+        formControlName="counterId"
+        required
+      />
+      <!-- Show error message based on the form validation -->
+      <mat-error *ngIf="counterId?.hasError('required')">
+        Counter ID is required.
+      </mat-error>
+      <mat-error *ngIf="counterId?.hasError('pattern')">
+       Only numbers greater than 0 are allowed.
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <!-- Show additional error message after pressing the Submit button -->
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <div class="dialog-actions">
+    
+    <button
+    mat-flat-button
+   
+    class="custom-button"
+    style="background-color: red;border: none;"
+    (click)="Back()"
+  >
+    Cancel
+  </button>
+  <button
+      mat-flat-button
+      color="primary"
+      class="custom-button ml-3"
+      [disabled]="!counterForm.valid && !errorMessage"
+      (click)="save()"
+    >
+      Submit
+    </button>
+  </div>
+</div>

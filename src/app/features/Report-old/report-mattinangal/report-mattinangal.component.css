@@ -1,0 +1,32 @@
+.body-print table{
+  margin:20px 0;
+}
+i{
+  text-transform: capitalize;
+}
+.fwnames{
+  max-width: 250px;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+.fwname p{
+  max-width: 400px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-style: italic;
+}
+.numberwidth{
+  max-width: 200px;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+td.fwname p{
+ margin-top: 0;
+  margin-bottom: 0;
+} 
+td.fwname p i{
+  margin-top: 0;
+  margin-bottom: 0;
+}

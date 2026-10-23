@@ -1,0 +1,364 @@
+p.transaction {
+  margin: 10px 0 0 0;
+  font-family: Manjari, sans-serif;
+  font-size: 18px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+p.category {
+  font-family: Manjari, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.transactionTable {
+  margin-bottom: 10px;
+}
+
+.number {
+  text-align: right;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.transactionTotal {
+  font-family: Manjari, sans-serif;
+  font-weight: bold;
+  margin-top: 14px;
+  text-align: right;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #04418c;
+}
+
+.grandtotal {
+  text-align: right;
+  font-family: Manjari, sans-serif;
+  font-weight: bolder;
+  color: red;
+  font-size: 20px;
+  margin: 16px 0;
+}
+
+td, th {
+  word-wrap: break-word; 
+  white-space: normal;   
+  overflow-wrap: break-word; 
+  max-width: 200px;
+}
+
+/* Mode section & header */
+.mode-section {
+  margin-bottom: 34px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.mode-section:last-child {
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+.mode-header-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 16px 0 14px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #029fb0;
+}
+
+.mode-label {
+  font-family: Manjari, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #04418c;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.mode-heading {
+  margin: 0 !important;
+  font-family: Manjari, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  text-decoration: none !important;
+}
+
+/* Category / Vazhipad styling and generous spacing */
+.category-section {
+  margin-bottom: 32px; /* Distinct spacing after first vazhipad before next list */
+}
+
+.category-section:last-child {
+  margin-bottom: 16px;
+}
+
+.category-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 4px 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.category-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vazhipad-records {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.category-label {
+  font-family: Manjari, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #029fb0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.category-title-wrap .category {
+  margin: 0 !important;
+  font-family: Manjari, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+}
+
+th.col-vazhipad {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+td.col-vazhipad,
+td.vazhipad-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Credit Section */
+.creditCollection {
+  margin-top: 28px;
+  margin-bottom: 32px;
+}
+
+.credit-header-row {
+  border-bottom: 2px solid #029fb0;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+.credit-heading {
+  margin: 0 !important;
+  font-family: Manjari, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  text-decoration: none !important;
+}
+
+/* Per-Table / Per-Vazhipad Column Visibility Button & Dropdown */
+.vazhipad-column-picker {
+  margin-left: auto;
+  flex-shrink: 0;
+  position: relative;
+  display: inline-flex;
+}
+
+.vazhipad-columns-btn {
+  padding: 5px 12px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #475569 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.vazhipad-columns-btn:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.vazhipad-columns-btn.has-custom-columns {
+  border-color: #029fb0 !important;
+  background: rgba(2, 159, 176, 0.08) !important;
+  color: #04418c !important;
+  font-weight: 600 !important;
+}
+
+.custom-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #029fb0 0%, #04418c 100%);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 2px;
+}
+
+.vazhipad-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 1000;
+  min-width: 220px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+}
+
+.vazhipad-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.vazhipad-dropdown-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 130px;
+}
+
+.reset-common-btn {
+  background: none;
+  border: none;
+  color: #029fb0;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.12s;
+}
+
+.reset-common-btn:hover {
+  color: #04418c;
+}
+
+.vazhipad-dropdown-body {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 4px;
+}
+
+/* Table styles */
+.table-responsive-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.report-table th, 
+.report-table td {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.report-table th {
+  background-color: #f8fafc;
+  color: #334155;
+  font-weight: 700;
+}
+
+.table-footer-row td {
+  background-color: #f1f5f9;
+  font-weight: bold;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .category-section {
+    margin-bottom: 24px !important;
+    page-break-inside: avoid;
+  }
+
+  .mode-section {
+    margin-bottom: 28px !important;
+    page-break-inside: avoid;
+  }
+
+  .category-title-wrap {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+  }
+
+  .category-label {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
+  }
+
+  .category-title-wrap .category,
+  h4.category,
+  p.category {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
+  }
+
+  th.col-vazhipad {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+  }
+
+  td.col-vazhipad,
+  td.vazhipad-name,
+  .vazhipad-name {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+  }
+}

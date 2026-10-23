@@ -1,0 +1,82 @@
+
+<h2 mat-dialog-title style="background:#223d61;color:white;">Search Result  - +91 {{mobilenumber}}</h2>
+<!-- <h3 class="status">Status :{{TrnStatus==='S'?'Success':'Cancelled'}}</h3><button class="cancel btn btn-primary" (click)="cancellTheBill()" >Cancel Bill</button> -->
+<mat-dialog-content class="high">
+    <div class="container">
+        <div class="row openmenu">
+            <div class="col-md-12">
+                <div class="">
+                  <!-- <mat-form-field>
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                  </mat-form-field> -->
+                  
+                  <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+                      <ng-container matColumnDef="Diety" style="width: 250px;">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"PRATHISTA" | translate}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Prathista}} </td>
+                      </ng-container>
+                      <!-- ID Column -->
+                      <ng-container matColumnDef="Vazhipad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"VAZHIPAD" |translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Vazhipad}} </td>
+                      </ng-container>
+                  
+                      <!-- Progress Column -->
+                      <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"NAME"  | translate}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Name}}</td>
+                      </ng-container>
+                  
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="Star">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"STAR" | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{getStarbyId(row.Star) || "OM"}} </td>
+                      </ng-container>
+                  
+                      <!-- Fruit Column -->
+                      
+                      <ng-container matColumnDef="Date" style="width: 250px;">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"DATE" | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.EvazDate|  date:'dd-MM-yyyy'}} </td>
+                      </ng-container>EvazDate
+                      <ng-container matColumnDef="Qty">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"QUANTITY" | translate}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Qty}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Rate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"RATE" | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Rate}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Amount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"AMOUNT" | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Amount}} </td>
+                      </ng-container>
+                      <!-- <ng-container matColumnDef="Time">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Amount}} </td>
+                      </ng-container> -->
+                     
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                      </tr>
+                    </table>
+                  
+                    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator> -->
+                  </div>   
+                  </div>
+            </div>      
+        </div>
+    </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions  class="menuend">
+  <button mat-button [mat-dialog-close]="true" class="close">Close</button>
+    <!-- <button mat-button class="proceed" >Proceed</button>  -->
+</mat-dialog-actions>

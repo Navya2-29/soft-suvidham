@@ -1,0 +1,22 @@
+*{
+    font-family: Manjari;
+}
+.member {
+    text-align: left !important;
+    max-width: 200px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; /* Ensures proper wrapping */
+}
+h4.member{
+    font-weight: bold !important;
+}
+table{
+    margin: 10px 10px 0 0;
+}
+th.member{
+    max-width: 200px !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;  
+}

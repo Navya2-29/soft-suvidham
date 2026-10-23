@@ -1,0 +1,7 @@
+.menu{
+    background:white;
+    border-radius:5px;
+    padding: 2px 5px !important;
+    border:transparent !important;
+    cursor:pointer;
+}

@@ -1,0 +1,23 @@
+<div class="expiry-container">
+  <!-- Warning Icon -->
+  <mat-icon class="expiry-icon">warning</mat-icon>
+
+  <!-- Title -->
+  <h2 class="expiry-title">License Expired</h2>
+
+  <!-- Content -->
+  <p class="expiry-text">
+    Your software license expired on:<br/>
+    <strong>{{ expiryDate  }}</strong>.
+  </p>
+  <p class="expiry-text">
+    Please contact your administrator or renew your subscription to continue using the system.We are not responsible for any data loss or any kind of errors if occured due to non-updation and non maintenance of the software after expiry date.
+
+  </p>
+  <p>Contact No:9349438666/643/660</p>
+
+  <!-- Actions -->
+  <div class="expiry-actions">
+    <button mat-raised-button color="warn"(click)="onClose()" >OK</button>
+  </div>
+</div>

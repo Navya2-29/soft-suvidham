@@ -1,0 +1,695 @@
+/* Temple counter header: clean, valid CSS. No TypeScript changes required. */
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@400;500;600;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font-family: 'Anek Malayalam', Arial, sans-serif;
+}
+
+:host * {
+  box-sizing: border-box;
+}
+
+button {
+  font: inherit;
+}
+
+.mobile-header {
+  display: none;
+}
+
+.desktop-header {
+  display: block;
+}
+
+.desktop-header,
+.mobile-header {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+/* LARGE SCREENS: EXACT 100PX */
+.header-container {
+  width: 100%;
+  height: 80px;
+  /* min-height: 100px;
+  max-height: 100px; */
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%);
+  border-bottom: 3px groove gold;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .15);
+}
+
+.header-left {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-btn {
+  display: flex;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.back-btn mat-icon {
+  width: 23px;
+  height: 23px;
+  font-size: 23px;
+}
+
+.back-btn:hover,
+.user-btn:hover,
+.mobile-logout:hover {
+  background: rgba(255, 255, 255, .23);
+}
+
+.counter-menu-group {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.counter-badge {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  color: #fff;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.counter-label {
+  color: #ffe1a3;
+  font: 700 9px Arial, sans-serif;
+  letter-spacing: .6px;
+}
+
+.counter-number {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.menu-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.logo-box {
+  width: 70px;
+  height: 70px;
+  flex: 0 0 70px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid #e6bd73; */
+  border-radius: 14px;
+}
+
+.logo-box a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-box img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.temple-info {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.temple-caption {
+  color: #ffe1a3;
+  font: 700 10px Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+.temple-name {
+  color: #fff;
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 700;
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+}
+
+.temple-subtitle {
+  color: #e2eaf4;
+  font: 11px Arial, sans-serif;
+}
+
+.date-card {
+  display: flex;
+  align-items: center;
+  padding: 9px 8px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+}
+
+.date-box {
+  display: flex;
+  align-items: center;
+  min-width: 108px;
+  padding: 2px 9px;
+  gap: 7px;
+}
+
+.date-box mat-icon {
+  color: #966a26;
+  width: 21px;
+  height: 21px;
+  font-size: 21px;
+  flex: 0 0 21px;
+}
+
+.date-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.date-value {
+  color: #1c3449;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.date-label {
+  color: #976429;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.date-divider {
+  height: 30px;
+  width: 1px;
+  background: #e2e7ed;
+}
+
+.user-btn {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 5px 10px 5px 5px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+  cursor: pointer;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: #eab85f;
+  color: #183047;
+  border-radius: 9px;
+}
+
+.user-avatar mat-icon {
+  font-size: 23px;
+  width: 23px;
+  height: 23px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 110px;
+}
+
+.user-title {
+  font: 10px Arial, sans-serif;
+  color: #e0ebf7;
+}
+
+.user-name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 12px Arial, sans-serif;
+}
+
+.user-arrow {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.user-menu-divider {
+  height: 1px;
+  margin: 5px 0;
+  background: #e6eaf0;
+}
+
+/* MEDIUM DESKTOP: FIT ALL CONTENT WITHOUT SCROLLING */
+@media (max-width: 1400px) {
+  .header-container {
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 9px;
+  }
+
+  .logo-box {
+    width: 60px;
+    height: 60px;
+    flex-basis: 60px;
+  }
+
+  .date-box {
+    min-width: 94px;
+    gap: 5px;
+    padding: 2px 5px;
+  }
+
+  .temple-caption {
+    font-size: 9px;
+  }
+
+  .temple-name {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .header-container {
+    height: 88px;
+    padding: 8px 12px;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 8px;
+  }
+
+  .logo-box {
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
+  }
+
+  .temple-caption,
+  .temple-subtitle {
+    display: none;
+  }
+
+  .temple-name {
+    font-size: 16px;
+  }
+
+  .date-card {
+    padding: 5px;
+  }
+
+  .date-box {
+    min-width: 0;
+    padding: 2px 4px;
+  }
+
+  .date-box mat-icon {
+    display: none;
+  }
+
+  .date-value {
+    font-size: 11px;
+  }
+
+  .date-label {
+    font-size: 10px;
+  }
+
+  .user-details,
+  .user-arrow {
+    display: none;
+  }
+
+  .user-btn {
+    padding: 5px;
+  }
+}
+
+/* TABLET & MOBILE */
+@media (max-width: 900px) {
+  .desktop-header {
+    display: none;
+  }
+
+  .mobile-header {
+    display: block;
+    background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%);
+    border-bottom: 3px solid #dba74b;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .16);
+  }
+
+  .mobile-header-inner {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-brand {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .mobile-temple-name {
+    width: 100%;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-subtitle {
+    color: #ffe1a3;
+    font: 500 11px Arial, sans-serif;
+    text-align: center;
+    letter-spacing: .3px;
+  }
+
+  .mobile-logout {
+    display: flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .mobile-logout mat-icon {
+    width: 23px;
+    height: 23px;
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mobile-header-inner {
+    min-height: 68px;
+    padding: 7px 11px;
+    gap: 7px;
+  }
+
+  .mobile-menu {
+    flex-basis: 40px;
+  }
+
+  .mobile-temple-name {
+    font-size: 15px;
+  }
+
+  .mobile-subtitle {
+    font-size: 10px;
+  }
+
+  .mobile-logout {
+    flex-basis: 38px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-header-inner {
+    padding: 7px 6px;
+    gap: 4px;
+  }
+
+  .mobile-menu {
+    flex-basis: 36px;
+  }
+
+  .mobile-temple-name {
+    font-size: 13px;
+  }
+
+  .mobile-subtitle {
+    font-size: 9px;
+  }
+
+  .mobile-logout {
+    flex-basis: 35px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.back-btn:focus-visible,
+.user-btn:focus-visible,
+.mobile-logout:focus-visible {
+  outline: 2px solid #f2bd67;
+  outline-offset: 3px;
+}
+
+
+/* ==========================================
+   MODERN USER PROFILE — HEADER
+========================================== */
+
+.user-section {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  font-family: "Anek Malayalam", Arial, sans-serif;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 255px;
+  max-width: 100%;
+  height: 66px;
+  padding: 8px 12px 8px 9px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.08)
+  );
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: background .25s ease,
+              box-shadow .25s ease,
+              transform .25s ease;
+}
+
+.user-btn:hover,
+.user-btn.menu-open {
+  background: rgba(255,255,255,.21);
+  box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+
+.user-btn:focus-visible {
+  outline: 2px solid #ffd36c;
+  outline-offset: 3px;
+}
+
+/* GOLD AVATAR */
+
+.user-avatar {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: #183b65;
+  background: linear-gradient(135deg,#ffdc82,#eeb344);
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+
+.user-avatar mat-icon {
+  font-size: 27px;
+  width: 27px;
+  height: 27px;
+}
+
+.online-indicator {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #345bc8;
+  border-radius: 50%;
+  background: #26c98b;
+}
+
+/* USER TEXT */
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  gap: 3px;
+}
+
+.user-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  color: #dce8ff;
+}
+
+.user-name {
+  display: block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #fff;
+}
+
+.user-arrow-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background: rgba(255,255,255,.1);
+}
+
+.user-arrow {
+  font-size: 21px;
+  transition: transform .25s ease;
+}
+
+.menu-open .user-arrow {
+  transform: rotate(180deg);
+}
+
+/* ==========================================
+   RESPONSIVE HEADER
+========================================== */
+
+@media (max-width: 1100px) {
+  .user-btn {
+    width: 210px;
+  }
+
+  .user-name {
+    max-width: 105px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-btn {
+    width: auto;
+    height: 48px;
+    padding: 4px 7px;
+    gap: 5px;
+    border-radius: 12px;
+  }
+
+  .user-avatar {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 10px;
+  }
+
+  .user-details,
+  .user-arrow-wrap {
+    display: none;
+  }
+}
+

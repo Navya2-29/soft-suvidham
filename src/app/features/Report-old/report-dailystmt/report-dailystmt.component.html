@@ -1,0 +1,150 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <input
+      type="text"
+      class="styled-search"
+      placeholder="Search report..."
+      (input)="onSearch($event)"
+    />
+
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make Print" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.DAILY STATEMENT (DETAILED) REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+    <div class="body-print">
+      <div id="pdf-content" *ngIf="filteredData.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ "Report Name.Bill Date" | translate }}</th>
+              <th>
+                {{ "BILL NO" | translate }}
+              </th>
+
+              <th>{{ "Report Name.VAZHIPAD DATE" | translate }}</th>
+              <th>
+                {{ "VAZHIPAD" | translate }}
+              </th>
+              <th>
+                {{ "NAME" | translate }}
+              </th>
+              <th>
+                {{ "STAR" | translate }}
+              </th>
+              <th>
+                {{ "QUANTITY" | translate }}
+              </th>
+              <th class="number">
+                {{ "RATE" | translate }}
+              </th>
+              <th class="number">
+                {{ "AMOUNT" | translate }}
+              </th>
+              <th>{{ "Transaction Mode" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of filteredData"
+              [ngStyle]="
+                item.TrnsMode == 'CR' || item.TrnStatus == 'C'
+                  ? { color: 'red' }
+                  : {}
+              "
+            >
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ item.BillDate }}
+              </td>
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ item.BillNo }}
+              </td>
+
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ item.VazhiDate }}
+              </td>
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ item.Vazhipad }}
+              </td>
+
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ item.Name }}
+              </td>
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ getStarbyId(item.Star) }}
+              </td>
+              <td
+                class="qty"
+                [ngStyle]="isRedText(item) ? { color: 'red' } : {}"
+              >
+                {{ item.Qty }}
+              </td>
+              <td
+                class="number"
+                [ngStyle]="isRedText(item) ? { color: 'red' } : {}"
+              >
+                {{ item.Rate | number : "1.2-2" }}
+              </td>
+              <td
+                class="number"
+                [ngStyle]="isRedText(item) ? { color: 'red' } : {}"
+              >
+                {{ item.Amount | number : "1.2-2" }}
+              </td>
+              <td [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                {{ getTransactionType(item.TrnsMode) }}
+                <p>{{ gettransactionstatus(item.TrnStatus) }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="8" class="total">
+                {{ "Report Name.GrandTotal" | translate }}
+              </td>
+              <td class="total">
+                {{ getGrandTotal() | number : "1.2-2" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

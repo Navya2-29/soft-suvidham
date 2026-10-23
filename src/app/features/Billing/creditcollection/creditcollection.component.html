@@ -1,0 +1,225 @@
+<!-- Credit Collection: matched to Nadavaravu master styling. Shared header remains in parent. -->
+<main class="cc-page">
+  <header class="cc-titlebar">
+    <div class="cc-title-left">
+      <span class="cc-title-symbol"><mat-icon>payments</mat-icon></span>
+      <div class="cc-heading">
+        <h1>{{ 'Credit Collection' | translate }}</h1>
+        <p>Counter Management · Payments and Collection Records</p>
+      </div>
+    </div>
+    <span class="cc-header-note">TEMPLE MANAGEMENT</span>
+  </header>
+
+  <section class="cc-workspace">
+    <!-- 4/12 LEFT - COLLECTION FORM -->
+    <section class="cc-panel cc-entry-panel">
+      <div class="cc-panel-title">
+        <span class="cc-panel-heading"><mat-icon>edit_note</mat-icon> Credit Collection Details</span>
+        <span class="cc-panel-subtitle">New Collection</span>
+      </div>
+      <div class="cc-form-scroll">
+        <form [formGroup]="CreditForm" class="cc-form">
+          <p class="cc-section-label">MEMBER INFORMATION</p>
+          <div class="cc-form-grid">
+            <div class="cc-field cc-span-2">
+              <label for="cc-mobile">{{ 'Credits.Mobile Number' | translate }}</label>
+              <input id="cc-mobile" type="text" formControlName="Mobile"
+                [placeholder]="'Credits.Mobile Number' | translate"
+                (blur)="checkMobileRegistration()" />
+            </div>
+            <div class="cc-field">
+              <label for="cc-mid">{{ 'Credits.MemberId' | translate }}</label>
+              <input id="cc-mid" type="text" formControlName="MID" readonly
+                [placeholder]="'Credits.MemberId' | translate" />
+            </div>
+            <div class="cc-field">
+              <label for="cc-name">{{ 'Credits.Name' | translate }}</label>
+              <input id="cc-name" type="text" formControlName="Name" readonly
+                [placeholder]="'Credits.Name' | translate" />
+            </div>
+          </div>
+
+          <p class="cc-section-label cc-divider-label">COLLECTION SUMMARY</p>
+          <div class="cc-kpis">
+            <div class="cc-kpi">
+              <span>{{ 'Credits.Total Amount' | translate }}</span>
+              <strong>{{ totalAmount }}</strong>
+            </div>
+            <div class="cc-kpi">
+              <span>Amount Paid</span>
+              <strong>{{ PaidMount }}</strong>
+            </div>
+            <div class="cc-kpi cc-kpi-balance">
+              <span>{{ totalAmount > PaidMount ? 'Balance amount to Paid' : 'Balance amount at Temple' }}</span>
+              <strong>{{ Balanace }}</strong>
+            </div>
+          </div>
+
+          <p class="cc-section-label cc-divider-label">PAYMENT DETAILS</p>
+          <div class="cc-form-grid">
+            <div class="cc-field">
+              <label for="cc-amount">{{ 'Report Name.Amount' | translate }}</label>
+              <input id="cc-amount" type="text" formControlName="Amount"
+                [placeholder]="'Report Name.Amount' | translate" />
+            </div>
+            <div class="cc-field">
+              <label for="cc-mode">{{ 'Credits.Payment Method' | translate }}</label>
+              <select id="cc-mode" formControlName="TrnsMode">
+                <option value="CS">{{ 'Cash' | translate }}</option>
+                <option value="UP">{{ 'UPI' | translate }}</option>
+                <option value="DE">{{ 'Debit' | translate }}</option>
+                <option value="ON">{{ 'Bank' | translate }}</option>
+              </select>
+            </div>
+            <div class="cc-field cc-span-2" *ngIf="CreditForm.get('TrnsMode')?.value != 'CS'">
+              <label for="cc-remarks">{{ 'Credits.Remakrs' | translate }}</label>
+              <input id="cc-remarks" type="text" formControlName="Remarks"
+                [placeholder]="'Credits.Enter  Number Cheque / DD /Mo /UPI' | translate"
+                [ngClass]="{'is-invalid': CreditForm.get('Remarks')?.invalid && CreditForm.get('Remarks')?.touched}" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 8/12 RIGHT - RECORDS -->
+    <section class="cc-panel cc-record-panel">
+      <div class="cc-panel-title">
+        <span class="cc-panel-heading"><mat-icon>list_alt</mat-icon> Credit Collection List</span>
+        <span class="cc-panel-subtitle">Transaction Records</span>
+      </div>
+      <div class="cc-search" [formGroup]="searchForm">
+        <div class="cc-search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" formControlName="searchBillNo"
+            [placeholder]="'Search by Mobile' | translate"
+            aria-label="Search by Mobile" (input)="getCreditCollection()" />
+        </div>
+        <input type="date" formControlName="searchBillDate" class="cc-hidden-date" aria-label="Search bill date" />
+        <span class="cc-record-count">{{ filteredData?.length || 0 }} records</span>
+      </div>
+      <div class="cc-table-scroll">
+        <table class="cc-table">
+          <thead><tr>
+            <th>{{ 'Report Name.SINO' | translate }}</th>
+            <th>{{ 'BILL NO' | translate }}.</th>
+            <th>{{ 'Report Name.Bill Date' | translate }}</th>
+            <th>{{ 'Credits.Name' | translate }}</th>
+            <th>{{ 'Credits.Mobile Number' | translate }}</th>
+            <th>{{ 'Vazhipad' | translate }}</th>
+            <th>{{ 'Qty' | translate }}</th>
+            <th>{{ 'Rate' | translate }}</th>
+            <th>{{ 'Report Name.TOTAL' | translate }}</th>
+          </tr></thead>
+          <tbody>
+            <tr *ngFor="let data of filteredData; let i = index">
+              <td><span class="cc-index">{{ i + 1 }}</span></td>
+              <td><strong>{{ data.BillNo }}</strong></td>
+              <td>{{ data.BillDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ data.Name }}<small *ngIf="data.Name2">{{ data.Name2 }}</small></td>
+              <td>{{ data.MobileNo }}</td>
+              <td>{{ data.Vazhipad }}</td>
+              <td>{{ data.Qty }}</td>
+              <td class="cc-numeric">{{ data.Rate }}</td>
+              <td class="cc-numeric">{{ data.Amount }}</td>
+            </tr>
+            <tr *ngIf="hasFilteredData" class="cc-summary-row">
+              <td colspan="7"></td><td>Total Due :</td>
+              <td class="cc-numeric">{{ getDuetotal('Due') | number:'1.2-2' }}</td>
+            </tr>
+            <tr *ngIf="hasFilteredData" class="cc-summary-row">
+              <td colspan="7"></td><td>Total Paid :</td>
+              <td class="cc-numeric">{{ getDuetotal('Credit') | number:'1.2-2' }}</td>
+            </tr>
+            <tr *ngIf="hasFilteredData" class="cc-summary-row cc-summary-final">
+              <td colspan="7"></td>
+              <td>{{ getDuetotal('Due') > getDuetotal('Credit') ? 'Due Amount :' : 'Amount in Hand:' }}</td>
+              <td class="cc-numeric">{{ (getDuetotal('Due') > getDuetotal('Credit') ? getDuetotal('Due') - getDuetotal('Credit') : getDuetotal('Credit') - getDuetotal('Due')) | number:'1.2-2' }}</td>
+            </tr>
+            <tr *ngIf="!hasFilteredData"><td colspan="9" class="cc-empty">No records found</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <footer class="cc-action-footer">
+    <span class="cc-footer-hint">Credit Collection · Counter Transactions</span>
+    <div class="cc-footer-buttons">
+      <button type="button" class="cc-cancel-btn" (click)="Reset()"><mat-icon>close</mat-icon> Cancel</button>
+      <button type="button" class="cc-save-btn" (click)="onSubmit()"
+        [disabled]="isSubmitting || role == 'admin' || role == 'audit' || role == 'super'">
+        <mat-icon>save</mat-icon> {{ isSubmitting ? 'Processing...' : 'Save' }}
+      </button>
+    </div>
+  </footer>
+</main>
+
+<!-- ORIGINAL RECEIPT TEMPLATE: preserved as supplied -->
+<div
+  id="receipt"
+  style="
+    width: 6in;
+    height: 4in;
+    display: none;
+    position: relative;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+  "
+>
+  <div
+    style="
+      position: absolute;
+      left:11cm; top: 3.6cm;
+      max-width: 8cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    "
+  >
+    {{ lastBillnumber }}
+  </div>
+  <div style="position: absolute; left:11cm; top: 3.1cm; font-size: 9pt">
+    {{ today | date : "dd-MM-yyyy" }}
+  </div>
+  <div
+    style="
+      position: absolute;
+      left: 2.6cm; top: 3.6cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    "
+  >{{"Report.Credit Collection" | translate}}
+  </div>
+  <div
+    style="
+      position: absolute;
+     left: 1cm; top: 5.2cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    "
+  >
+    {{ CreditForm.get("Name")?.value }}
+   
+  <div style="margin-top: 0;">
+    {{ CreditForm.get("Mobile")?.value }}<br/>
+     {{"ID | translste"}}:{{ CreditForm.get("MID")?.value }}
+ 
+  </div>
+    </div>
+  <div style="position: absolute; left: 12cm;top: 5.2cm">
+    {{ CreditForm.get("Amount")?.value }}
+  </div>
+  <div style="position: absolute; left: 7.5cm; top: 9.3cm;">
+    {{ CreditForm.get("Amount")?.value }}
+  </div>
+  <div style="position: absolute; left: 1cm; top: 8.2cm; font-size: 8pt">
+    User:{{ name }},({{
+      getTransactionType(CreditForm.get("TrnsMode")?.value)
+    }})(CNTR:{{ CounterId }})
+  </div>
+</div>
+

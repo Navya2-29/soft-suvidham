@@ -1,0 +1,126 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<main class="us-page">
+  <section class="us-shell">
+    <header class="us-page-header">
+      <div class="us-header-left">
+        <!-- <button type="button" class="us-back" (click)="gotoBack()" title="Back" aria-label="Back">
+          <mat-icon>arrow_back</mat-icon>
+        </button> -->
+        <div class="us-heading-icon"><mat-icon>manage_accounts</mat-icon></div>
+        <div class="us-heading-copy">
+          <h1>User Management</h1>
+          <p>{{ templeName }} · User Accounts and Access</p>
+        </div>
+      </div>
+      <span class="us-header-tag">TEMPLE MANAGEMENT</span>
+    </header>
+
+    <div class="us-panels">
+      <!-- LEFT: Existing reactive form and event handlers retained -->
+      <section class="us-panel us-form-panel">
+        <div class="us-panel-heading">
+          <div class="us-panel-title"><mat-icon>person_add</mat-icon><h2>User SignUp</h2></div>
+          <span class="us-panel-note">{{ updateFlag ? 'Edit User' : 'New User' }}</span>
+        </div>
+        <form [formGroup]="userForm" class="us-form" (ngSubmit)="updateFlag ? onUpdate() : onSubmit()">
+          <p class="us-section-caption">USER INFORMATION</p>
+          <div class="us-fields">
+            <div class="us-field us-full">
+              <label for="us-username">User name <span>*</span></label>
+              <input id="us-username" type="text" formControlName="username" required class="form-control" placeholder="Enter username" />
+              <div class="us-validation" *ngIf="pmasterFormFormControl['username'].invalid && (pmasterFormFormControl['username'].dirty || pmasterFormFormControl['username'].touched)">
+                <div *ngIf="pmasterFormFormControl['username'].hasError('required')">Name is required.</div>
+                <div *ngIf="pmasterFormFormControl['username'].hasError('duplicateName')">Name already exists.</div>
+              </div>
+            </div>
+            <div class="us-field us-full">
+              <label for="us-password">Password <span>*</span></label>
+              <input id="us-password" type="password" matInput formControlName="password" maxlength="50" class="form-control" placeholder="Enter password" appUpperCase />
+            </div>
+            <div class="us-field us-full">
+              <label for="us-email">Email <span>*</span></label>
+              <input id="us-email" type="email" matInput formControlName="email" class="form-control" placeholder="Enter email" />
+            </div>
+            <div class="us-field us-full">
+              <label for="us-mobile">Mobile <span>*</span></label>
+              <input id="us-mobile" type="text" matInput formControlName="mobile" class="form-control" placeholder="Enter mobile" />
+            </div>
+            <div class="us-field us-full">
+              <label for="us-address">Address <span>*</span></label>
+              <input id="us-address" type="text" matInput formControlName="Address1" class="form-control" placeholder="Enter address" />
+            </div>
+            <div class="us-field us-full">
+              <label for="us-role">Role <span>*</span></label>
+              <select id="us-role" formControlName="Role" class="form-control" matInput>
+                <option value="">Select an option</option>
+                <option value="staff">Staff</option>
+              </select>
+            </div>
+            <label class="us-active-row us-full">
+              <input type="checkbox" formControlName="Active" />
+              <span>Active user</span>
+            </label>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT: search and user list -->
+      <section class="us-panel us-list-panel">
+        <div class="us-panel-heading">
+          <div class="us-panel-title"><mat-icon>list_alt</mat-icon><h2>User List</h2></div>
+          <span class="us-panel-note">User Records</span>
+        </div>
+        <div class="us-search-bar">
+          <div class="us-search-box">
+            <mat-icon>search</mat-icon>
+            <input type="text" class="us-search-input" [(ngModel)]="searchQuery" (input)="onSearch()" (keyup.enter)="onSearch()" placeholder="Search by Name or Mobile" aria-label="Search by Name or Mobile" />
+            <button type="button" class="us-search-button" (click)="onSearch()" aria-label="Search"><mat-icon>search</mat-icon></button>
+          </div>
+          <span class="us-record-count">{{ filteredUmaster?.length || 0 }} records</span>
+        </div>
+        <div class="us-table-scroll">
+          <table class="us-table">
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Mobile</th><th>Role</th>
+                <th *ngIf="currentRole=='super'">Password</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredUmaster">
+                <td class="us-name-cell">{{ item.UName }}</td>
+                <td class="us-email-cell">{{ item.UEmailId }}</td>
+                <td>{{ item.Umobile }}</td>
+                <td><span class="us-role-chip">{{ item.Role }}</span></td>
+                <td *ngIf="currentRole=='super'" class="us-password-cell">{{ item.UPwd }}</td>
+                <td>
+                  <div class="us-row-actions">
+                    <button type="button" class="us-action us-edit" (click)="onEdit(item)" title="Edit user" aria-label="Edit user"><mat-icon>edit</mat-icon></button>
+                    <button type="button" class="us-action us-delete" (click)="onDelete(item.UId)" title="Delete user" aria-label="Delete user"><mat-icon>delete_outline</mat-icon></button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!filteredUmaster || filteredUmaster.length === 0">
+                <td class="us-empty" [attr.colspan]="currentRole=='super' ? 6 : 5">
+                  <mat-icon>inbox</mat-icon><span>No records found</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <footer class="us-footer">
+      <span class="us-footer-text">User Management · User Accounts</span>
+      <div class="us-footer-actions">
+        <button type="button" class="us-btn us-cancel" (click)="reset()"><mat-icon>close</mat-icon> Cancel</button>
+        <!-- Buttons live outside form, so use click handlers exactly as before -->
+        <button *ngIf="!updateFlag" type="button" class="us-btn us-save" (click)="onSubmit()"><mat-icon>save</mat-icon> Save</button>
+        <button *ngIf="updateFlag" type="button" class="us-btn us-save" (click)="onUpdate()"><mat-icon>save</mat-icon> Update</button>
+      </div>
+    </footer>
+  </section>
+</main>

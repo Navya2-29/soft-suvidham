@@ -1,0 +1,28 @@
+.expiry-container {
+  text-align: center;
+  padding: 20px;
+  max-width: 350px;
+}
+
+.expiry-icon {
+  font-size: 48px;
+  color: #d32f2f; /* red warning */
+  margin-bottom: 10px;
+}
+
+.expiry-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #d32f2f;
+  margin: 10px 0;
+}
+
+.expiry-text {
+  font-size: 14px;
+  color: #555;
+  margin: 6px 0;
+}
+
+.expiry-actions {
+  margin-top: 20px;
+}

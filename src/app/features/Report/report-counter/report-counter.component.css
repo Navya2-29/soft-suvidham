@@ -1,0 +1,258 @@
+/* Document Canvas & Print Sheet */
+.preview-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ebf0f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.document-canvas {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 48px;
+  box-sizing: border-box;
+}
+
+.document-sheet {
+  background: #ffffff;
+  width: 100%;
+  max-width: 950px;
+  padding: 36px 44px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header Section */
+.header-print {
+  text-align: center;
+  font-family: inherit;
+}
+
+.templename {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: #04418c;
+  letter-spacing: -0.01em;
+}
+
+.templeaddress {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0 0 8px 0;
+  color: #475569;
+}
+
+.reportname {
+  font-size: 15.5px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #029fb0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.date {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0 0 10px 0;
+  color: #64748b;
+}
+
+.header-divider {
+  border: 0;
+  border-top: 1.5px solid #029fb0;
+  margin: 8px 0 16px 0;
+}
+
+/* Headings by Group */
+.counter-title {
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 16px 0 6px 0;
+  color: #0f172a;
+}
+
+.user-title {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 8px 0 4px 0;
+  color: #8b0000;
+}
+
+.mode-title {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 8px 0 6px 0;
+  color: #04418c;
+}
+
+/* Table Design - Exact Gradient from Screenshot */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0 12px 0;
+  font-family: inherit;
+}
+
+.report-table th {
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%);
+  color: #ffffff;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.report-table td {
+  padding: 8px 12px;
+  font-size: 12.5px;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+}
+
+.cell-vazhipad {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #1e293b;
+}
+
+.cell-qty {
+  font-weight: 400;
+  color: #475569;
+}
+
+.cell-rate,
+.cell-amount {
+  font-weight: 400;
+  color: #1e293b;
+}
+
+.report-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.mode-total-row td {
+  background-color: #f8fafc !important;
+  font-weight: 600;
+  border-top: 1px solid #e2e8f0;
+  font-size: 12.5px;
+  padding: 9px 12px;
+}
+
+.mode-total-label {
+  text-transform: uppercase;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.mode-total-amount {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Subtotals & Grand Totals */
+.user-total-row {
+  text-align: right;
+  margin: 8px 0 4px 0;
+}
+
+.user-total-text {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #8b0000;
+  margin: 0;
+}
+
+.counter-total-row {
+  text-align: right;
+  margin: 4px 0 16px 0;
+}
+
+.counter-total-text {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #04418c;
+  margin: 0;
+}
+
+.grandtotal-row {
+  text-align: right;
+  margin: 22px 0 16px 0;
+}
+
+.grandtotal-text {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: #dc2626;
+  margin: 0 0 12px 0;
+}
+
+.footer-divider {
+  border: 0;
+  border-top: 1.5px solid #cbd5e1;
+  margin: 12px 0 0 0;
+}
+
+/* Utilities */
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.nodataFound {
+  text-align: center;
+  padding: 24px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Print Rules */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .app-header,
+  .table-pagination-bar {
+    display: none !important;
+  }
+
+  body, html, .preview-page-container, .document-canvas {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .document-sheet, #print-section {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .counter-section,
+  .user-section,
+  .mode-section {
+    page-break-inside: avoid;
+  }
+}

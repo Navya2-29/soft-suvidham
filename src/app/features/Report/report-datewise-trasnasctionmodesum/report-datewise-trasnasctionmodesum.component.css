@@ -1,0 +1,286 @@
+p.counter{
+text-align: left !important;
+/* font-family: 'Times New Roman', Times, serif; */
+font-family: Manjari;
+margin-top: 10px;
+font-size: large;
+text-transform: uppercase;
+}
+p.user{
+  text-align: left !important;
+  /* font-family: 'Times New Roman', Times, serif;  */
+  font-family: Manjari;
+  font-size: larger;
+  color: maroon;
+  text-transform: uppercase;
+}
+p.transaction{
+  text-align: left !important;
+  /* font-family: 'Times New Roman', Times, serif;  */
+  font-family: Manjari;
+  font-size: medium;
+  color: rgb(5, 5, 121);
+  text-transform: uppercase;
+
+}
+.counterTable{
+  margin: 10px 0;
+
+}
+h5#totalamount{
+/* font-family: 'Times New Roman', Times, serif; */
+font-family: Manjari;
+font-weight: bolder;
+font-size: 20px;
+color: maroon;
+margin-bottom: 0px;
+
+}
+h5.totalcounter{
+  font-family: Manjari;
+  /* font-family: 'Times New Roman', Times, serif; */
+font-weight: bolder;
+font-size: 20px;
+color: rgb(18, 18, 117);
+margin-bottom: 0px;
+}
+.grandtotal h1{
+  font-family: Manjari;
+}
+
+/* Document Canvas & Print Sheet */
+.preview-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ebf0f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.preview-title-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid #bae6fd;
+}
+
+.column-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.column-dropdown-body {
+  padding: 6px 0;
+}
+
+.document-canvas {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 48px;
+  box-sizing: border-box;
+}
+
+.document-sheet {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1000px;
+  padding: 36px 44px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header Section */
+.header-print {
+  text-align: center;
+  font-family: inherit;
+}
+
+.templename {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: #04418c;
+  letter-spacing: -0.01em;
+}
+
+.templeaddress {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0 0 8px 0;
+  color: #475569;
+}
+
+.reportname {
+  font-size: 15.5px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #029fb0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.date {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0 0 10px 0;
+  color: #64748b;
+}
+
+.header-divider {
+  border: 0;
+  border-top: 1.5px solid #029fb0;
+  margin: 8px 0 16px 0;
+}
+
+/* Headings by Group */
+.bill-date-title {
+  font-family: inherit !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #04418c !important;
+  margin: 18px 0 8px 0 !important;
+  text-transform: uppercase;
+}
+
+.counter-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 6px 0;
+  gap: 8px;
+}
+
+.counter-header-row p.counter {
+  margin: 0 !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+}
+
+.counter-records {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* Table Design - Exact Gradient */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0 12px 0;
+  font-family: inherit;
+}
+
+.report-table th {
+  background: linear-gradient(90deg, rgba(2, 159, 176, 1) 0%, rgba(4, 65, 140, 1) 50%, rgba(83, 106, 237, 1) 100%);
+  color: #ffffff;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.report-table td {
+  padding: 8px 12px;
+  font-size: 12.5px;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  font-weight: 400;
+}
+
+.report-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.total-row td,
+.grand-total-row td {
+  background-color: #f8fafc !important;
+  font-weight: 600 !important;
+  border-top: 1px solid #e2e8f0;
+  font-size: 12.5px;
+  padding: 9px 12px;
+}
+
+.online-table {
+  max-width: 320px;
+  margin-top: 12px;
+}
+
+.mode-grand-total {
+  max-width: 450px;
+  margin-top: 6px;
+}
+
+.grand-mode-title {
+  margin-top: 24px !important;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  font-size: 14.5px !important;
+  color: #04418c !important;
+}
+
+.number {
+  text-align: right !important;
+}
+
+.nodataFound {
+  text-align: center;
+  padding: 24px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Print Rules */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .app-header,
+  .table-pagination-bar {
+    display: none !important;
+  }
+
+  body, html, .preview-page-container, .document-canvas {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .document-sheet, #print-section {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .date-group-section,
+  .counter-section {
+    page-break-inside: avoid;
+  }
+}

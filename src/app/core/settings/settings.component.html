@@ -1,0 +1,181 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<main class="settings-page">
+  <section class="settings-shell">
+    <!-- PAGE TITLE -->
+    <header class="settings-page-header">
+      <div class="settings-page-title">
+        <span class="settings-title-icon"><mat-icon>settings</mat-icon></span>
+        <div>
+          <h1>Settings Master</h1>
+          <p>Temple Management · Configuration and Access Control</p>
+        </div>
+      </div>
+      <!-- <div class="settings-header-right">
+        <span class="settings-system-label">TEMPLE MANAGEMENT</span>
+        <button type="button" class="settings-back-btn" (click)="gotoDashBoard()">
+          <mat-icon>arrow_back</mat-icon><span>Dashboard</span>
+        </button>
+      </div> -->
+    </header>
+
+    <div class="settings-content">
+      <!-- LEFT: TEMPLE SETTINGS -->
+      <section class="settings-panel temple-panel">
+        <div class="settings-panel-heading">
+          <div class="settings-panel-heading-left">
+            <mat-icon>edit_note</mat-icon>
+            <h2>Temple Settings</h2>
+          </div>
+          <span class="settings-panel-subtitle">General Configuration</span>
+        </div>
+
+        <form [formGroup]="settingsForm" class="settings-form" (ngSubmit)="updateSettings()">
+          <div class="settings-fields-scroll">
+            <div class="settings-section-caption">TEMPLE INFORMATION</div>
+            <div class="settings-form-grid">
+              <div class="settings-field settings-span-full">
+                <label for="settingTempleName">Temple Name <span class="required">*</span></label>
+                <input id="settingTempleName" type="text" class="settings-input" formControlName="templeName" placeholder="Enter Temple Name" />
+              </div>
+
+              <div class="settings-field settings-span-full">
+                <label for="settingTempleAddress">Temple Address <span class="required">*</span></label>
+                <textarea id="settingTempleAddress" class="settings-input settings-textarea" appUpperCase formControlName="templeAddress" placeholder="Enter Temple Address" rows="2"></textarea>
+              </div>
+
+              <div class="settings-field">
+                <label for="settingEmail">Email <span class="required">*</span></label>
+                <input id="settingEmail" type="email" class="settings-input" formControlName="email" placeholder="Enter email address" />
+              </div>
+              <div class="settings-field">
+                <label for="settingPhone">Phone</label>
+                <input id="settingPhone" type="text" class="settings-input" formControlName="phone" placeholder="Enter phone number" />
+              </div>
+            </div>
+
+            <div class="settings-section-caption settings-section-gap">SYSTEM PREFERENCES</div>
+            <div class="settings-form-grid">
+              <div class="settings-field">
+                <label for="settingLanguage">Language <span class="required">*</span></label>
+                <select id="settingLanguage" class="settings-input settings-select" formControlName="language">
+                  <option value="">Select Language</option>
+                  <option value="en">English</option>
+                  <option value="ml">Malayalam</option>
+                  <option value="tm">Tamil</option>
+                  <option value="kn">Kannada</option>
+                  <option value="hi">Hindi</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label for="settingPrinter">Printer <span class="required">*</span></label>
+                <select id="settingPrinter" class="settings-input settings-select" formControlName="printer">
+                  <option value="">Select Printer</option>
+                  <option value="dotMetrix">Dot Matrix</option>
+                  <option value="inkjet">Inkjet Printer</option>
+                  <option value="laser">Laser Printer</option>
+                  <option value="thermal">Thermal Printer</option>
+                  <option value="lasera5">Laser A5</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label for="settingCounter">Counter <span class="required">*</span></label>
+                <input id="settingCounter" type="number" min="1" class="settings-input" formControlName="Counter" placeholder="Enter counter" />
+              </div>
+              <div class="settings-field">
+                <label for="settingOpening">Opening Time</label>
+                <input id="settingOpening" type="time" class="settings-input" formControlName="StartTime" />
+              </div>
+              <div class="settings-field">
+                <label for="settingClosing">Closing Time</label>
+                <input id="settingClosing" type="time" class="settings-input" formControlName="EndTime" />
+              </div>
+            </div>
+
+            <div class="settings-section-caption settings-section-gap">NOTIFICATIONS &amp; VALIDITY</div>
+            <div class="settings-form-grid">
+              <div class="settings-field settings-span-full">
+                <label for="settingNotification">Notification</label>
+                <textarea id="settingNotification" class="settings-input settings-textarea" appUpperCase formControlName="Notification" placeholder="Add Notification" rows="2"></textarea>
+              </div>
+              <div class="settings-field">
+                <label for="settingInstallation">Installation Date</label>
+                <input id="settingInstallation" type="date" class="settings-input" appUpperCase formControlName="InstallationDate" />
+              </div>
+              <div class="settings-field">
+                <label for="settingExpiry">Expiration Date</label>
+                <input id="settingExpiry" type="date" class="settings-input" appUpperCase formControlName="ExpiryDate" />
+              </div>
+            </div>
+
+            <div class="settings-section-caption settings-section-gap">TEMPLE BRANDING</div>
+            <div class="settings-form-grid">
+              <div class="settings-field settings-span-full">
+                <label for="settingLogo">Temple Logo <span class="required">*</span></label>
+                <div class="settings-upload-row">
+                  <div class="settings-upload-control">
+                    <input id="settingLogo" type="file" accept="image/png" class="settings-input settings-file" (change)="previewImage($event)" #fileInput />
+                  </div>
+                  <button type="button" class="settings-remove-logo" *ngIf="imagePreview" (click)="removeImagePreview()" title="Remove logo preview">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+                <small class="settings-hint">PNG image supported</small>
+                <div *ngIf="errorMessage" class="settings-error">{{ errorMessage }}</div>
+                <div *ngIf="imagePreview" class="settings-image-preview">
+                  <img [src]="imagePreview" alt="Temple logo preview" />
+                  <span>Logo Preview</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-form-actions">
+            <button type="button" class="settings-btn settings-btn-light" (click)="gotoDashBoard()"><mat-icon>close</mat-icon> Cancel</button>
+            <button type="submit" class="settings-btn settings-btn-primary"><mat-icon>save</mat-icon> Save Settings</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT: BILL LOCK CONTROLS -->
+      <section class="settings-panel lock-panel">
+        <div class="settings-panel-heading">
+          <div class="settings-panel-heading-left"><mat-icon>lock_open</mat-icon><h2>Lock Settings</h2></div>
+          <span class="settings-panel-subtitle">Bill &amp; Browser Controls</span>
+        </div>
+        <div class="settings-lock-body">
+          <div class="settings-section-caption">BILL NUMBER MANAGEMENT</div>
+          <div class="settings-help-card">
+            <span class="settings-help-icon"><mat-icon>receipt_long</mat-icon></span>
+            <div><strong>Unlock Bill Number</strong><p>Select a transaction category to unlock its bill numbering.</p></div>
+          </div>
+          <div class="settings-field">
+            <label for="settingBillType">Select Type of the Bill</label>
+            <select id="settingBillType" class="settings-input settings-select" [(ngModel)]="billType">
+              <option value="">Please select bill type</option>
+              <option value="UnLockBooking">Vazhipad Booking</option>
+              <option value="UnLockNadavaravu">Nadavaravu</option>
+              <option value="UnLockCredit">Credit Collection</option>
+              <option value="UnLockFeeCollect">Fee Collection</option>
+              <option value="UnLockEndowment">Endowment</option>
+              <option value="UnLockThulabaram">Thulabaram</option>
+            </select>
+          </div>
+          <button type="button" class="settings-btn settings-btn-primary settings-unlock-btn" (click)="unLockBillNumber()">
+            <mat-icon>lock_open</mat-icon> Unlock Bill Number
+          </button>
+
+          <div class="settings-section-caption settings-section-gap">BROWSER MAINTENANCE</div>
+          <div class="settings-maintenance-card">
+            <div class="settings-maintenance-heading"><mat-icon>cleaning_services</mat-icon><strong>Clear Browser Data</strong></div>
+            <p>Clear locally stored browser data for this application. Use this option only when required.</p>
+            <button type="button" class="settings-btn settings-btn-warning" (click)="clearAllBrowserData()">
+              <mat-icon>delete_sweep</mat-icon> Clear Browser Data
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <footer class="settings-footer"><span>Settings · Temple Configuration</span><span>{{ templeName }}</span></footer>
+  </section>
+</main>

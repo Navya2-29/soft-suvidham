@@ -1,0 +1,187 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.CREDIT REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div class="memberpending" *ngIf="data.length > 0">
+          <!-- <h4 class="tabble-heading">
+            {{ "Report Name.Member due/credit" | translate }}
+          </h4> -->
+
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "Name" | translate }}</th>
+                <th>{{ "Report Name.MOBILE NO" | translate }}</th>
+                <th class="number" >{{ "Due" | translate }}</th>
+                <th class="number">{{ "Paid" | translate }}</th>
+                <th class="number">{{ "Balance" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of data">
+                <td>{{ member.Name  }}</td>
+                <td>{{member.MobileNo }}</td>
+                <td class="number">{{ member.Due }}</td>
+
+                <td class="number">{{ member.Paid }}</td>
+                <td class="number">{{ (member.Due - member.Paid) < 0 ? 0 : (member.Due - member.Paid) }}</td>
+
+                <!-- <td class="number">{{ member.Amount | number : "1.2-2" }}</td> -->
+              </tr>
+              <tr>
+                <td colspan="2" class="Due">
+                  {{ "Report Name.TOTAL" | translate }}:
+                </td>
+                <td class="total">
+                  {{ getmemberDueTotalAmount() | number : "1.2-2" }}
+                </td>
+                <td class="total">
+                  {{ getmemberPaidTotalAmount() | number : "1.2-2" }}
+                </td>
+                <td class="total">
+                  {{ getmemberTotalAmount() | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="page-break" *ngIf="membercreditdata.length > 0"></div> -->
+
+        <!-- <div class="non-memberpending" *ngIf="nonmembercreditdata.length > 0">
+          <h4 class="tabble-heading">
+            {{ "Report Name.Devotee due/credit" | translate }}
+          </h4>
+
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th>{{ "BILL NO" | translate }}</th>
+
+                <th>{{ "Report Name.MOBILE NO" | translate }}</th>
+
+                <th class="number">{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of nonmembercreditdata">
+                <td>{{ member.BillDate | date : "dd-MM-yyyy" }}</td>
+                <td>{{ member.BillNo }}</td>
+
+                <td>{{ member.MobileNo }}</td>
+
+                <td class="number">{{ member.Amount | number : "1.2-2" }}</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="total">
+                  {{ "Report Name.TOTAL" | translate }}:
+                </td>
+                <td class="total">
+                  {{ getnonmemberTotalAmount() | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page-break" *ngIf="nonmembercreditdata.length > 0"></div> -->
+
+        <!-- <div class="alldue" *ngIf="data.length > 0">
+          <h4 class="tabble-heading">
+            {{ "Report Name.All Due/credit" | translate }}
+          </h4>
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th>{{ "BILL NO" | translate }}</th>
+                <th>{{ "VAZHIPAD" | translate }}</th>
+                <th>{{ "NAME" | translate }}</th>
+                <th>{{ "Report Name.MOBILE NO" | translate }}</th>
+
+                <th class="number">{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data">
+                <td>{{ item.BillDate }}</td>
+                <td>{{ item.BillNo }}</td>
+                <td>{{ item.Vazhipad }}</td>
+                <td>{{ item.Name }}</td>
+                <td>{{ item.MobileNo }}</td>
+
+                <td class="number">
+                  {{ item.Amount | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5" class="total">
+                  {{ "Report Name.TOTAL" | translate }}
+                </td>
+                <td class="total">
+                  {{ getTotalAmount() | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+        <div *ngIf="data.length > 0">
+          <p class="grandtotal">
+            {{ "Report Name.GrandTotal" | translate }} :
+            {{ getTotalAmount() | number : "1.2-2" }}
+          </p>
+        </div>
+      </div>
+      <div
+        class="nodataFound"
+        *ngIf="
+          data.length === 0 &&
+          nonmembercreditdata.length === 0 &&
+          membercreditdata.length == 0
+        "
+      >
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

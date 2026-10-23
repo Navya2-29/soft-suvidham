@@ -1,0 +1,358 @@
+<!-- Nadavaravu — Prathishta Master inspired layout. Header supplied by the parent Mattinangal component. -->
+<main class="nv-page">
+  <header class="nv-titlebar">
+    <div class="nv-title-left">
+      <!-- <a routerLink="/front" class="nv-back" aria-label="Back to counter home" title="Back to counter home">
+        <mat-icon>arrow_back</mat-icon>
+      </a> -->
+      <span class="nv-title-symbol"><mat-icon>receipt_long</mat-icon></span>
+      <div class="nv-heading">
+        <h1>{{ 'Nadavaravu' | translate }}</h1>
+        <p>Counter Management · Receipts and Transactions</p>
+      </div>
+    </div>
+    <span class="nv-header-note">TEMPLE MANAGEMENT</span>
+  </header>
+
+  <section class="nv-workspace">
+    <!-- LEFT: ENTRY FORM -->
+    <section class="nv-panel nv-entry-panel">
+      <div class="nv-panel-title">
+        <span class="nv-panel-heading"><mat-icon>edit_note</mat-icon> Nadavaravu Details</span>
+        <span class="nv-panel-subtitle">New Receipt</span>
+      </div>
+      <div class="nv-form-scroll">
+        <div class="nv-form" [formGroup]="nadavaravForm">
+          <div class="nv-section-label">DEVOTEE INFORMATION</div>
+          <div class="nv-form-grid">
+            <div class="nv-field nv-span-2">
+              <label for="nv-name">{{ 'PLACEHOLDER.NAME' | translate }} <span class="nv-required">*</span></label>
+              <input id="nv-name" type="text" formControlName="Name" [placeholder]="'PLACEHOLDER.NAME' | translate"
+                [ngClass]="{'is-invalid': nadavaravForm.get('Name')?.invalid && nadavaravForm.get('Name')?.touched}" />
+            </div>
+            <div class="nv-field">
+              <label for="nv-star">{{ 'STAR' | translate }}</label>
+              <select id="nv-star" formControlName="Star">
+                <option value="">{{ 'STAR' | translate }}</option>
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_NameEng }}</option>
+                </ng-container>
+                <ng-container *ngIf="lang == 'ml'">
+                  <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_Name }}</option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="nv-field">
+              <label for="nv-address">{{ 'PLACEHOLDER.ADDRESS' | translate }}</label>
+              <textarea id="nv-address" rows="2" formControlName="Address"
+                [placeholder]="'PLACEHOLDER.ADDRESS' | translate"></textarea>
+            </div>
+            <div class="nv-field nv-span-2">
+              <label for="nv-description">{{ 'PLACEHOLDER.Description' | translate }}</label>
+              <input id="nv-description" type="text" formControlName="Description"
+                [placeholder]="'PLACEHOLDER.Description' | translate" />
+            </div>
+          </div>
+
+          <div class="nv-section-label nv-divider-label">ITEM &amp; RECEIPT DETAILS</div>
+          <div class="nv-form-grid">
+            <div class="nv-field nv-span-2">
+              <label for="nv-item">{{ 'Select Item' | translate }} <span class="nv-required">*</span></label>
+              <select id="nv-item" formControlName="NMId" (change)="onItemSelected($event)"
+                [ngClass]="{'is-invalid': nadavaravForm.get('NMId')?.invalid && nadavaravForm.get('NMId')?.touched}">
+                <option value="">{{ 'Select Item' | translate }}</option>
+                <ng-container *ngIf="lang == 'ml'">
+                  <option *ngFor="let item of itemMaster" [value]="item.NM_Id">{{ item.NM_RName }}</option>
+                </ng-container>
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let item of itemMaster" [value]="item.NM_Id">{{ item.NM_Name }}</option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="nv-field">
+              <label for="nv-qty">{{ 'Quantity' | translate }}</label>
+              <input id="nv-qty" type="text" formControlName="Qty" [placeholder]="'PLACEHOLDER.QUANTITY' | translate" />
+            </div>
+            <div class="nv-field">
+              <label for="nv-weight">{{ 'Weight' | translate }}</label>
+              <input id="nv-weight" type="text" formControlName="weight" [placeholder]="'Enter weight' | translate"
+                [ngClass]="{'is-invalid': nadavaravForm.get('weight')?.invalid && nadavaravForm.get('weight')?.touched}" />
+            </div>
+            <div class="nv-field">
+              <label for="nv-unit">{{ 'select Unit' | translate }}</label>
+              <select id="nv-unit" formControlName="unit"
+                [ngClass]="{'is-invalid': nadavaravForm.get('unit')?.invalid && nadavaravForm.get('unit')?.touched}">
+                <option value="">{{ 'select Unit' | translate }}</option>
+                <option value="KG">Kg</option>
+                <option value="GM">Gm</option>
+                <option value="MG">Mg</option>
+                <option value="LTR">Ltr</option>
+                <option value="NOS">No.s</option>
+              </select>
+            </div>
+            <div class="nv-field">
+              <label for="nv-item-value">{{ 'Item Value' | translate }}</label>
+              <input id="nv-item-value" type="text" formControlName="ItemValue"
+                [placeholder]="'Item Value' | translate" />
+            </div>
+            <div class="nv-field">
+              <label for="nv-receipt-amount">{{ 'Receipt Amount' | translate }}</label>
+              <input id="nv-receipt-amount" type="text" formControlName="ReceiptAmount" readonly
+                [placeholder]="'Receipt Amount' | translate" />
+            </div>
+            <div class="nv-field">
+              <label for="nv-transaction">{{ 'Transaction Mode' | translate }}</label>
+              <select id="nv-transaction" formControlName="TrnsMode">
+                <option value="CS">{{ 'Cash' | translate }}</option>
+                <option value="UP">{{ 'UPI' | translate }}</option>
+              </select>
+            </div>
+            <div class="nv-field nv-span-2">
+              <label for="nv-remarks">{{ 'PLACEHOLDER.Remark' | translate }}</label>
+              <input id="nv-remarks" type="text" formControlName="Remarks"
+                [placeholder]="'PLACEHOLDER.Remark' | translate" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: RECENT RECEIPTS -->
+    <section class="nv-panel nv-record-panel">
+      <div class="nv-panel-title">
+        <span class="nv-panel-heading"><mat-icon>list_alt</mat-icon> Nadavaravu List</span>
+        <span class="nv-panel-subtitle">Transaction Records</span>
+      </div>
+      <div class="nv-search" [formGroup]="searchForm">
+        <div class="nv-search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" formControlName="searchBillNO" [placeholder]="'Search by Bill number' | translate"
+            aria-label="Search by Bill number" (input)="onSearch()" />
+        </div>
+        <span class="nv-record-count">{{ filteredData?.length || 0 }} records</span>
+      </div>
+      <div class="nv-table-scroll">
+        <table class="nv-table">
+          <thead>
+            <tr>
+              <th>{{ 'Report Name.SINO' | translate }}.</th>
+              <th>{{ 'Date' | translate }}</th>
+              <th>{{ 'Receipt No' | translate }}.</th>
+              <th>{{ 'Name' | translate }}</th>
+              <th>{{ 'Item' | translate }}</th>
+              <th>{{ 'Weight' | translate }}</th>
+              <th>{{ 'Quantity' | translate }}</th>
+              <th>{{ 'Receipt Amount' | translate }}</th>
+              <th>{{ 'Transaction Mode' | translate }}</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filteredData; let i = index" [class.nv-cancelled]="item.TrnStatus === 'C'">
+              <td><span class="nv-index">{{ i + 1 }}</span></td>
+              <td>{{ item.Billdate | date:'dd-MM-yyyy' }}</td>
+              <td><strong>{{ item.BillNo }}</strong></td>
+              <td>{{ item.Name }}</td>
+              <td>{{ getItemById(item.NM_Id) }}</td>
+              <td>{{ item.weight }} {{ item.unit }}</td>
+              <td>{{ item.Qty }}</td>
+              <td class="nv-numeric">{{ item.Receipt_Amt }}</td>
+              <td>{{ getTransactionType(item.TrnMode) }}</td>
+              <td class="nv-actions">
+                <button type="button" class="nv-icon-action nv-delete" title="Cancel bill"
+                  *ngIf="role === 'admin' || role === 'super'" [disabled]="item.TrnStatus === 'C'"
+                  (click)="item.TrnStatus !== 'C' && cancellTheBill(item.BillNo)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+                <button type="button" class="nv-icon-action" title="Duplicate Print" *ngIf="item.TrnStatus !== 'C'"
+                  (click)="duplicateBill(item)">
+                  <mat-icon>print</mat-icon>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="!filteredData || filteredData.length === 0">
+              <td colspan="10" class="nv-empty">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <!-- FIXED ACTION BAR — SAME COLOR PATTERN AS SCREENSHOT -->
+  <footer class="nv-action-footer">
+    <span class="nv-footer-hint">Nadavaravu · Counter Transactions</span>
+    <div class="nv-footer-buttons">
+      <button type="button" class="nv-cancel-btn" (click)="resetForm()">
+        <mat-icon>close</mat-icon> Cancel
+      </button>
+      <button type="button" class="nv-save-btn" (click)="onSubmit()"
+        [disabled]="role == 'admin' || role == 'audit' || role == 'super'">
+        <mat-icon>save</mat-icon> Save
+      </button>
+    </div>
+  </footer>
+</main>
+
+<!-- Receipt templates below deliberately remain unchanged for existing printing logic. -->
+<div id="receipt" style="
+    width: 6in;
+    height: 4in;
+    display: none;
+    position: relative;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+  ">
+  <!-- <div style="position: absolute; left: 2cm; top: 4cm;">{{ itemName }}</div> -->
+  <div style="position: absolute; left:11cm; top: 2.5cm;">
+    {{ theLastBillNo }}
+  </div>
+
+  <div style="position: absolute; left:11cm; top: 3.1cm;">
+    {{ todayDate | date : "dd-MM-yyyy" }}
+  </div>
+  <div style="
+      position: absolute;
+      left: 2.6cm; top: 3.1cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    ">{{ itemName }}
+  </div>
+  <div style="position: absolute; left: 1cm; top: 5.2cm">
+    {{ nadavaravForm.get("Name")?.value }}
+    <p>{{ nadavaravForm.get("Address")?.value }}</p>
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "Weight" | translate }}:{{ nadavaravForm.get("weight")?.value }}
+    </p>
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "unit" | translate }}:{{ nadavaravForm.get("unit")?.value }}
+    </p>
+
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "Qty" | translate }}:{{ nadavaravForm.get("Qty")?.value }}
+    </p>
+  </div>
+  <div style="
+      position: absolute;
+       left: 6.9cm; top: 5.2cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    ">
+    {{ getStarNameById(nadavaravForm.get("Star")?.value) }}
+  </div>
+  <div style="position: absolute; left: 12cm;  top: 5.2cm">
+    {{ nadavaravForm.get("ReceiptAmount")?.value }}
+  </div>
+  <div style="position: absolute; left: 10.5cm; top: 8.3cm;">
+    {{ nadavaravForm.get("ReceiptAmount")?.value }}
+  </div>
+  <div style="position: absolute; left: 1cm; top: 8.3cm; font-size: 8pt">
+    User:{{ this.name }}(
+    {{ getTransactionType(nadavaravForm.get("TrnsMode")?.value) }}),(CNTR:{{
+    this.CounterId
+    }})
+  </div>
+</div>
+
+<div id="duplicateRecipt" style="
+    width: 6in;
+    height: 4in;
+    display: none;
+    position: relative;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+  ">
+  <div style="position: absolute; left:11cm; top: 3.6cm;">
+    {{ dupliacteBillData?.BillNo }}
+  </div>
+  <div style="position: absolute; left:11cm; top: 3.1cm;">
+    {{ dupliacteBillData?.Billdate | date : "dd-MM-YYYY" }}
+  </div>
+  <div style="
+      position: absolute;
+       left: 2.6cm; top: 3.1cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    ">
+    {{ getItemById(dupliacteBillData?.NM_Id) }}
+  </div>
+  <div style="position: absolute; left: 1cm; top: 5.5cm">
+    {{ dupliacteBillData?.Name }}
+    <p>{{ dupliacteBillData?.Address }}</p>
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "Weight" | translate }}:{{ dupliacteBillData?.weight }}
+    </p>
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "unit" | translate }}:{{ dupliacteBillData?.unit }}
+    </p>
+    <p style="
+        font-family: Arial, sans-serif;
+        margin-bottom: 0;
+        font-family: Arial, sans-serif;
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      ">
+      {{ "Qty" | translate }}: {{ dupliacteBillData?.Qty }}
+    </p>
+  </div>
+  <div style="
+      position: absolute;
+      left: 6.9cm; top: 5.2cm;
+      max-width: 5cm;
+      font-size: 9pt;
+      white-space: pre-wrap;
+    ">
+    {{ getStarNameById(dupliacteBillData?.Star) }}
+  </div>
+  <div style="position: absolute; left: 12cm;  top: 5.2cm">
+    {{ dupliacteBillData?.Receipt_Amt }}
+  </div>
+  <div style="position: absolute;  left: 10.5cm; top: 8.3cm;">
+    {{ dupliacteBillData?.Receipt_Amt }}
+  </div>
+  <div style="position: absolute;  left: 1cm; top: 8.3cm; font-size: 8pt">
+    User:{{ this.name }}(
+    {{ getTransactionType(nadavaravForm.get("TrnsMode")?.value) }}),(CNTR:{{
+    this.CounterId
+    }})
+  </div>
+</div>

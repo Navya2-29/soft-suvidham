@@ -1,0 +1,336 @@
+<app-header></app-header>
+<app-spinner *ngIf="isloading"></app-spinner>
+<form [formGroup]="searchForm">
+  <div class="main-container" style="font-family: Manjari">
+    <div class="first-column">
+      <!-- First Row -->
+      <div class="row">
+        <div class="box">
+          <div class="radio-group">
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="Poornam"
+              />
+              {{ "Report.All Vazhipad List" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="DailyStmt"
+              />
+              {{ "Report.Daily Statement(Transaction)" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="DailyStmtDetaild"
+              />
+              {{ "Report.Daily Statement (Detailed)" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="AdvanceBook"
+              />
+              {{ "Report.Advance Booking" | translate }}</label
+            >
+            <label>
+              <input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="counter"
+              />
+              {{ "Report.Daily Statement (Counter)" | translate }}
+              <br />
+              <input type="checkbox" formControlName="countercheckbox" />{{
+                "Report.All Counter" | translate
+              }}
+            </label>
+            <!-- <label><input type="radio" formControlName="vazhipadOption" value="Dayend"> {{ "Report.Dayend" | translate }}</label> -->
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="datewise"
+              />
+              {{ "Daily Collection" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="devoteeledger"
+              />
+              {{ "Devotee-ledger" | translate }}</label
+            >
+          </div>
+        </div>
+
+        <div class="box">
+          <!-- <form [formGroup]="searchForm"> -->
+          <div class="radio-group">
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="debit"
+              />
+              {{ "Report.Debit/Credit Card" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="moneyorder"
+              />
+              {{ "Report.Money Order" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="upi"
+              />
+              {{ "Report.UPI" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="online"
+              />
+              {{ "Bank Transaction Statement" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="cheque"
+              />
+              {{ "Report.Cheque Statement" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="credit"
+              />
+              {{ "Report.Due/Credit" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="report-endowment"
+              />
+              {{ "Report.Endowment" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="online-transaction"
+              />
+              {{ "Online-Transaction" | translate }}</label
+            >
+
+            <!-- <label>
+            </label> -->
+          </div>
+          <!-- </form> -->
+        </div>
+      </div>
+
+      <!-- Second Row -->
+      <div class="row">
+        <div class="box">
+          <!-- <form [formGroup]="searchForm"> -->
+          <div class="radio-group">
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="devotee-creditcollection"
+              />
+              {{ "Report.Credit Collection" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="feecollection"
+              />
+              {{ "Report.FEE COLLECTION REPORT" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="duplicate"
+              />
+              {{ "Report.report-duplicate" | translate }}</label
+            >
+            <label>
+              <input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="donation"
+              />
+              {{ "Report Name.DONATION REPORT" | translate }}
+            </label>
+
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="cancel"
+              />
+              {{ "Report.Cancel Report" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="timeslot"
+              />
+              {{ "Time Slot Based Report" | translate }}</label
+            >
+          </div>
+          <!-- </form> -->
+        </div>
+
+        <div class="box">
+          <!-- <form [formGroup]="searchForm"> -->
+          <div class="radio-group">
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="offering"
+              />
+              {{ "Report.Offering Only" | translate }}</label
+            >
+            <label><input type="radio" formControlName="vazhipadOption" value="prathistaall"> {{ "Report Name.allprathista" | translate }}</label>
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="nadavaravu"
+              />
+              {{ "Report.Nadavaravu Booking" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="mattinamgal"
+              />
+              {{ "Report.MATTINAM REPORT" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="salesitem"
+              />
+              {{ "Report.SALES ITEM REPORT" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="vihidham"
+              />
+              {{ "Report.VIHIDHAM REPORT" | translate }}</label
+            >
+            <label
+              ><input
+                type="radio"
+                formControlName="vazhipadOption"
+                value="billregister"
+              />
+              {{ "Report.Bill Register" | translate }}</label
+            >
+          </div>
+          <!-- </form> -->
+        </div>
+      </div>
+      <!-- </form> -->
+    </div>
+
+    <!-- Second Column: Two rows -->
+    <div class="second-column">
+      <div class="form-box">
+        <form [formGroup]="searchForm">
+          <!-- PRATHISTA Dropdown -->
+          <label for="prathishta">{{ "PRATHISTA" | translate }}</label>
+          <select
+            class="form-control"
+            formControlName="prathista"
+            id="prathishta"
+            (change)="onPrathistaChange($event)"
+          >
+            <option value="">{{ "Select Diety" | translate }}</option>
+            <ng-container *ngIf="lang == 'en'">
+              <option *ngFor="let item of pmaster" [value]="item.PM_ID">
+                {{ item.PM_Name }}
+              </option>
+            </ng-container>
+            <ng-container *ngIf="lang != 'en'">
+              <option *ngFor="let item of pmaster" [value]="item.PM_ID">
+                {{ item.PM_RegName }}
+              </option>
+            </ng-container>
+          </select>
+
+          <!-- VAZHIPAD Dropdown -->
+          <label for="vazhipad">{{ "VAZHIPAD" | translate }}</label>
+          <select class="form-control" formControlName="vazhipad" id="vazhipad">
+            <option value="">{{ "Select Vazhipad" | translate }}</option>
+            <ng-container *ngIf="lang == 'en'">
+              <option *ngFor="let item of Vmaster" [value]="item.VM_Id">
+                {{ item.VM_Name }}
+              </option>
+            </ng-container>
+            <ng-container *ngIf="lang != 'en'">
+              <option *ngFor="let item of Vmaster" [value]="item.VM_Id">
+                {{ item.VM_RName }}
+              </option>
+            </ng-container>
+          </select>
+        </form>
+      </div>
+
+      <div class="date-box">
+        <form [formGroup]="searchForm" class="date-form">
+          <div class="form-group">
+            <label for="from-date">{{ "FROMDATE" | translate }}</label>
+            <input type="date" id="from-date" formControlName="fromDate" />
+          </div>
+          <div class="form-group">
+            <label for="to-date">{{ "TODATE" | translate }}</label>
+            <input type="date" id="to-date" formControlName="toDate" />
+          </div>
+          <!-- Buttons -->
+          <div class="button-group">
+            <button type="submit" class="submit-btn btn" (click)="onSearch()">
+              Submit
+            </button>
+            <button
+              type="button"
+              class="cancel-btn btn btn-secondary"
+              (click)="onBack()"
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</form>

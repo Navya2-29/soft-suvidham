@@ -1,0 +1,391 @@
+.nowrap {
+    margin:0px;
+}
+
+.container{
+    display:block;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width:100%;
+    
+}
+
+.main {
+    display:block;
+    width:100%;
+    height:100%;
+    background-image:url('/assets/images/login-bg.jpg');background-position: center;background-size: cover;
+    
+}
+
+.content{
+    width:100%;
+}
+
+.card-body {
+    height:auto;
+    padding-bottom:36px;
+    
+}
+
+.fixitems {
+    height:300px;
+  overflow-y:scroll;
+  overflow-x:auto;
+}
+
+.fixitems::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+.fixitems::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+.fixitems::-webkit-scrollbar-thumb {
+  background: #5d85b9; /* Color of the thumb */
+  border-radius: 5px; /* Radius of the thumb */
+}
+
+table {
+    width: 100%;
+  }
+
+a {
+    text-decoration:none;
+}
+
+.add {
+    text-align:center;
+    color:white;
+    margin-top:50px;
+    border-radius:0px;
+}
+
+.addbtn{
+    background-color: white;color:#6206ca;padding:9px;border-radius:0px; font-size:11.7pt;font-weight:700;transition:1s;
+}
+.addbtn:hover {
+  box-shadow:0px 0px 36px white; transition:0.5s;padding:15px;font-size:18pt;background:rgb(255, 255, 255);color:rgb(0, 95, 36);
+}
+
+
+.vazhlist tr > td {
+    padding-left:15px;
+    padding-right:15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size:9pt;
+    vertical-align:middle;
+    line-height:0pt;
+    font-weight:530;
+}
+
+.vazhlist tr > td a {
+    color:#000000;
+}
+
+
+.vazhlist tr {
+    padding-bottom:0px;
+}
+.rate {
+    background:rgb(223, 232, 255);
+    color:white;
+    text-align:right;
+}
+
+.rate a {
+    color:rgb(0, 0, 0);
+}
+
+td {
+    vertical-align:middle;
+    font-size:9pt;
+    font-weight:600;
+   
+    
+}
+
+.vazhlist {
+    margin:0px;
+}
+
+.example-section {
+    margin: 12px 0;
+  }
+  
+  .example-margin {
+    margin: 0 12px;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin-top: 4px;
+  }
+  
+table tr td {
+    padding:2px;
+    vertical-align:middle;
+}
+
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .matsize {
+    height:150px;
+  }
+
+  .amt {
+    display:flex;
+    justify-content: center;
+    color:white;
+  }
+
+  .addicon {
+    padding:10px;border:1px solid blue;align-items: center;display:flex;justify-content: center;margin:5px;background:maroon;color:white;border:none;border-radius:15px;
+  }
+  
+  mat-form-field {
+    margin-bottom:-400px;
+    
+  }
+
+  table tr th {
+    font-weight:700;
+    color:rgb(65, 64, 64);
+    vertical-align:center;
+    text-align:center;
+  }
+
+  table {
+    background:rgba(98, 6, 202, .1);
+    border-bottom:2px solid #223d61;
+  }
+  
+  table tr {
+    padding:0px;
+  }
+  input[type="checkbox"] {
+    transform: scale(1.2);
+    font-size:110%;
+ }
+
+ mat-label {
+  font-size:9pt;
+ }
+
+ select option {
+  font-size:10pt;
+ }
+
+ select {
+  width:80px;
+ }
+
+ a {
+  color: #6206ca;
+ }
+
+ .nextview {
+  background-color: #6206ca;
+  padding-top:15px;
+ }
+
+.paymentMethod {
+  background: rgba(255, 255, 255, 0.6);
+  border-bottom:9px solid #6206ca;
+  color:rgb(0, 0, 0);padding:0px;border-radius:6px 6px 15px 15px;
+ }
+
+ mat-radio-button {
+  margin-top:180px;
+}
+
+.deleteselected {
+  padding:9px;
+  border-radius:5px;
+  background-color:red;
+
+}
+
+.live {
+  background: linear-gradient(90deg, #06ca31, #fff0e5, #ff0404, #fffeb8);
+  background-size: 100% 000%;
+  animation: gradientAnimation 1s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+
+input[type=text]:hover {
+  background-color: white;
+  color:black;
+ 
+}
+
+input[type=text]:focus {
+ background-color: white;
+  border-bottom:2px solid #135796;
+  box-shadow: 0px 0px 0px white;
+  border-top:0px solid rgb(202, 202, 202);
+}
+
+input[type="text"] {
+  border-bottom:2px solid rgb(202, 202, 202);
+  border-top:0px solid rgb(202, 202, 202);
+   height:30.6px;
+}
+
+input[type="number"] {
+  border-bottom:2px solid rgb(202, 202, 202);
+  height:30.6px;
+  width:72px;
+  font-size: 12px;
+}
+
+input[type="number"]:focus {
+  border-bottom:2px solid #135796;
+  box-shadow: 0px 0px 0px white;
+}
+
+select {
+  font-size: 12px; /* Select tag font size */
+  color: #6e6e6e; /* Select tag font color */
+  padding-left: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight:400;
+  border-bottom:2px solid rgb(202, 202, 202);
+}
+
+select:hover {
+  border-bottom:2px solid #135796;
+}
+
+/* Style for option tags */
+option {
+  font-size: 14px; /* Option tag font size */
+  color: #666; /* Option tag font color */
+}
+
+
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-input {
+  max-width: 100%;
+  width: 300px;
+}
+
+::placeholder {
+  color: #313131; /* Placeholder text color */
+  font-size: 12px; /* Placeholder text font size */
+  font-weight:400;
+}
+
+::ng-deep .mat-form-field .mat-form-field-infix {
+  width: 300px !important;
+background-color: #f4f5f7 !important;
+
+}
+
+.sps {
+  border-bottom:2px solid rgb(202, 202, 202);
+  height:30.6px;
+}
+
+.sps:focus {
+  border-bottom:2px solid #135796;
+  box-shadow: 0px 0px 0px white;
+}
+
+/* Style for select element */
+
+
+mat-option {
+  font-size:11pt;
+  margin-bottom:0px;
+  margin-top:-20px;
+  margin-bottom:-8px;
+  height:auto;
+}
+
+.formdate {
+  border-bottom:2px solid rgb(202, 202, 202);
+  height:30.6px;
+  font-size:10pt;
+}
+
+.formdate:focus {
+  border-bottom:2px solid #135796;
+  box-shadow: 0px 0px 0px white;
+}
+
+.spsr {
+  border-bottom:2px solid rgb(202, 202, 202);
+  height:30.6px;
+  font-size:10pt;
+  background:transparent;
+}
+
+.spsr:focus {
+  border-bottom:2px solid rgb(66, 66, 223);
+  box-shadow: 0px 0px 0px white;
+}
+
+
+.icons {
+  color:#223d61;
+  font-size:15pt;
+}
+
+.delete {
+  color:white;
+  font-size:15pt;
+  padding:2pt;
+}
+
+.search table tr td {
+    text-align:center;
+    vertical-align: middle;
+}
+
+.btn {
+    padding:4px;
+    font-size:10pt;
+}
+
+.small {
+    font-size:15px;
+}

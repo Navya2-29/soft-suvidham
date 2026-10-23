@@ -1,0 +1,479 @@
+<div class="vazhipad-page">
+
+  <section class="booking-shell">
+
+    <!-- <header class="booking-header">
+
+      <div class="heading-group">
+
+        <div class="heading-symbol"><mat-icon>temple_hindu</mat-icon></div>
+
+        <div>
+
+          <div class="eyebrow">COUNTER BOOKING</div>
+
+          <h2>{{ 'VAZHIPAD' | translate }}</h2>
+
+          <p>Enter devotee details and manage vazhipad bookings</p>
+
+        </div>
+
+      </div>
+
+      <div class="header-accent"><span class="pulse-dot"></span> Booking entry</div>
+
+    </header> -->
+
+    <div class="booking-content" id="details">
+
+      <form [formGroup]="form" autocomplete="off">
+
+        <div class="table-scroll" role="region" aria-label="Vazhipad booking details" tabindex="0">
+
+          <table class="booking-table">
+
+            <colgroup>
+
+              <col style="width: 18%" />
+
+              <col style="width: 17%" />
+
+              <col style="width: 10%" />
+
+              <col style="width: 12%" />
+
+              <col style="width: 6%" />
+
+              <col style="width: 7%" />
+
+              <col style="width: 14%" />
+
+              <col style="width: 8%" />
+
+              <col style="width: 8%" />
+
+            </colgroup>
+
+            <thead>
+
+              <tr>
+
+                <th>{{ 'VAZHIPAD' | translate }}</th>
+
+                <th>{{ 'NAME' | translate }}</th>
+
+                <th>{{ 'STAR' | translate }}</th>
+
+                <th>{{ 'PRATHISTA' | translate }}</th>
+
+                <th class="numeric-heading">{{ 'QUANTITY' | translate }}</th>
+
+                <th class="numeric-heading">{{ 'RATE' | translate }}</th>
+
+                <th>{{ 'DATE' | translate }}</th>
+
+                <th>{{ 'TIME' | translate }}</th>
+
+                <th class="actions-heading">ACTIONS</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody formArrayName="vazhipadinfo">
+
+              <tr *ngFor="let row of vazhipadinfo.controls; let i = index" [formGroupName]="i" [id]="'row-' + i" class="booking-row">
+
+                <td class="hidden-field"><input type="text" formControlName="Slno" /></td>
+
+                <td>
+
+                  <div class="field floating-field">
+
+                    <input type="text" matInput #nameInput #firstInput #inputRef
+
+                      id="Vazhipad-{{ i }}" class="field-input"
+
+                      formControlName="Vazhipad" [matAutocomplete]="auto"
+
+                      [readonly]="multidayBooking[i]" placeholder=" "
+
+                      (focus)="selectText($event)"
+
+                      (keydown)="navigateToNext($event, i, 'name')" />
+
+                    <label for="Vazhipad-{{ i }}">{{ 'PLACEHOLDER.VAZHIPAD' | translate }}</label>
+
+                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+
+                      class="large-autocomplete-panel modern-autocomplete-panel"
+
+                      (optionSelected)="onSelect($event, i)">
+
+                      <ng-container *ngIf="lang === 'en'">
+
+                        <mat-option *ngFor="let option of filteredOptions[i]" [value]="option.VM_Name">
+
+                          <span class="option-code">{{ option.VM_Code }}</span>
+
+                          <span class="option-name">{{ option.VM_Name }}</span>
+
+                        </mat-option>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="lang === 'ml'">
+
+                        <mat-option *ngFor="let option of filteredOptions[i]" [value]="option.VM_RName">
+
+                          <span class="option-code">{{ option.VM_Code }}</span>
+
+                          <span class="option-name">{{ option.VM_RName }}</span>
+
+                        </mat-option>
+
+                      </ng-container>
+
+                    </mat-autocomplete>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field floating-field">
+
+                    <input type="text" appUpperCase class="field-input" id="Name-{{ i }}"
+
+                      formControlName="Name" [readonly]="multidayBooking[i]"
+
+                      placeholder=" " (keydown)="navigateToNext($event, i, 'starName')" />
+
+                    <label for="Name-{{ i }}">{{ 'PLACEHOLDER.NAME' | translate }}</label>
+
+                  </div>
+
+                  <div class="supplementary-field" *ngIf="row.get('Mattinagal')?.value === 'Y'">
+
+                    <div class="field floating-field">
+
+                      <input type="text" class="field-input" formControlName="Remarks"
+
+                        id="Remark-{{ i }}" placeholder=" " />
+
+                      <label for="Remark-{{ i }}">{{ 'REMARKS' | translate }}</label>
+
+                    </div>
+
+                  </div>
+
+                  <div class="supplementary-field" *ngIf="row.get('multiname')?.value === 'Y'">
+
+                    <div class="field floating-field">
+
+                      <input type="text" class="field-input" formControlName="Name2"
+
+                        id="Name2-{{ i }}" placeholder=" "
+
+                        (keydown)="navigateToNext($event, i, 'Star2')" />
+
+                      <label for="Name2-{{ i }}">{{ 'Name2' | translate }}</label>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field floating-field">
+
+                    <input type="text" matInput class="field-input" id="starName-{{ i }}"
+
+                      formControlName="starName" [matAutocomplete]="str"
+
+                      [readonly]="multidayBooking[i]" placeholder=" "
+
+                      (keydown)="navigateToNext($event, i, 'Prethista')"
+
+                      (focus)="selectText($event)" />
+
+                    <label for="starName-{{ i }}">{{ 'PLACEHOLDER.STAR' | translate }}</label>
+
+                    <mat-autocomplete #str="matAutocomplete" autoActiveFirstOption
+
+                      class="large-autocomplete-panel modern-autocomplete-panel"
+
+                      (optionSelected)="onStarSelect($event, i)">
+
+                      <ng-container *ngIf="lang === 'en'">
+
+                        <mat-option *ngFor="let option of starFilteredOption[i]" [value]="option.SM_Name">
+
+                          <span class="option-code">{{ option.SM_Id }}</span>
+
+                          <span class="option-name">{{ option.SM_Name }}</span>
+
+                        </mat-option>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="lang === 'ml'">
+
+                        <mat-option *ngFor="let option of starFilteredOption[i]" [value]="option.SM_RName">
+
+                          <span class="option-code">{{ option.SM_Id }}</span>
+
+                          <span class="option-name">{{ option.SM_RName }}</span>
+
+                        </mat-option>
+
+                      </ng-container>
+
+                    </mat-autocomplete>
+
+                  </div>
+
+                  <div class="supplementary-field" *ngIf="row.get('multiname')?.value === 'Y'">
+
+                    <div class="field select-field">
+
+                      <label for="Star2-{{ i }}">{{ 'PLACEHOLDER.STAR' | translate }} 2</label>
+
+                      <select class="field-input" formControlName="Star2" id="Star2-{{ i }}">
+
+                        <option value="">{{ 'Select' | translate }}</option>
+
+                        <ng-container *ngIf="lang === 'en'">
+
+                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.SM_Id">{{ nakshtra.SM_Name }}</option>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="lang === 'ml'">
+
+                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.SM_Id">{{ nakshtra.SM_RName }}</option>
+
+                        </ng-container>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field select-field" *ngIf="!multidayBooking[i]">
+
+                    <label for="Prethista-{{ i }}">{{ 'PRATHISTA' | translate }}</label>
+
+                    <select class="field-input" formControlName="Prethista" #input3Ref
+
+                      id="Prethista-{{ i }}" (keydown)="navigateToNext($event, i, 'Qty')"
+
+                      (change)="onPrathistaChange($event, i)">
+
+                      <ng-container *ngIf="lang === 'en'">
+
+                        <option *ngFor="let prathishta of prathishtaOptions[i]" [ngValue]="prathishta.name">{{ prathishta.name }}</option>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="lang === 'ml'">
+
+                        <option *ngFor="let prathishta of prathishtaOptions[i]" [ngValue]="prathishta.rname">{{ prathishta.rname }}</option>
+
+                      </ng-container>
+
+                    </select>
+
+                  </div>
+
+                  <div class="field floating-field" *ngIf="multidayBooking[i]">
+
+                    <input class="field-input" type="text" formControlName="Prethista" readonly placeholder=" " />
+
+                    <label>{{ 'PRATHISTA' | translate }}</label>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field floating-field number-field">
+
+                    <input [min]="1" type="number" class="field-input" formControlName="Qty"
+
+                      id="Qty-{{ i }}" [readonly]="multidayBooking[i]" placeholder=" "
+
+                      [ngClass]="{ 'error-border': row.get('Qty')?.errors && row.get('Qty')?.touched }"
+
+                      (keydown)="navigateToNext($event, i, 'Rate')" (input)="onQtyChange(i)" />
+
+                    <label for="Qty-{{ i }}">{{ 'PLACEHOLDER.QUANTITY' | translate }}</label>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field floating-field number-field">
+
+                    <input type="text" appNumber class="field-input" formControlName="Rate"
+
+                      id="Rate-{{ i }}" [readonly]="multidayBooking[i] || row.get('ratechange')?.value === 'N'"
+
+                      placeholder=" " (keydown)="navigateToNext($event, i, 'VazhipadDate')" />
+
+                    <label for="Rate-{{ i }}">{{ 'PLACEHOLDER.RATE' | translate }}</label>
+
+                  </div>
+
+                  <input type="hidden" formControlName="Amount" />
+
+                </td>
+
+                <td>
+
+                  <div class="date-field-group">
+
+                    <div class="field floating-field date-field">
+
+                      <input type="date" class="field-input" id="VazhipadDate-{{ i }}"
+
+                        formControlName="VazhipadDate" [readonly]="row.get('VM_Receipt')?.value === 'Y'"
+
+                        [attr.min]="row.get('dateToSet')?.value"
+
+                        (input)="getAlreadybookedvazhipadQty(i)"
+
+                        (keydown)="navigateToNext($event, i, 'VTime')" />
+
+                      <label for="VazhipadDate-{{ i }}">{{ 'DATE' | translate }}</label>
+
+                    </div>
+
+                    <button type="button" class="icon-button calendar-button" (click)="openCalendarPopup(i)" aria-label="Open calendar" title="Open calendar">
+
+                      <mat-icon>event</mat-icon>
+
+                    </button>
+
+                  </div>
+
+                  <div *ngIf="multidayBooking[i]" class="supplementary-field">
+
+                    <div class="field floating-field date-field">
+
+                      <input type="date" class="field-input" formControlName="toDate" readonly />
+
+                      <label>To date</label>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td>
+
+                  <div class="field select-field">
+
+                    <label for="VTime-{{ i }}">{{ 'TIME' | translate }}</label>
+
+                    <select class="field-input" id="VTime-{{ i }}" formControlName="VTime"
+
+                      \#vTimeSelect (keydown)="navigateToNext($event, i, 'Name2')">
+
+                      <option *ngFor="let time of vazhipadtime" [value]="time.id">{{ 'OPTIONS.' + time.key | translate }}</option>
+
+                    </select>
+
+                  </div>
+
+                  <div *ngIf="row.get('VM_TimeSlot')?.value === 'Y'" class="supplementary-field">
+
+                    <div class="field select-field">
+
+                      <label>Time slot</label>
+
+                      <select formControlName="Remarks" class="field-input">
+
+                        <option value="">Select slot</option>
+
+                        <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td class="action-cell">
+
+                  <div class="row-actions">
+
+                    <button type="button" class="icon-button multi-day-button" (click)="openMultiDayDialog(i)" title="Multi-day booking" aria-label="Multi-day booking">
+
+                      <span class="multi-day-letter">M</span>
+
+                    </button>
+
+                    <button type="button" class="icon-button add-button" (click)="addRow(i)" title="Add row" aria-label="Add row">
+
+                      <mat-icon>add_circle_outline</mat-icon>
+
+                    </button>
+
+                    <button *ngIf="multidayBooking[i]" type="button" class="icon-button details-button"
+
+                      (click)="openMultiDayBookedDetails(i)" title="Multi-day details" aria-label="Multi-day details">
+
+                      <mat-icon>more_horiz</mat-icon>
+
+                    </button>
+
+                    <button type="button" class="icon-button remove-button" (click)="removeRow(i)" title="Delete row" aria-label="Delete row">
+
+                      <mat-icon>delete_outline</mat-icon>
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <footer class="booking-footer">
+
+          <button type="button" class="clear-button" (click)="clearAll()">
+
+            <mat-icon>delete_sweep</mat-icon> Clear all
+
+          </button>
+
+        </footer>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</div>

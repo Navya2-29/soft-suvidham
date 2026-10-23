@@ -1,0 +1,191 @@
+
+
+
+/* General Document Styles */
+.document-container {
+    max-width: 100%; /* A4 page width */
+    min-height: 29.7cm; /* A4 page height */
+    padding: 10px; /* Page margins */
+    margin: 0 auto; /* Center the page */
+    background: white;
+    border: none; /* No borders */
+    box-shadow: none; /* No shadow */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Header Styles */
+.document-header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.5cm;
+    margin-bottom: 1cm;
+}
+
+/* Content Styles */
+.document-content h2 {
+    margin-top: 0;
+    /* margin-bottom: 1cm; */
+    text-align: left;
+}
+.document-content {
+    position: relative; /* Relative positioning for the container */
+    max-height: 400px; /* Set a maximum height (adjust as needed) */
+    overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+.document-content table {
+    width: 100%;
+    border-collapse: collapse; /* Prevents double borders */
+    page-break-inside: auto; /* Allow breaks inside the table */
+}
+
+.document-content .thead {
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9; /* Light gray background for header */
+    z-index: 1; /* Ensure the header stays on top */
+}
+.document-content th,
+.document-content td {
+    padding: 8px;
+    text-align: left;
+}
+
+.document-content th {
+    background-color: #f9f9f9; /* Light gray background for the header */
+}
+
+/* Footer Styles */
+.document-footer {
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5cm;
+    margin-top: 1cm;
+}
+
+/* Fixed Button Container */
+.fixed-button-container {
+    /* Removed 'fixed' to allow natural flow */
+    background-color: #fff; /* Background color */
+    padding: 20px 0;  /* Padding around the buttons */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Optional shadow effect */
+    /* z-index: 1000; Make sure it stays on top of other content */
+    display: flex;
+    justify-content: center;  /* Center the buttons horizontally */
+    gap: 15px;  /* Space between buttons */
+    
+  
+}
+
+/* Button Styles */
+.fixed-button-container button {
+    margin-right: 10px; /* Space between buttons */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Print Styles */
+@media print {
+    .document-container {
+        padding: 2cm; /* Keep the same padding for printing */
+        margin: 0; /* Reset margin */
+        border: none; /* No borders */
+        box-shadow: none; /* No shadow */
+        page-break-after: always; /* Ensure a break after each document container */
+    }
+
+    .document-footer {
+        display: block; /* Show the footer in print view */
+        position: relative; /* Position relative for proper placement */
+        padding: 0.5cm 0; /* Padding around the footer */
+        width: 100%;
+        bottom: 0; /* Align to the bottom of the page */
+        background: white;
+        border-top: 1px solid #ccc;
+    }
+
+    /* Page settings */
+    @page {
+        size: A4; /* Specify page size */
+        margin: 2cm; /* Set margins for print */
+    }
+
+    /* Additional print styling */
+    body {
+        margin: 0; /* Reset body margin */
+    }
+
+    .fixed-button-container {
+        display: none; /* Hide buttons in print view */
+    }
+
+    /* Ensure rows break correctly in the print view */
+    tr {
+        page-break-inside: avoid; /* Prevent rows from breaking */
+    }
+
+    /* To ensure top margin for the first printed page */
+    .document-container:first-of-type {
+        margin-top: 2cm; /* Add top margin for the first page */
+    }
+}
+
+/* Button Wrapper */
+.button-wrapper {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons */
+    gap: 15px; /* Space between buttons */
+}
+
+/* Button Styles */
+.button {
+    padding: 10px 20px; /* Padding for buttons */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Text color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px; /* Font size */
+}
+
+/* Specific Button Colors */
+.save-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.print-button {
+    background-color: #008CBA; /* Blue */
+}
+
+.download-button {
+    background-color: #f44336; /* Red */
+}
+
+/* Optional Hover Effects */
+.button:hover {
+    opacity: 0.9; /* Slightly fade on hover */
+}
+
+
+.custom-button-dropdown {
+    appearance: none; /* Removes default styling in most browsers */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-color:#008CBA; /* Button background color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Button padding */
+    border: none; /* Removes default border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Changes the cursor to a pointer */
+    font-size: 16px; /* Font size for the text */
+    font-weight: bold; /* Make the text bold */
+}
+
+.custom-button-dropdown:focus {
+    outline: none; /* Removes focus outline */
+}
+
+.custom-button-dropdown option {
+    background-color: white; /* Option background color */
+    color: black; /* Option text color */
+}
+

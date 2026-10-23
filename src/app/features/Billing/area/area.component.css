@@ -1,0 +1,27 @@
+.nowrap {
+    margin:0px;
+}
+
+.container{
+    display:block;
+   
+    height:100%;
+    width:100%;
+}
+
+.main {
+    display:block;
+    width:100%;
+    height:100%;
+    background-image:url('/assets/images/login-bg.jpg');background-position: center;background-size: cover;
+}
+
+.content{
+    width:100%;
+}
+
+.card-body {
+    height:500px;
+   
+}
+

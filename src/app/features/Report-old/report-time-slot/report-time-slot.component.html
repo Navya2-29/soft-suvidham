@@ -1,0 +1,85 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF">
+      <span class="material-icons" (click)="generatePDF()">print</span>
+    </button>
+     <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Time-Slot Based Report" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+    <div class="body-print" >
+      <div id="pdf-content">
+        <ng-container *ngIf="data.length>0">
+        
+        <div *ngFor="let mode of groupedData | keyvalue">
+          <p class="transaction tabble-heading">
+            {{ mode.key }}
+          </p>
+
+          <div *ngFor="let category of mode.value | keyvalue">
+            <p class="category">{{ category.key }}</p>
+            <table class="transactionTable">
+              <thead>
+                <tr>
+                  <th>{{ "BILLNO" | translate }}</th>
+                  <th>{{ "Name" | translate }}</th>
+                  <th>{{ "STAR" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr *ngFor="let item of category.value | keyvalue">
+                  <td>{{ item.value.BillNo }}</td>
+              
+                  <td>
+                    {{ item.value.Name  }}
+                  </td>
+                  <td>
+                    {{ item.value.Star  }}
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+      </div> 
+      <div *ngIf="data.length===0 && creditTransactionArray.length===0" class="nodataFound">
+      <h2> </h2>
+      </div>
+      <hr/>
+    </div>
+  </div>
+</div>

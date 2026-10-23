@@ -1,0 +1,125 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="vm-page">
+<header class="vm-titlebar"><div class="vm-title-left"><a class="vm-back" routerLink="/dashboard" aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></a><span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span><div><h1>Category Master</h1><p></p></div></div><span class="vm-header-note">Temple Management System</span></header>
+<main class="vm-workspace"><div class="vm-layout"><section class="vm-panel vm-editor"><div class="vm-panel-title"><mat-icon>edit_note</mat-icon><span>Category Master Details</span></div><div class="vm-panel-body">
+          <h1 style="font-weight:500;">Category Master</h1>
+          <form [formGroup]="cmasterForm" (keydown.enter)="$event.preventDefault()">
+            <table class="table">
+              <tr>
+                <td> Category Code<span class="text-danger">*</span><input type="text" maxlength="3"
+                    appUpperCase matInput formControlName="VC_Code" [readonly]="updateFlag"
+                    class="form-control sps" placeholder="Enter Code" style="width:126px;"> </td>
+              </tr>
+              <div
+                *ngIf="cmasterFormControl['VC_Code'].invalid && (cmasterFormControl['VC_Code'].dirty || cmasterFormControl['VC_Code'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="cmasterFormControl['VC_Code'].hasError('required')">
+                  Code is required.
+                </div>
+                <div
+                  *ngIf="cmasterFormControl['VC_Code'].invalid && cmasterFormControl['VC_Code'].hasError('maxlength')">
+                  Code must be 3 characters long.
+                </div>
+                <div *ngIf="cmasterFormControl['VC_Code'].hasError('pattern')">
+                  Code must be include number or english alphabat.
+                </div>
+                <div *ngIf="showMaxLengthError" class="pl-1 text-danger">
+                  Code must be 3 characters long.
+                </div>
+                <div *ngIf="cmasterFormControl['VC_Code'].hasError('duplicateCode')" class="text-danger">
+                  Code already exists.
+                </div>
+              </div>
+              <tr>
+                <td> Category Name<span class="text-danger">*</span><input type="text" appUpperCase
+                    formControlName="VC_Name" matInput class="form-control" placeholder="Enter Name"> </td>
+              </tr>
+              <div
+                *ngIf="cmasterFormControl['VC_Name'].invalid && (cmasterFormControl['VC_Name'].dirty || cmasterFormControl['VC_Name'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="cmasterFormControl['VC_Name'].hasError('required')">
+                  Name is required.
+                </div>
+                <div *ngIf="cmasterFormControl['VC_Name'].hasError('pattern')">
+                  Name include only numbers,english alphabat,spaces .
+                </div>
+                <div *ngIf="cmasterFormControl['VC_Name'].hasError('duplicateName')" class="text-danger">
+                  Name already exists.
+                </div>
+              </div>
+              <tr>
+                <td> Category Name in regional<span class="text-danger">*</span><input type="text"
+                    formControlName="VC_RegName" matInput class="form-control" placeholder="In regional Language"> </td>
+              </tr>
+              <div
+                *ngIf="cmasterFormControl['VC_RegName'].invalid && (cmasterFormControl['VC_RegName'].dirty || cmasterFormControl['VC_RegName'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="cmasterFormControl['VC_RegName'].hasError('required')">
+                  Name is required.
+                </div>
+                <div *ngIf="cmasterFormControl['VC_RegName'].hasError('duplicateRName')" class="text-danger">
+                  Name already exists.
+                </div>
+              </div>
+              <tr>
+                <td>
+                  <mat-checkbox formControlName="VC_Active">Active</mat-checkbox>
+                </td>
+              </tr>
+              <div
+                *ngIf="cmasterFormControl['VC_Active'].invalid && (cmasterFormControl['VC_Active'].dirty || cmasterFormControl['VC_Active'].touched)"
+                class="pl-1 text-danger">
+
+              </div>
+              <tr>
+                <td>
+                  
+                  
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Category Master List</span></div><div class="vm-list-area">
+          <div style="display:flex;" class="search-container mt-3 vm-search-container">
+            <input type="text" class="form-control sps search-input" (input)="onSearch()"
+              placeholder="search by Code or Name" style="width:36%;" [(ngModel)]="searchQuery">
+            <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+          </div>
+          <div class="fixitems prathishta">
+            <table class="table">
+              <thead style="border-bottom: 2px solid #223d61;">
+                <!-- <th>Id</th> -->
+                <th class="code_center">code</th>
+                <th>Name</th>
+                <th></th>
+              </thead>
+              <tbody *ngIf="cmaster && cmaster.length > 0">
+                <tr *ngFor="let data of filteredCmaster ; let i=index">
+                  <!-- <td>{{data.VC_ID}}</td> -->
+                  <td class="code_center">{{data.VC_Code}}</td>
+                  <td style="text-align:left;width:50%" class="wrap-text">{{data.VC_Name}}-{{data.VC_RegName}}</td>
+                  <td>
+                    <mat-icon title="Edit" class="small" style="vertical-align: middle;"
+                      (click)="onEdit(data)">edit</mat-icon>
+                    <mat-icon title="Delete" class="small" style="vertical-align: middle;"
+                      (click)="onDeleteCheck(data.VC_ID)">delete</mat-icon>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr *ngIf="!cmaster || cmaster.length === 0">
+                  <td colspan="5">
+                    <div style="width: 100%;" class="mt-3">
+                      <h4 class="text-center">No Records found</h4>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div></section></div></main>
+<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-secondary ml-1" (click)="onReset()">Cancel</button><button type="button" class="vm-save-btn" *ngIf="!updateFlag" class="btn btn-primary"
+                    (click)="onSubmit(cmasterForm.value)"  >Save</button><button type="button" class="vm-save-btn" *ngIf="updateFlag" class="btn btn-primary"
+                    (click)="onUpdate(cmasterForm.value)"  >Update</button></div></footer>
+</div>

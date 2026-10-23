@@ -1,0 +1,104 @@
+.body-print table{
+  margin:20px 0;
+}
+.tabble-heading{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: Manjari;
+  text-transform: uppercase;
+  color: rgb(8, 8, 49);
+  /* text-decoration: underline; */
+}
+.vazhipad-cancel{
+  margin: 0;
+  padding: 0;
+}
+
+.row-count-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.overall-subtotal {
+  font-size: 11px;
+  font-weight: normal;
+  margin-left: 6px;
+  color: #475569;
+}
+
+.grandtotal {
+  text-align: right;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 16px 0 10px 0;
+}
+
+.grandtotal .overall-total {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.column-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.column-dropdown-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.column-dropdown-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.column-dropdown-body {
+  padding: 6px 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.column-item-label {
+  font-size: 12px;
+  color: #334155;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .overall-subtotal,
+  .overall-total,
+  .column-picker-wrapper,
+  .icon-container {
+    display: none !important;
+  }
+}

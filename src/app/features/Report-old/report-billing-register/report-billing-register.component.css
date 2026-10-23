@@ -1,0 +1,10 @@
+#pdf-content{
+    margin: 20px 0;
+    /* padding: 20px 0; */
+}
+td, th {
+    word-wrap: break-word; 
+    white-space: normal;   
+    overflow-wrap: break-word; 
+    max-width: 200px;
+}

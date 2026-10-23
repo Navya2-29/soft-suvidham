@@ -1,0 +1,327 @@
+<app-header class="app-header no-print"></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="preview-page-container">
+  <!-- TOP PREVIEW HEADER & ACTION BAR -->
+  <div class="preview-header-bar no-print">
+    <div class="preview-title-area">
+      <nav class="report-breadcrumb" aria-label="Breadcrumb">
+        <a class="breadcrumb-link" (click)="goBack()">Reports</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ "Bill Register" | translate }}</span>
+      </nav>
+      <span class="report-badge no-print" *ngIf="billRegisterData && billRegisterData.length > 0">
+        {{ billRegisterData.length }} {{ billRegisterData.length === 1 ? 'record' : 'records' }}
+      </span>
+    </div>
+
+    <div class="preview-actions">
+      <!-- Common Columns Dropdown -->
+      <div class="column-picker-wrapper common-column-picker">
+        <button
+          type="button"
+          class="columns-btn"
+          (click)="toggleColumnDropdown($event)"
+          aria-label="Toggle Columns"
+        >
+          <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span class="columns-btn-text">Columns ({{ visibleColumnCount }}/{{ totalColumnCount }})</span>
+          <svg class="chevron-icon" [class.rotated]="showColumnDropdown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="column-menu-dropdown" *ngIf="showColumnDropdown" (click)="$event.stopPropagation()">
+          <div class="column-dropdown-header">
+            <span class="column-dropdown-title">Columns</span>
+            <span class="column-dropdown-count">{{ visibleColumnCount }}/{{ totalColumnCount }}</span>
+          </div>
+          <div class="column-dropdown-body">
+            <label class="column-menu-item" *ngFor="let col of columnList">
+              <input
+                type="checkbox"
+                [checked]="columns[col.key]"
+                (change)="toggleColumn(col.key)"
+              />
+              <span class="column-item-label">{{ col.label }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Back to previous page"
+        (click)="goBack()"
+        aria-label="Back"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="action-btn-text">Back</span>
+      </button>
+
+      <!-- Print Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Make Print"
+        (click)="generatePDF()"
+        aria-label="Print"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span class="action-btn-text">Print</span>
+      </button>
+
+      <!-- Export to Excel Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Export to Excel"
+        (click)="reportinexcelformat()"
+        aria-label="Export to Excel"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        </svg>
+        <span class="action-btn-text">Excel</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- DOCUMENT CANVAS -->
+  <div class="document-canvas">
+    <div id="print-section" class="document-sheet">
+
+      <!-- Header Print -->
+      <div class="header-print">
+        <h1 class="templename" *ngIf="templeName">{{ templeName }}</h1>
+        <h4 class="templeaddress" *ngIf="templeAddress">{{ templeAddress }}</h4>
+
+        <div class="report-title-wrap">
+          <h2 class="report-title">{{ "Bill Register" | translate }}</h2>
+          <div class="report-title-underline"></div>
+        </div>
+
+        <p class="report-date-range" *ngIf="fromDate || toDate">
+          {{ formatDateToDDMMYYYY(fromDate) }}<span *ngIf="fromDate && toDate"> to </span>{{ formatDateToDDMMYYYY(toDate) }}
+        </p>
+      </div>
+
+      <!-- Body Print -->
+      <div class="body-print">
+        <div id="pdf-content" *ngIf="billRegisterData && billRegisterData.length > 0">
+
+          <!-- Table -->
+          <div class="table-responsive-wrapper">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th *ngIf="isColumnVisible('sino')" class="col-sino">{{ "Report Name.SINO" | translate }}</th>
+                  <th *ngIf="isColumnVisible('billDate')" class="col-billdate">{{ "Report Name.Bill Date" | translate }}</th>
+                  <th *ngIf="isColumnVisible('billNo')" class="col-billno">{{ "BILL NO" | translate }}</th>
+                  <th *ngIf="isColumnVisible('cash')" class="number col-cash">{{ "Cash" | translate }}</th>
+                  <th *ngIf="isColumnVisible('upi')" class="number col-upi">{{ "UPI" | translate }}</th>
+                  <th *ngIf="isColumnVisible('cheque')" class="number col-cheque">{{ "Cheque" | translate }}</th>
+                  <th *ngIf="isColumnVisible('mOrder')" class="number col-morder">{{ "M.Order" | translate }}</th>
+                  <th *ngIf="isColumnVisible('debit')" class="number col-debit">{{ "Debit" | translate }}</th>
+                  <th *ngIf="isColumnVisible('bank')" class="number col-bank">{{ "Bank" | translate }}</th>
+                  <th *ngIf="isColumnVisible('online')" class="number col-online">{{ "Online" | translate }}</th>
+                  <th *ngIf="isColumnVisible('due')" class="number col-due">{{ "Due" | translate }}</th>
+                  <th *ngIf="isColumnVisible('total')" class="number col-total">{{ "Report Name.TOTAL" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of (isPrinting ? billRegisterData : getPaginatedEntries(billRegisterData)); let i = index">
+                  <td *ngIf="isColumnVisible('sino')" class="col-sino cell-sino" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ isPrinting ? (i + 1) : ((currentPage - 1) * pageSize + i + 1) }}
+                  </td>
+                  <td *ngIf="isColumnVisible('billDate')" class="col-billdate cell-billdate" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.BillDate }}
+                  </td>
+                  <td *ngIf="isColumnVisible('billNo')" class="col-billno cell-billno" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.BillNo }}
+                  </td>
+                  <td *ngIf="isColumnVisible('cash')" class="number col-cash" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "CS" ? item.TotalAmt : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('upi')" class="number col-upi" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "UP" ? item.TotalAmt : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('cheque')" class="number col-cheque" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "CH" ? item.TotalAmt : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('mOrder')" class="number col-morder" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "MO" ? item.TotalAmt : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('debit')" class="number col-debit" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "DE" ? item.TotalAmt : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('bank')" class="number col-bank" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "ON" ? item.TotalAmt.toFixed(2) : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('online')" class="number col-online" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ isRedText(item) ? "-" : "" }}
+                    {{ item.TrnsMode === "OL" ? item.TotalAmt.toFixed(2) : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('due')" class="number col-due" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    {{ item.TrnsMode === "CR" ? item.TotalAmt.toFixed(2) : (0 | number: "1.2-2") }}
+                  </td>
+                  <td *ngIf="isColumnVisible('total')" class="number col-total" [ngStyle]="isRedText(item) ? { color: 'red' } : {}">
+                    <span>{{
+                      item.TrnsMode === "CR" ||
+                      (item.TrnsMode !== "CR" && item.TrnStatus !== "S")
+                        ? "-"
+                        : ""
+                    }}</span>
+                    {{ item.TotalAmt.toFixed(2) | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="table-footer-row">
+                  <td [attr.colspan]="getLeadingColspan()" class="total footer-total-label">
+                    <span class="total-label-gradient">{{ "Report Name.GrandTotal" | translate }}:</span>
+                    <span class="row-count-text no-print" *ngIf="billRegisterData && billRegisterData.length > 0">
+                      (Showing {{ getRangeStart() }}–{{ getRangeEnd() }} of {{ billRegisterData.length }} records)
+                    </span>
+                    <span class="row-count-text print-only" *ngIf="isPrinting">
+                      ({{ billRegisterData.length }} records)
+                    </span>
+                  </td>
+                  <td *ngIf="isColumnVisible('cash')" class="total number col-cash">
+                    {{ getColumnTotal("CS") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('upi')" class="total number col-upi">
+                    {{ getColumnTotal("UP") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('cheque')" class="total number col-cheque">
+                    {{ getColumnTotal("CH") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('mOrder')" class="total number col-morder">
+                    {{ getColumnTotal("MO") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('debit')" class="total number col-debit">
+                    {{ getColumnTotal("DE") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('bank')" class="total number col-bank">
+                    {{ getColumnTotal("ON") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('online')" class="total number col-online">
+                    {{ getColumnTotal("OL") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('due')" class="total number col-due">
+                    {{ "-" + getColumnTotal("CR") | number: "1.2-2" }}
+                  </td>
+                  <td *ngIf="isColumnVisible('total')" class="total number col-total">
+                    {{ getGrandTotal() | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Pagination Toolbar -->
+          <div class="table-pagination-bar no-print" *ngIf="billRegisterData && billRegisterData.length > 0">
+            <div class="pagination-info">
+              <span class="rows-label">Rows per page:</span>
+              <div class="select-container">
+                <select
+                  class="page-size-select"
+                  [value]="pageSize"
+                  (change)="onPageSizeChange($any($event.target).value)"
+                  aria-label="Rows per page"
+                >
+                  <option [value]="5">5</option>
+                  <option [value]="10">10</option>
+                  <option [value]="25">25</option>
+                  <option [value]="50">50</option>
+                  <option [value]="100">100</option>
+                  <option [value]="200">200</option>
+                  <option [value]="500">500</option>
+                </select>
+              </div>
+              <span class="pagination-divider">|</span>
+              <span class="showing-label">
+                Showing {{ getRangeStart() }}–{{ getRangeEnd() }} of {{ billRegisterData.length }} records
+              </span>
+            </div>
+
+            <div class="pagination-buttons">
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="currentPage === 1"
+                (click)="prevPage()"
+                aria-label="Previous Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              <button
+                *ngFor="let p of getPages(billRegisterData)"
+                type="button"
+                class="page-btn page-num-btn"
+                [class.active]="p === currentPage"
+                (click)="goToPage(p)"
+              >
+                {{ p }}
+              </button>
+
+              <button
+                type="button"
+                class="page-btn page-nav-btn"
+                [disabled]="currentPage === getTotalPages(billRegisterData)"
+                (click)="nextPage(billRegisterData)"
+                aria-label="Next Page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMPTY STATE MESSAGE WHEN NO REPORT IS AVAILABLE -->
+        <div class="no-data-card no-print" *ngIf="!loading && (!billRegisterData || billRegisterData.length === 0)">
+          <div class="no-data-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+              <line x1="9" y1="11" x2="15" y2="11"></line>
+              <line x1="9" y1="7" x2="11" y2="7"></line>
+            </svg>
+          </div>
+          <h3 class="no-data-title">No Report Available</h3>
+          <p class="no-data-desc">
+            There are no billing records available for the selected date range
+            <span *ngIf="fromDate && toDate">({{ formatDateToDDMMYYYY(fromDate) }} to {{ formatDateToDDMMYYYY(toDate) }})</span>.
+          </p>
+        </div>
+        <div class="no-data-print-text print-only" *ngIf="!loading && (!billRegisterData || billRegisterData.length === 0)">
+          No report data available for the selected period.
+        </div>
+
+        <hr class="no-print" />
+      </div>
+    </div>
+  </div>
+</div>

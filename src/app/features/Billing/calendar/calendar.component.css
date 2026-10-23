@@ -1,0 +1,170 @@
+
+.line {
+			transition:1s;
+			border-radius:6px;
+			position:relative;
+	  }
+	  .line:hover {
+			background:orange;
+			box-shadow:1px 1px 35px silver;
+			transition:1s;	
+	  }
+	  .cat {
+			transition:1s;
+			border-radius:5px;;
+			border:1px solid gray;
+			margin:10px;
+	  }
+	  .cat:hover {
+			border:1px solid red;
+			box-shadow:1px 1px 35px silver;
+			transition:1s;
+	  }
+	  .catbg {
+		border:1px solid silver;
+		padding:15px;
+		background:white;
+	  }
+	  
+	  .calnav{
+		font-size:11.4pt;
+		background:white;
+		color:maroon;
+		padding:6px;
+		border-radius:4.2px;
+		cursor:pointer;
+	  }
+	  
+	  .weekday > th{
+		font-size:15pt;
+		font-weight:500;
+		color:black;
+		border-bottom:6px solid orange;
+		padding:5px;
+		text-align:center;
+         font-family: "Anek Malayalam", sans-serif;
+	  }
+	  .weekday > td{
+		font-size:18pt;
+		padding:1px;
+		font-weight:720;
+		color:black;
+		border:1px solid orange;
+		text-align:center;
+		cursor:pointer;
+         font-family: "Anek Malayalam", sans-serif;
+	  }
+	  .naal{
+		font-size:12pt;
+         font-family: "Anek Malayalam", sans-serif;
+		}
+		
+		.model-box {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .model-content {
+      background-color: white;
+      margin: 5px auto;
+      padding: 20px;
+      border: 1px solid #888;
+	  border-radius:8.1px;
+      width: 80%;
+    }
+    .close {
+      color: black;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .mal-naal{
+        width:75%;font-size:7pt;text-align:left;float:left;color:maroon;padding:5px;font-family: "Anek Malayalam", sans-serif;
+    }
+
+    .mal-date{
+        width:25%;font-size:7pt;text-align:left;float:right;padding:5px;font-family: "Anek Malayalam", sans-serif;
+    }
+
+    .imp-title{
+        font-family: "Anek Malayalam", sans-serif;font-size:15pt;
+    }
+
+    .imp-header{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+	.mal-thidhi{
+		position:absolute;top:0;
+		font-family: "Anek Malayalam", sans-serif;
+		font-size:7pt;
+		color:maroon;padding:5px;
+	}
+
+	.date {
+		font-weight:600;
+		margin-top:15px;
+	}
+
+	.green{
+		background:rgb(86, 228, 86);
+	}
+
+	.gray{
+		background:rgb(236, 236, 236);
+	}
+	td {
+  position: relative;
+}
+
+/* Hover popup box */
+.hover-box {
+  position: absolute;
+  bottom: 100%; /* show above the cell */
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 1000;
+
+  opacity: 0;
+  animation: fadeIn 0.2s forwards;
+}
+
+/* Small arrow */
+.hover-box::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

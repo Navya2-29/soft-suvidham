@@ -1,0 +1,116 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make Print" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+   
+      <button mat-icon-button matTooltip="Export to Excel" (click)="exportToExcel()">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Report Name.ONLINE REPORT" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div class="Fee collection" *ngIf="filteredData.length>0">
+          <!-- <h4 class="tabble-heading">{{ "FeeCollection" | translate }}</h4> -->
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "Order Id" | translate }}</th>
+                <!-- <th>{{ "BILL NO" | translate }}</th> -->
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th class="number">{{ "AMOUNT" | translate }}</th>
+
+                <th>{{ "Reference No" | translate }}</th>
+
+                <!-- <th>{{"Counter" | translate }}</th>
+            <th>{{ "VAZHIPAD" | translate }}</th> -->
+                <th>{{ "VAZHIPAD Date" | translate }}</th>
+                <th>{{ "NAME & Address" | translate }}</th>
+                <th>{{ "Status" | translate }}</th>
+                <th>{{ "Deatails" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredData">
+                <td>{{ item.OrderId }}</td>
+                <td>{{ item.BillDate }}</td>
+                <td>{{ item.Amount }}</td>
+                <td>{{ item.TrnId ? item.TrnId : "--" }}</td>
+                <td>{{ item.VazhiDate }}</td>
+                <td>
+                  {{ item.Address1 }}<br />
+                  {{ item.Address2 }},<br />
+                  {{ item.Address3 }}<br />
+                  {{ item.Address4 }}<br />
+                  {{ item.MobileNo }}
+                </td>
+                <td>{{ getTransStatus(item.TrnStatus) }}</td>
+                <td>
+                  <a
+                     style="color: darkblue; cursor: pointer"
+                    (click)="showViewMorePopUp(item.OrderId, item.TrnStatus)"
+                    >View More</a
+                  >
+                </td>
+
+                <!-- <td>{{ item.Remarks }}</td> -->
+              </tr>
+              <!-- <tr>
+            <td colspan="8" class="total">
+              {{ "Report Name.TOTAL" | translate }}:
+            </td>
+            <td class="total">
+              {{ getFeecollectionTotalAmount() | number : "1.2-2" }}
+            </td> -->
+              <!-- <td colspan="2"></td> -->
+              <!-- </tr> -->
+            </tbody>
+          </table>
+          <!-- <div>
+            <p class="grandtotal">
+              {{ "Report Name.Total Collection" | translate }}:{{
+                getTotalAmount() +
+                  getCreditCollectTotalAmount() +
+                  getFeecollectionTotalAmount() | number : "1.2-2"
+              }}
+            </p>
+          </div> -->
+        </div>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

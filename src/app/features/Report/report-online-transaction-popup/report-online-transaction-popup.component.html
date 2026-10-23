@@ -1,0 +1,96 @@
+<h2 mat-dialog-title class="dialog-title">Online Order No: {{ orderId }}</h2>
+<mat-dialog-content *ngIf="orderDetails">
+  <table class="custom-table">
+    <tr>
+      <td>Name</td>
+      <td>{{ orderDetails[0]?.Address1 }}</td>
+    </tr>
+    <tr>
+      <td>Email ID</td>
+      <td>{{ orderDetails[0]?.EmailId }}</td>
+    </tr>
+    <tr>
+      <td>Mobile</td>
+      <td>{{ orderDetails[0]?.MobileNo }}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>
+        {{ orderDetails[0].Address2 }}<br />
+        {{ orderDetails[0].Address3 }}<br />
+        {{ orderDetails[0].Address4 }}<br />
+        {{ orderDetails[0].PinCode }}
+      </td>
+    </tr>
+    <tr>
+      <td>Bank</td>
+      <td>{{ "--" }}</td>
+    </tr>
+    <tr>
+      <td>Transaction ID</td>
+      <td>{{ orderDetails[0]?.TrnId || "--" }}</td>
+    </tr>
+    <tr>
+      <td>Order Id</td>
+      <td>{{ orderDetails[0]?.OrderId }}</td>
+    </tr>
+    <tr>
+      <td>Order Date</td>
+      <td>{{ formatDateToDDMMYYYY(orderDetails[0]?.BillDate) }}</td>
+    </tr>
+    <tr>
+      <td>Total Amount</td>
+      <td>₹{{ orderDetails[0]?.TotalAmt }}</td>
+    </tr>
+  </table>
+
+  <h3 style="margin-top: 20px">Vazhipad Details</h3>
+  <table class="custom-table">
+    <tr>
+      <th>Sl.No</th>
+      <th>Vazhipad</th>
+      <th>Name</th>
+      <th>Star</th>
+      <th>Qty</th>
+      <th>Vazhipad Date</th>
+      <th>Amount</th>
+    </tr>
+    <tr *ngFor="let orderDetails of orderDetails">
+      <td>1</td>
+      <td>{{ orderDetails.Vazhipad }}</td>
+      <td>{{ orderDetails.Name }}</td>
+      <td>{{ orderDetails.Star }}</td>
+      <td>{{ orderDetails.Qty }}</td>
+      <td>{{ formatDateToDDMMYYYY(orderDetails.EvazDate) }}</td>
+      <td>₹{{ orderDetails.Amount }}</td>
+    </tr>
+  </table>
+
+  <div class="dropdown-action-container">
+    <div class="dropdown-container">
+      <label class="dropdown-label">Transaction Status</label>
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Select an Option</mat-label>
+        <mat-select [(value)]="selectedOption" [(ngModel)]="status">
+          <mat-option value="S">Success</mat-option>
+          <mat-option value="F">Failed</mat-option>
+          <mat-option value="N">Pending</mat-option>
+          <mat-option value="C">Cancel</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="submit-button"
+      (click)="submitStatus()"
+    >
+      Submit
+    </button>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="primary">Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,21 @@
+<div class="tab-container">
+  <mat-tab-group
+    mat-align-tabs="start"
+    (selectedTabChange)="onTabChange($event)"
+  >
+    <mat-tab label="Nadavaravu">
+      <app-nadavaravu></app-nadavaravu>
+    </mat-tab>
+
+    <mat-tab label="Credit Collection">
+      <app-creditcollection></app-creditcollection>
+    </mat-tab>
+
+    <mat-tab label="Fee Collection">
+      <app-devotee-fee-collection #feeCollection></app-devotee-fee-collection>
+    </mat-tab>
+    <!-- <mat-tab label="Thulabharam">
+      <app-thulabaram #thulabaram></app-thulabaram>
+    </mat-tab> -->
+  </mat-tab-group>
+</div>

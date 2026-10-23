@@ -1,0 +1,327 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="vm-page">
+<header class="vm-titlebar"><div class="vm-title-left"><a class="vm-back" (click)="gotoDashBoard()" aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></a><span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span><div><h1>Devotee Master</h1><p>{{ templeName }}</p></div></div><span class="vm-header-note">Temple Management System</span></header>
+<main class="vm-workspace"><div class="vm-layout"><section class="vm-panel vm-editor"><div class="vm-panel-title"><mat-icon>edit_note</mat-icon><span>Devotee Master Details</span></div><div class="vm-panel-body">
+          <h1 style="font-weight: 500; padding-top: 5px">Devotee Master</h1>
+          <form
+            [formGroup]="memeberForm"
+            (keydown.enter)="$event.preventDefault()"
+          >
+            <div class="row">
+              <div class="col-md-4">
+                <table class="table">
+                  <tr>
+                    <td>
+                      Name<input
+                        formControlName="name"
+                        type="text"
+                        class="form-control sps"
+                        placeholder="Enter Name"
+                      />
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Gothram<input
+                        formControlName="Gothram"
+                        type="text"
+                        class="form-control sps"
+                        placeholder="Enter Gothram"
+                      />
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      Address
+                      <input
+                        formControlName="address1"
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Address"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      Mobile<input
+                        type="text"
+                        formControlName="mobile"
+                        class="form-control"
+                        placeholder="Enter Mobile"
+                      />
+                    </td>
+
+                    <div
+                      *ngIf="
+                        memeberForm.get('mobile')?.invalid &&
+                        memeberForm.get('mobile')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      <span
+                        *ngIf="memeberForm.get('mobile')?.errors?.['required']"
+                        >Mobile number is required</span
+                      >
+                      <span
+                        *ngIf="memeberForm.get('mobile')?.errors?.['pattern']"
+                        >Enter a valid 10-digit number</span
+                      >
+                    </div>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      Email<input
+                        type="email"
+                        formControlName="email"
+                        class="form-control"
+                        placeholder="Enter Email"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Devotee Type <span class="text-danger">*</span>
+                      <select
+                        class="form-control sps"
+                        formControlName="devoteeType"
+                      >
+                        <option value="">Select Type</option>
+                        <option value="devotee">Devotee</option>
+                        <option value="member">Member</option>
+
+                      </select>
+                      <div
+                        *ngIf="
+                          memeberForm.get('devoteeType')?.touched &&
+                          memeberForm.get('devoteeType')?.invalid
+                        "
+                        class="text-danger"
+                      >
+                        Devotee type is required
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <div>
+                  <table>
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class=""
+                          formControlName="endowment"
+                          (change)="onEndowmentChange()"
+                        />&nbsp;Endowment
+                      </td>
+                    </tr>
+                    <tr *ngIf="memeberForm.get('endowment')?.value">
+                      <td>
+                        <input
+                          type="text"
+                          name=""
+                          id=""
+                          placeholder="Enter Amount"
+                          formControlName="Amount"
+                          class="form-control sps"
+                          width="100%"
+                        />
+                      </td>
+                    </tr>
+                    <tr *ngIf="memeberForm.get('endowment')?.value">
+                      <td>
+                        <select
+                          name=""
+                          id=""
+                          class="form-control sps"
+                          style="width: 100%"
+                          formControlName="VazhId"
+                        >
+                          <option value="">Select Vazhipad</option>
+                          <option
+                            *ngFor="let vazhipad of vmActivelist"
+                            [value]="vazhipad.VM_Id"
+                          >
+                            {{ vazhipad.VM_Name }}
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <table class="table">
+                  <div formArrayName="relativesDetails">
+                    <tr
+                      *ngFor="
+                        let devotee of relativesDetails.controls;
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                    >
+                      <td>
+                        <a color="accent"
+                          ><mat-icon class="icons" (click)="removeDevotee(i)"
+                            >delete</mat-icon
+                          ></a
+                        >
+                      </td>
+                      <td>
+                        <input
+                          formControlName="Name"
+                          type="text"
+                          placeholder="Enter Name"
+                          style="border: none"
+                        />
+                      </td>
+                      <td>
+                        <select
+                          class="form-control"
+                          formControlName="Star"
+                          style="width: 100%; height: 30.6px"
+                        >
+                          <option value="">Select Star</option>
+                          <ng-container *ngIf="lang == 'en'">
+                            <option
+                              *ngFor="let nakshtra of nakshatham"
+                              [value]="nakshtra.id"
+                            >
+                              {{ nakshtra.SM_NameEng }}
+                            </option>
+                          </ng-container>
+                          <ng-container *ngIf="lang == 'ml'">
+                            <option
+                              *ngFor="let nakshtra of nakshatham"
+                              [value]="nakshtra.id"
+                            >
+                              {{ nakshtra.SM_Name }}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </td>
+                      <td style="vertical-align: center">
+                        <mat-icon
+                          class="icons"
+                          (click)="addRelativeDetails()"
+                          style="color: rgb(32, 59, 94)"
+                          >add_comment</mat-icon
+                        >
+                      </td>
+                    </tr>
+                  </div>
+                </table>
+                <table style="border: none">
+                  <tr>
+                    <td></td>
+                    <td colspan="3">
+                      
+                      
+                      
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Devotee Master List</span></div><div class="vm-list-area">
+          <div style="display: flex" class="search-container mt-3 vm-search-container">
+            <input
+              type="text"
+              class="form-control sps search-input"
+              (input)="onSearch()"
+              placeholder="search by Mob or Name"
+              style="width: 36%"
+              [(ngModel)]="searchQuery"
+            />
+            <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+            <div>
+              &nbsp;<button
+                class="btn buttonColor"
+                (click)="printEndowmentlist()"
+              >
+                Endowment list
+              </button>
+              &nbsp;<button
+                class="btn buttonColor"
+                (click)="printMemberslist()"
+              >
+                Members list
+              </button>
+            </div>
+          </div>
+          <div class="prathishta">
+            <div>
+              <div
+                style="padding: 0px; margin-bottom: 18px; margin-top: 20px"
+                class="tablescroll"
+              >
+                <table class="table">
+                  <thead
+                    style="
+                      border-bottom: 2px solid #223d61;
+                      background-color: #223d61;
+                      color: white;
+                    "
+                  >
+                    <tr>
+                      <th style="color: antiquewhite">SINO</th>
+                      <th style="color: antiquewhite">Member Id</th>
+                      <th style="color: antiquewhite">Name</th>
+                      <th style="color: antiquewhite">Mobile</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+                  <tr *ngFor="let member of filteredPmaster; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ member.MID }}</td>
+                    <td style="text-align: left">{{ member.Name }}</td>
+                    <td>{{ member.mobile }}</td>
+                    <td>
+                      <mat-icon
+                        title="Edit"
+                        class="small"
+                        style="vertical-align: middle"
+                        (click)="onEdit(member)"
+                        >edit</mat-icon
+                      >
+                      <mat-icon
+                        title="Delete"
+                        class="small"
+                        style="vertical-align: middle"
+                        (click)="onDeleteAll(member.MID)"
+                        >delete</mat-icon
+                      >
+                    </td>
+                  </tr>
+                  <tr *ngIf="memberList.length == 0">
+                    <td colspan="5">No Data Found</td>
+                  </tr>
+                </table>
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </div></section></div></main>
+<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn"
+                        class="btn btn-secondary ml-4"
+                        (click)="resetForm()"
+                      >
+                        Cancel
+                      </button><button type="button" class="vm-save-btn"
+                        class="btn buttonColor mt-8"
+                        *ngIf="!this.editFlag"
+                        (click)="onSubmit(memeberForm.value)"
+                      >
+                        Save
+                      </button><button type="button" class="vm-save-btn"
+                        class="btn buttonColor ml-4"
+                        *ngIf="this.editFlag"
+                        (click)="onUpdate(memeberForm.value)"
+                      >
+                        Update
+                      </button></div></footer>
+</div>

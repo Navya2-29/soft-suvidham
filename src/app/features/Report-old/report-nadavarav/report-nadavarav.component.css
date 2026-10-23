@@ -1,0 +1,15 @@
+h3.tabble-heading{
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  text-align: left;
+
+}
+.fwname{
+  max-width: 250px;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+}

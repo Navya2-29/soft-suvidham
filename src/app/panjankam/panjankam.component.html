@@ -1,0 +1,215 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="panchangam-page-wrapper">
+  <div class="panchangam-layout">
+    <!-- LEFT FILTER PANEL -->
+    <div class="left-panel">
+      <h3 class="panel-title">Filter Type</h3>
+
+      <div class="radio-group">
+        <label class="radio-item" [class.active]="selectedType === 'all'">
+          <input
+            type="radio"
+            name="filterType"
+            value="all"
+            [(ngModel)]="selectedType"
+            (change)="onTypeChange()"
+          />
+          <span class="custom-radio"></span>
+          <span class="radio-label">All</span>
+        </label>
+
+        <label class="radio-item" [class.active]="selectedType === 'rahukalam'">
+          <input
+            type="radio"
+            name="filterType"
+            value="rahukalam"
+            [(ngModel)]="selectedType"
+            (change)="onTypeChange()"
+          />
+          <span class="custom-radio"></span>
+          <span class="radio-label">Rahu Kalam</span>
+        </label>
+
+        <label class="radio-item" [class.active]="selectedType === 'gulika'">
+          <input
+            type="radio"
+            name="filterType"
+            value="gulika"
+            [(ngModel)]="selectedType"
+            (change)="onTypeChange()"
+          />
+          <span class="custom-radio"></span>
+          <span class="radio-label">Gulika Kalam</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-panel">
+      <!-- TOP ACTION BAR -->
+      <div class="top-action-bar">
+        <!-- BREADCRUMB -->
+        <nav class="breadcrumb-nav">
+          <span class="breadcrumb-parent" (click)="goBack()">Reports</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Panchangam</span>
+          <span class="breadcrumb-count">({{ data ? data.length : 0 }} records)</span>
+        </nav>
+
+        <!-- FILTERS & ACTIONS -->
+        <div class="filters-toolbar">
+          <div class="filter-control year-control">
+            <i class="fa fa-calendar-alt filter-icon"></i>
+            <input
+              type="text"
+              [(ngModel)]="year"
+              placeholder="Year"
+              min="2002"
+              maxlength="4"
+              class="year-input"
+            />
+            <i class="fa fa-chevron-down chevron-icon"></i>
+          </div>
+
+          <div class="filter-control select-control">
+            <select [(ngModel)]="selectedMonth" class="styled-select">
+              <option value="">All Months</option>
+              <option *ngFor="let month of months" [value]="month.emonthEng">
+                {{ month.emonthEng }}
+              </option>
+            </select>
+            <i class="fa fa-chevron-down chevron-icon"></i>
+          </div>
+
+          <div class="filter-control select-control">
+            <select [(ngModel)]="selectedStar" class="styled-select">
+              <option value="">All Stars</option>
+              <option *ngFor="let star of stars" [value]="star.id">
+                {{ getStarName(star) }}
+              </option>
+            </select>
+            <i class="fa fa-chevron-down chevron-icon"></i>
+          </div>
+
+          <button class="btn-action btn-search" (click)="filterData()">
+            <i class="fa fa-search"></i>
+            <span>Search</span>
+          </button>
+
+          <button class="btn-action btn-reset" (click)="reset()">
+            <i class="fa fa-rotate-right"></i>
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TITLE SECTION -->
+      <div class="title-section">
+        <h2 class="panchangam-title">Panchangam</h2>
+        <div class="title-underline"></div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-container">
+        <table class="panchangam-table">
+          <thead>
+            <tr>
+              <th *ngFor="let col of displayedColumns">
+                {{ columnLabels[col] || col }}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              *ngFor="let item of paginatedData"
+              (click)="openEdit(item)"
+              style="cursor: pointer"
+            >
+              <td
+                *ngFor="let col of displayedColumns"
+                [ngClass]="'col-' + col"
+              >
+                <ng-container *ngIf="col === 'edate'; else normal">
+                  {{ item[col] | date: "dd-MM-yyyy" }}
+                </ng-container>
+
+                <ng-template #normal>
+                  {{ item[col] }}
+                </ng-template>
+              </td>
+            </tr>
+
+            <tr *ngIf="data.length === 0">
+              <td [attr.colspan]="displayedColumns.length" class="no-data-cell">
+                No Data
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION TOOLBAR -->
+      <div class="table-pagination-bar" *ngIf="data.length > 0">
+        <div class="pagination-info">
+          <span class="rows-label">Rows per page:</span>
+          <div class="select-container">
+            <select
+              class="page-size-select"
+              [ngModel]="pageSize"
+              (ngModelChange)="onPageSizeChange($event)"
+              aria-label="Rows per page"
+            >
+              <option *ngFor="let size of pageSizeOptions" [value]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <span class="pagination-divider">|</span>
+          <span class="showing-label">
+            Showing {{ startRecord }}–{{ endRecord }} of {{ data.length }} records
+          </span>
+        </div>
+
+        <div class="pagination-buttons">
+          <button
+            type="button"
+            class="page-btn page-nav-btn"
+            [disabled]="currentPage === 1"
+            (click)="prevPage()"
+            aria-label="Previous Page"
+          >
+            <i class="fa fa-chevron-left"></i>
+          </button>
+
+          <ng-container *ngFor="let p of visiblePageNumbers">
+            <button
+              *ngIf="p !== '...'; else ellipsis"
+              type="button"
+              class="page-btn page-num-btn"
+              [class.active]="p === currentPage"
+              (click)="setPage(+p)"
+            >
+              {{ p }}
+            </button>
+            <ng-template #ellipsis>
+              <span class="page-ellipsis">...</span>
+            </ng-template>
+          </ng-container>
+
+          <button
+            type="button"
+            class="page-btn page-nav-btn"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+            aria-label="Next Page"
+          >
+            <i class="fa fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

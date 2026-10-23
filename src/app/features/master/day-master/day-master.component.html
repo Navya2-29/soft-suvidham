@@ -1,0 +1,106 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="vm-page">
+<header class="vm-titlebar"><div class="vm-title-left"><a class="vm-back" (click)="navigateToDAshboard()" aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></a><span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span><div><h1>Day Master</h1><p>{{ templeName }}</p></div></div><span class="vm-header-note">Temple Management System</span></header>
+<main class="vm-workspace"><div class="vm-layout"><section class="vm-panel vm-editor"><div class="vm-panel-title"><mat-icon>edit_note</mat-icon><span>Day Master Details</span></div><div class="vm-panel-body">
+                    <h1 style="font-weight:500;">Day Master</h1>
+                    <form  [formGroup]="dayMasterForm" (keydown.enter)="$event.preventDefault()" >
+                    <table class="table">
+                        <tr>
+                           <td colspan="3"> Select Offering
+                           <input type="text"
+                           placeholder="Select Vazhipad"
+                           aria-label="Number"
+                           matInput
+                           class="form-control sps"
+                           formControlName="VM_Name"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      @for (option of filteredVMList | async; track option.VM_Name) {
+                        <mat-option [value]="option.VM_Name">{{option.VM_Name}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </td>
+                          </tr>
+
+                          <div
+                *ngIf="daymasterControl['VM_Name'].invalid && (daymasterControl['VM_Name'].dirty || daymasterControl['VM_Name'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="daymasterControl['VM_Name'].hasError('required')">
+                  Name is required.
+                </div>
+              </div>
+                          <!-- <div *ngIf="dayMasterForm.get('VM_Name')?.hasError('required')">
+                            Vazhipad Name is required.
+                          </div> -->
+                         <tr>
+                            <td>Days</td>
+                          </tr>
+                          <!-- <tr>
+                            <td><input type="checkbox" ></td>
+                             <td>Select All</td>
+
+                          </tr> -->
+                          <div formArrayName="selectedDays" style="margin-left: 10px;">
+                            
+                            <div *ngFor="let day of days; let i = index">
+                              <label>
+                                <input type="checkbox" [formControlName]="i" />
+                                {{ day.name }}
+                              </label>
+                            </div>
+                          </div>
+                          <div *ngIf="showNoDaysError">
+                          <small style="color: red;">Please selct atleat one day</small>
+                          </div>
+                         <tr>
+                          <td colspan="3">
+                          
+                          
+                        </td>
+                         </tr>
+                       </table>
+                      </form>
+                </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Day Master List</span></div><div class="vm-list-area">
+                  <!-- <div style="display:flex;" class="search-container mt-3 vm-search-container">
+                    <input type="text" class="form-control sps search-input"
+                      placeholder="Search by Name" style="width:36%;" [(ngModel)]="searchQuery">
+                    <mat-icon class="search-icon" >search</mat-icon>
+                  </div> -->
+                    <div class="fixitems prathishta">
+                        <table class="table">
+                              <thead style="border-bottom: 2px solid #223d61;">
+                                <th class="code_center">Id</th>
+                                <th >Day</th>
+                                <th >Vazhipad Name</th>
+                                <th></th>
+                              </thead>
+                            <tbody *ngIf="!showNoRecordsMessage &&dayMasterList && dayMasterList.length > 0">
+                              <tr *ngFor="let item of dayMasterList ; let i=index">
+                                <td class="code_center">{{item.Day_id}}</td>
+                              <td>{{dayMap[item.Day]}}</td>
+                              <td>{{ vazhipadMap[item.VazhId]}}</td>
+                              <td>
+                                <mat-icon title="Edit" class="small" style="vertical-align: middle;" (click)="onEdit(item)"
+                                 >edit</mat-icon>
+                                <mat-icon title="Delete" class="small" (click)="onDelete(item.Day_id)" style="vertical-align: middle;"
+                                  >delete</mat-icon>
+                              </td>
+                              </tr>
+                            </tbody>
+                            <tfoot>
+                              <tr *ngIf="!dayMasterList || dayMasterList.length === 0 || showNoRecordsMessage">
+                                <td colspan="5">
+                                  <div style="width: 100%;" class="mt-3">
+                                    <h4 class="text-center">No Records found</h4>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                    </div>
+                </div></section></div></main>
+<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-secondary ml-1" (click)="resetForm()">Cancel</button><button type="button" class="vm-save-btn" *ngIf="!updateFlag" class="btn btn-primary" (click)="onSubmit()"
+                           >save</button><button type="button" class="vm-save-btn" *ngIf="updateFlag" class="btn btn-primary"
+                          (click)="update()" >Update</button></div></footer>
+</div>

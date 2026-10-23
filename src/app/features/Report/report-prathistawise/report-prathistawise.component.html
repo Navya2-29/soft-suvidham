@@ -1,0 +1,113 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make Print" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+     <button mat-icon-button matTooltip="Export to Excel" (click)="exportToExcel()">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "PRATHISTAWISE REPORT" | translate }}-({{getPrathistaNameByCode(prathista)}})
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div
+          *ngFor="let group of groupedData | keyvalue"
+          class="tabble-heading"
+        >
+          <h3>{{ group.key }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  {{ "Report Name.SINO" | translate }}
+                </th>
+                <th>{{ "BILL NO" | translate }}</th>
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th>{{ "Report Name.VAZHIPAD DATE" | translate }}</th>
+
+                <th>
+                  {{ "NAME" | translate }}
+                </th>
+                <th>
+                  {{ "STAR" | translate }}
+                </th>
+                <th>
+                  {{ "QUANTITY" | translate }}
+                </th>
+                <th class="number">{{ "RATE" | translate }}</th>
+                <th class="number">{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of group.value; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ entry.BillNo }}</td>
+                <td>{{ entry.BillDate }}</td>
+                <td>{{ entry.VazhiDate }}</td>
+                <td>
+                  {{ entry.Name }}
+                  <ng-container *ngIf="entry.Name2"><br>{{ entry.Name2 }}</ng-container>
+                  <ng-container *ngIf="entry.Name3"><br>{{ entry.Name3 }}</ng-container>
+                </td>
+                <td>
+                  {{ entry.Star }}
+                  <ng-container *ngIf="entry.Star2"><br>{{ entry.Star2 }}</ng-container>
+                  <ng-container *ngIf="entry.Star3"><br>{{ entry.Star3 }}</ng-container>
+                </td>
+                <td class="qty">
+                  {{ entry.Qty }}
+                </td>
+                <td class="number">{{ entry.Rate | number : "1.2-2" }}</td>
+                <td class="number">{{ entry.Amount | number : "1.2-2" }}</td>
+              </tr>
+              <tr>
+                <td class="total" colspan="8">
+                  {{ "Report Name.TOTAL" | translate }}
+                </td>
+                <td class="total">
+                  {{ getTotalAmounts(group.value) | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="data.length>0"  
+          >
+            <p class="grandtotal">{{"Report Name.GrandTotal" |translate }} : {{ getTotalAmount() | number : "1.2-2" }}</p>
+          </div>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

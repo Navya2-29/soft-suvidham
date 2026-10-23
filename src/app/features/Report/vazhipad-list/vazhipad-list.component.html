@@ -1,0 +1,80 @@
+<div style="max-width:100%">
+<app-header></app-header> 
+<app-spinner *ngIf="loading"></app-spinner>
+
+<!-- Button Container -->
+<div class="fixed-button-container">
+    <div class="button-wrapper">
+        <button class="button btn-dark" (click)="backButtonClick()">Back</button>
+        <button class="button save-button" (click)="saveToComputer()">Save to Computer</button>
+        <button class="button print-button" (click)="printView()">Print as PDF</button>
+        <button class="button download-button" (click)="downloadExcel()">Download as Excel</button>
+        <select class="custom-button-dropdown" (change)="onPrathistaChange($event)">
+            <option value="">{{"Report Name.Select prathista"| translate}}</option>
+            <ng-container *ngIf="lang=='en'">
+                <option *ngFor="let name of prathistalist" let i="index" [value]="name.PM_Code">{{name.PM_Name}}</option>
+            </ng-container>
+            <ng-container *ngIf="lang!='en'" >
+                <option *ngFor="let name of prathistalist" let i="index" [value]="name.PM_Code">{{name.PM_RegName}}</option>
+            </ng-container>
+            
+        </select>
+        <button class="button download-button" (click)="showAllVazhipadWithPrathist()">All List</button>
+    </div>
+</div>
+
+<!-- Main Document Container -->
+<div class="document-container" *ngIf="vazhipadDetails">
+    
+
+    <div class="document-content" *ngIf="vazhipadDetails" id="printableArea">
+        <h2 *ngIf="prathistaName==''">{{"Report Name.Vazhipad List" | translate}}</h2>
+        <h2 *ngIf="prathistaName" >  {{prathistaName}} </h2>
+        <table>
+            <tr class="thead">
+                <th>#</th>
+                <th>{{"Report Name.Code" |translate}}</th>
+                <!-- <th class="no-print-column">VC ID</th> -->
+                <th>{{"Report Name.Vazhipad" | translate}}</th>
+                <th>{{"Report Name.Amount" | translate}}</th>
+                <th>{{"Report Name.Active"| translate }}</th>
+                <th class="no-print-column">{{"Report Name.Blocking" | translate }}</th>
+                <th class="no-print-column">{{"Report Name.Booking"| translate }}</th>
+                <th class="no-print-column">{{"Report Name.Seasonal" | translate }}</th>
+                <th class="no-print-column">{{"Report Name.Special" | translate }}</th>
+                <th class="no-print-column">{{"Report Name.Receipt" | translate}}</th>
+                <th class="no-print-column">{{"Report Name.MultiName"| translate }}</th>
+                <th class="no-print-column">{{"Report Name.Description"| translate }}</th>
+                <th class="no-print-column">{{"Report Name.Rate-Change"| translate }}</th>
+                <th class="no-print-column">{{"Report Name.SMS" | translate }}</th>
+                
+            </tr>
+            <tr *ngFor="let item of vazhipadDetails; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.VM_Code }}</td>
+                <!-- <td class="no-print-column">{{item.VC_ID}}</td> -->
+
+                <td><span *ngIf="lang=='en'" >{{ item.VM_Name }} </span> <span *ngIf="lang!='en'" >{{ item.VM_RName }}</span> </td>
+                <td style="text-align: right;">{{ item.VM_Amt | number: '1.2-2' }}</td>
+                
+                <td>{{ item.VM_Active }}</td>
+                <td class="no-print-column">{{item.VM_Blocking}}</td>
+                <td class="no-print-column">{{item.VM_Booking}}</td>
+                <td class="no-print-column">{{item.VM_Seasonal}}</td>
+                <td class="no-print-column">{{item.VM_Special}}</td>
+
+                <td class="no-print-column">{{item.VM_Receipt}}</td>
+                <td class="no-print-column">{{item.VM_MultiName}}</td>
+                <td class="no-print-column">{{item.VM_Description}}</td>
+                <td class="no-print-column">{{item.VM_Rate_Change}}</td>
+                <td class="no-print-column">{{item.VM_SMS}}</td>
+            </tr>
+            <tr *ngIf="vazhipadDetails==''"><td colspan="5" style="text-align: center;">{{"Vazhipad not found" | translate }}</td></tr>
+        </table>
+    </div>
+
+    <div class="document-footer">
+        cubix Software Solution
+    </div>
+</div>
+</div>

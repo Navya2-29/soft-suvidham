@@ -1,0 +1,49 @@
+.dialog-title {
+  background-color: #2c3e50;
+  color: white;
+  padding: 16px;
+  border-radius: 4px 4px 0 0;
+}
+
+.dialog-content {
+  padding: 16px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.custom-table th {
+  background-color: #2c3e50;
+  color: white;
+  text-align: left;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.status-dropdown {
+  flex: 1;
+}
+
+.submit-button {
+  height: 40px;
+  background-color: 2c3e50;
+}

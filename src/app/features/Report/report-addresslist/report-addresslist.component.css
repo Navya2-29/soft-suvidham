@@ -1,0 +1,74 @@
+.table-container {
+    margin: 20px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  .icon-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 16px; 
+    padding-right: 16px; 
+}
+
+.icon-container button {
+    margin-left: 8px; 
+    margin-top: 3px;
+}
+.report-table {
+  margin: 0 100px; 
+}
+
+.icon-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.report-table {
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .report-table {
+    max-width: 90%;
+    padding: 0 20px;
+  }
+}
+
+.mat-cell, .mat-header-cell {
+  white-space: normal;
+  word-break: break-word;
+  padding: 8px 12px;
+}
+
+@media (max-width: 600px) {
+  .mat-cell, .mat-header-cell {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  padding: 0 10px;
+}
+
+@media (max-width: 600px) {
+  mat-paginator .mat-paginator-range-label,
+  mat-paginator .mat-button-wrapper {
+    font-size: 12px;
+  }
+
+  mat-paginator .mat-mdc-button-base {
+    padding: 4px 8px;
+  }
+}

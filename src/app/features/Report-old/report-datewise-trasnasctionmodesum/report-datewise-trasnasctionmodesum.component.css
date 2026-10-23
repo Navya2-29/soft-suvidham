@@ -1,0 +1,49 @@
+p.counter{
+text-align: left !important;
+/* font-family: 'Times New Roman', Times, serif; */
+font-family: Manjari;
+margin-top: 10px;
+font-size: large;
+text-transform: uppercase;
+}
+p.user{
+  text-align: left !important;
+  /* font-family: 'Times New Roman', Times, serif;  */
+  font-family: Manjari;
+  font-size: larger;
+  color: maroon;
+  text-transform: uppercase;
+}
+p.transaction{
+  text-align: left !important;
+  /* font-family: 'Times New Roman', Times, serif;  */
+  font-family: Manjari;
+  font-size: medium;
+  color: rgb(5, 5, 121);
+  text-transform: uppercase;
+
+}
+.counterTable{
+  margin: 10px 0;
+
+}
+h5#totalamount{
+/* font-family: 'Times New Roman', Times, serif; */
+font-family: Manjari;
+font-weight: bolder;
+font-size: 20px;
+color: maroon;
+margin-bottom: 0px;
+
+}
+h5.totalcounter{
+  font-family: Manjari;
+  /* font-family: 'Times New Roman', Times, serif; */
+font-weight: bolder;
+font-size: 20px;
+color: rgb(18, 18, 117);
+margin-bottom: 0px;
+}
+.grandtotal h1{
+  font-family: Manjari;
+}

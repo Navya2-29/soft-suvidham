@@ -1,0 +1,129 @@
+<app-header></app-header>
+<app-spinner></app-spinner>
+<div class="vm-page">
+<header class="vm-titlebar"><div class="vm-title-left"><a class="vm-back" routerLink="/dashboard" aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></a><span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span><div><h1>Combo Master</h1><p>{{ templeName }}</p></div></div><span class="vm-header-note">Temple Management System</span></header>
+<main class="vm-workspace"><div class="vm-layout"><section class="vm-panel vm-editor"><div class="vm-panel-title"><mat-icon>edit_note</mat-icon><span>Combo Master Details</span></div><div class="vm-panel-body">
+          <h1 style="font-weight:500;">Combo Master</h1>
+          <form [formGroup]="comboMasterForm">
+            <table class="table">
+              <tr>
+                <td> Select Offering <input type="text" placeholder="select one vazhipad " aria-label="vazhipad list"
+                    formControlName="VM_Name" matInput class="form-control sps" [matAutocomplete]="combo">
+                  <mat-autocomplete autoActiveFirstOption (optionSelected)="onOptionSelected($event)"
+                    #combo="matAutocomplete">
+                    @for (list of filteredComboList | async; track list) {
+                    <mat-option [value]="list.VM_Name">{{list.VM_Name}}</mat-option>
+                    }
+                  </mat-autocomplete>
+                </td>
+              </tr>
+              <div
+                *ngIf="comoMasterFormControl['VM_Name'].invalid && (comoMasterFormControl['VM_Name'].dirty || comoMasterFormControl['VM_Name'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="comoMasterFormControl['VM_Name'].hasError('required')">
+                  name is required.
+                </div>
+              </div>
+              <tr *ngIf="optionSelelected">
+                <td colspan="3">
+                  <div class="p-2"
+                    style="border:1px solid rgb(155, 144, 144);text-align:center; text-align: start;display: flex;flex-direction: column;align-content: space-between;height:200px;overflow:scroll;">
+                    <div *ngFor="let vazhipad of comboVazhipads; let i=index"><input type="checkbox" value="Archanakal"
+                        name="Archanakal"> Archanakal</div>
+                    <div><input type="checkbox" value="Archanakal1" [(ngModel)]="chechboxe12"
+                        (change)="onChange($event)" name="Archanakal1"> Archanakal1 </div>
+                    <div><input type="checkbox" value="Archanakal2" (change)="onChange($event)" name="Archanakal2">
+                      Archanakal2</div>
+                    <div><input type="checkbox" value="Archanakal3" (change)="onChange($event)" name="Archanakal3">
+                      Archanakal3</div>
+                    <div><input type="checkbox" value="Archanakal4" (change)="onChange($event)" name="Archanakal4">
+                      Archanakal4</div>
+                    <div><input type="checkbox" value="Archanakal5" (change)="onChange($event)" name="Archanakal5">
+                      Archanakal5</div>
+                    <div><input type="checkbox" value="Archanakal6" (change)="onChange($event)" name="Archanakal6">
+                      Archanakal6</div>
+                    <div><input type="checkbox" value="Archanakal7" (change)="onChange($event)" name="Archanakal7">
+                      Archanakal7</div>
+                    <div><input type="checkbox" value="Archanakal8" (change)="onChange($event)" name="Archanakal8">
+                      Archanakal8</div>
+                    <div><input type="checkbox" value="Archanakal9" (change)="onChange($event)" name="Archanakal9">
+                      Archanakal9</div>
+                    <div><input type="checkbox" value="Archanakal10" (change)="onChange($event)" name="Archanakal10">
+                      Archanakal10</div>
+                    &nbsp;&nbsp;
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+
+                  <div class="p-2"
+                    style="border:1px solid rgb(155, 144, 144);text-align:center; text-align: start;display: flex; justify-content: space-between;">
+                    <div><input type="radio" value="Include" formControlName="CM_Flag" name="CM_Flag"> Include</div>
+                    &nbsp;&nbsp;<div><input type="radio" name="CM_Flag" formControlName="CM_Flag" value="Exclude">
+                      Exclude</div>
+                    &nbsp;&nbsp;
+                  </div>
+                </td>
+
+              </tr>
+              <div
+                *ngIf="comoMasterFormControl['CM_Flag'].invalid && (comoMasterFormControl['CM_Flag'].dirty || comoMasterFormControl['CM_Flag'].touched)"
+                class="pl-1 text-danger">
+                <div *ngIf="comoMasterFormControl['CM_Flag'].hasError('required')">
+                  plese fill this field </div>
+              </div>
+              <tr>
+                <td>
+                  
+                  
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Combo Master List</span></div><div class="vm-list-area">
+          <div style="display:flex;" class="search-container mt-3 vm-search-container">
+            <input type="text" class="form-control sps search-input" (input)="onSearch(searchQuery)"
+              placeholder="search by Code or Name" style="width:36%;" [(ngModel)]="searchQuery">
+            <mat-icon class="search-icon" (click)="onSearch(searchQuery)">search</mat-icon>
+          </div>
+          <div class="fixitems prathishta">
+            <table class="table">
+              <tr style="border-bottom: 2px solid #223d61;">
+
+                <th>Id</th>
+                <th>vazhipad</th>
+                <th>Combo-vazhipad</th>
+                <th></th>
+
+              </tr>
+              <tbody>
+                <tr *ngFor="let data of filteredComboMaster">
+                  <td>{{data.VM_Name}}</td>
+                  <td>{{data}}</td>
+                  <td></td>
+                  <td>
+                    <mat-icon title="Edit" class="small" style="vertical-align: middle;"
+                      (click)="onEdit(data)">edit</mat-icon>
+                    <mat-icon title="Delete" class="small" style="vertical-align: middle;"
+                      (click)="onDelete(data.CM_Id)">delete</mat-icon>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr *ngIf="!comboMaster || comboMaster.length === 0 || showNoRecordsMessage">
+                  <td colspan="5">
+                    <div style="width: 100%;" class="mt-3">
+                      <h4 class="text-center">No Records found</h4>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+
+            </table>
+          </div>
+        </div></section></div></main>
+<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-danger ml-1" (click)="onReset()">cancel</button><button type="button" class="vm-save-btn" *ngIf="!updateFlag" class="btn btn-primary"
+                    (click)="onSubmit(comboMasterForm.value)">save</button><button type="button" class="vm-save-btn" *ngIf="updateFlag" class="btn btn-primary"
+                    (click)="onUpdate(comboMasterForm.value)">update</button></div></footer>
+</div>

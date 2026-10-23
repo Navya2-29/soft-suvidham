@@ -1,0 +1,7 @@
+{
+    "/API": {
+      "target": "https://www.plutuscloudserviceuat.in:8201",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }

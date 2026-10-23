@@ -1,0 +1,279 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <div>
+        <h3 class="templename">
+          {{ templeName }}
+        </h3>
+        <h4>
+          {{ templeAddress }}
+        </h4>
+
+        <h2>
+          {{ "DAILY TEMPLE COLLECTION" | translate }}
+        </h2>
+        <p class="date">
+          {{ formatDateToDDMMYYYY(fromDate) }} to
+          {{ formatDateToDDMMYYYY(toDate) }}
+        </p>
+        <hr />
+      </div>
+
+      <div class="body-print">
+        <div *ngIf="Alldata.length > 0" id="pdf-content">
+          <div *ngFor="let dateGroup of groupedData | keyvalue">
+            <p class="counter">Bill Date: {{ dateGroup.key }}</p>
+
+            <div *ngFor="let counterGroup of dateGroup.value | keyvalue">
+              <p class="counter">Counter: {{ counterGroup.key }}</p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th class="number">Cash</th>
+                    <th class="number">UPI</th>
+                    <th class="number">Cheque</th>
+                    <th class="number">MO</th>
+                    <th class="number">Bank</th>
+                    <th class="number">Debit</th>
+                    <th class="number">Due</th>
+                    <th class="number">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let userGroup of counterGroup.value | keyvalue">
+                    <td>{{ userGroup.key }}</td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "CS")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "UP")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "CH")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "MO")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "ON")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "DE")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getUserModeTotal(userGroup.value, "CR")
+                          | number : "1.2-2"
+                      }}
+                    </td>
+                    <td class="number">
+                      {{
+                        getTotalForUser(
+                          dateGroup.key,
+                          counterGroup.key,
+                          userGroup.key
+                        ) | number : "1.2-2"
+                      }}
+                    </td>
+                  </tr>
+                  <tr class="total-row">
+                    <td><strong>Total</strong></td>
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "CS")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "UP")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                   
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "CH")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "MO")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "ON")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                    <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "DE")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                     <td class="number">
+                      <strong>{{
+                        getCounterModeTotal(counterGroup.value, "CR")
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                    <td class="number">
+                      <strong>{{
+                        getTotalForCounter(dateGroup.key, counterGroup.key)
+                          | number : "1.2-2"
+                      }}</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="total"></div>
+              <br />
+            </div>
+            <table *ngIf="hasOnlineDataForDate(dateGroup.key)">
+              <thead>
+                <th>Mode</th>
+                <th>Amount</th>
+              </thead>
+              <tbody>
+                <td>Online</td>
+                <td>
+                  {{ getOnlineDataTotal(dateGroup.key) | number : "1.2-2" }}
+                </td>
+              </tbody>
+            </table>
+            <div class="total" style="margin-top: 10px">
+              <h5>
+                <strong>
+                  Total for {{ dateGroup.key }} (excluding Due):
+                  {{ getDateTotal(dateGroup.key) | number : "1.2-2" }}
+                </strong>
+              </h5>
+            </div>
+          </div>
+
+          <p class="counter">Grand Totals by Transaction Mode</p>
+          <table class="mode-grand-total">
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th class="number">Total Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("CS") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td>UPI</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("UP") | number : "1.2-2" }}
+                </td>
+              </tr>
+             
+              <tr>
+                <td>Cheque</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("CH") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td>MO</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("MO") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Bank</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("ON") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Debit</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("DE") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Online</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("OL") | number : "1.2-2" }}
+                </td>
+              </tr>
+               <tr>
+                <td>Due</td>
+                <td class="number">
+                  {{ getGrandTotalByMode("CR") | number : "1.2-2" }}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Grand Total</strong></td>
+                <td class="number">
+                  <strong>{{
+                    getGrandTotalOfAllModes() | number : "1.2-2"
+                  }}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="nodataFound" *ngIf="data.length === 0">
+            <h2></h2>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>

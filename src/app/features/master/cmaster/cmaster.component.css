@@ -1,0 +1,527 @@
+/* SHARED MASTER THEME - MATCHES VAZHIPAD MASTER */
+:host {
+    display: block;
+    min-width: 0;
+    font-family: Arial, 'Manjari', sans-serif;
+    color: #28394c
+}
+
+:host,
+:host * {
+    box-sizing: border-box
+}
+
+.vm-page {
+    --vm-blue: #185aa6;
+    min-height: 440px;
+    height: calc(100dvh - 120px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f4f7fc;
+    color: #28394c
+}
+
+.vm-titlebar {
+    min-height: 56px;
+    flex-shrink: 0;
+    padding: 8px 23px;
+    background: #fff;
+    border-bottom: 0.5px solid silver;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+
+.vm-title-left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 12px
+}
+
+.vm-title-left h1 {
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 750;
+    margin: 0;
+    color: #111
+}
+
+.vm-title-left p {
+    font-size: 11px;
+    margin: 3px 0 0;
+    color: #454545;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.vm-title-symbol {
+    width: 30px;
+    height: 30px;
+    background: #1d86b2;
+    color: #fff;
+    border-radius: 8px;
+    display: grid;
+    place-items: center
+}
+
+.vm-title-symbol mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px
+}
+
+.vm-back {
+    display: grid;
+    place-items: center;
+    min-width: 35px;
+    width: 35px;
+    height: 35px;
+    background: #f3f7fb;
+    border: 1px solid #d2dae4;
+    border-radius: 9px;
+    color: #1c5f99;
+    text-decoration: none;
+    cursor: pointer
+}
+
+.vm-header-note {
+    color: #333;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase
+}
+
+.vm-workspace {
+    flex: 1;
+    min-height: 0;
+    padding: 12px 14px;
+    overflow: hidden
+}
+
+.vm-layout {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(340px, 1.05fr) minmax(0, 1fr);
+    gap: 12px;
+    align-items: stretch
+}
+
+.vm-layout.vm-single {
+    grid-template-columns: 1fr
+}
+
+.vm-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 13px;
+    background: #fff;
+    border: 1px solid #dbe7f8;
+    box-shadow: 0 3px 15px #183c6c0b;
+    overflow: hidden
+}
+
+.vm-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+    padding: 12px 13px;
+    background: #e9f2ff;
+    border-bottom: 1px solid #dbe7f8;
+    color: #18538e;
+    font-size: 13px;
+    font-weight: 750
+}
+
+.vm-panel-title mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px
+}
+
+.vm-panel-body {
+    min-height: 0;
+    flex: 1;
+    padding: 14px 12px 18px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #b3cae9 transparent
+}
+
+.vm-panel-body>h1,
+.vm-panel-body>.fixitems>h1 {
+    display: none
+}
+
+.vm-panel-body .fixitems {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important
+}
+
+.vm-panel-body form {
+    margin: 0;
+    min-width: 0
+}
+
+.vm-panel-body form table {
+    border: 0;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    background: transparent;
+    table-layout: auto
+}
+
+.vm-panel-body form table tr {
+    background: transparent !important
+}
+
+.vm-panel-body form table td {
+    border: 0 !important;
+    padding: 5px 7px !important;
+    vertical-align: top;
+    font-size: 11px;
+    color: #3369a9;
+    font-weight: 700;
+    line-height: 1.6;
+    min-width: 0
+}
+
+.vm-panel-body form table td:empty {
+    display: none
+}
+
+.vm-panel-body form input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.vm-panel-body form select,
+.vm-panel-body form textarea,
+.vm-panel-body form .form-control {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    min-height: 40px;
+    height: auto;
+    padding: 9px 11px;
+    border: 1px solid #d4e0f3;
+    border-radius: 8px;
+    color: #293e57;
+    font-family: inherit;
+    font-size: 12px;
+    background: #fff;
+    outline: none;
+    margin: 4px 0 0;
+    box-shadow: none;
+    transition: border-color .18s, box-shadow .18s
+}
+
+.vm-panel-body form input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+.vm-panel-body form select:focus,
+.vm-panel-body form textarea:focus {
+    border-color: #2772c9;
+    box-shadow: 0 0 0 3px #2772c91b
+}
+
+.vm-panel-body form input[readonly] {
+    background: #f3f6fb !important;
+    color: #7d8ca3
+}
+
+.vm-panel-body form input[type='file'] {
+    font-size: 12px;
+    width: 100%;
+    border: 1px dashed #b9cce6;
+    border-radius: 8px;
+    padding: 9px;
+    background: #f8fbff
+}
+
+.vm-panel-body form input[type='checkbox'],
+.vm-panel-body form input[type='radio'] {
+    accent-color: #1462b0;
+    margin-right: 7px
+}
+
+.vm-panel-body form textarea {
+    min-height: 90px !important;
+    resize: vertical
+}
+
+.vm-panel-body form .text-danger,
+.vm-panel-body form .error {
+    color: #db3453 !important;
+    font-size: 11px;
+    font-weight: 500
+}
+
+.vm-panel-body form mat-checkbox {
+    font-size: 12px
+}
+
+.vm-panel-body form .row {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap
+}
+
+.vm-panel-body form [class*='col-md-'] {
+    min-width: 0;
+    padding: 5px;
+    flex: 1 1 220px;
+    max-width: none
+}
+
+.vm-panel-body form .btn {
+    width: auto;
+    min-width: 90px
+}
+
+.vm-search-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 11px;
+    border-bottom: 1px solid #e7eef8
+}
+
+.vm-search-container input {
+    width: 100% !important;
+    max-width: none;
+    min-width: 0;
+    border: 1px solid #d4e0f3;
+    border-radius: 8px;
+    background: #fff;
+    padding: 9px 11px;
+    font-size: 12px;
+    min-height: 39px
+}
+
+.vm-search-container .search-icon {
+    position: static;
+    transform: none;
+    color: #7492bb;
+    cursor: pointer;
+    flex-shrink: 0
+}
+
+.vm-search-container .btn {
+    white-space: nowrap;
+    font-size: 11px;
+    padding: 9px 10px;
+    border-radius: 7px;
+    background: #185da8;
+    border: 0;
+    color: white
+}
+
+.vm-search-container .btn a {
+    color: white
+}
+
+.vm-list-area {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #b8d0ed transparent
+}
+
+.vm-list-area .fixitems {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important
+}
+
+.vm-list-area table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 11px;
+    margin: 0
+}
+
+.vm-list-area table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f3f7fd;
+    color: #315a87;
+    border-bottom: 1px solid #dbe7f8;
+    font-size: 11px;
+    font-weight: 750;
+    text-align: left;
+    padding: 12px 8px !important
+}
+
+.vm-list-area table td {
+    padding: 10px 8px !important;
+    border-bottom: 1px solid #e7eef8;
+    vertical-align: middle;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+    color: #43556e
+}
+
+.vm-list-area table tr:hover {
+    background: #f2f7ff
+}
+
+.vm-list-area mat-icon {
+    cursor: pointer;
+    color: #2067aa;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0 2px
+}
+
+.vm-list-area mat-icon[title='Delete'] {
+    color: #d64661
+}
+
+.vm-list-area img {
+    object-fit: cover;
+    border-radius: 6px
+}
+
+.vm-footer {
+    flex-shrink: 0;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 8px 15px;
+    background: linear-gradient(105deg, #079eae 0%, #05739c 36%, #144a99 75%, #355be1 100%)
+}
+
+.vm-footer-right {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: flex-end
+}
+
+.vm-footer button {
+    border: 0;
+    min-height: 39px;
+    min-width: 110px;
+    padding: 0 21px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer
+}
+
+.vm-cancel-btn {
+    background: #ffffffa6;
+    color: #116497
+}
+
+.vm-save-btn {
+    background: #fff;
+    color: #135ab0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px
+}
+
+.vm-footer button:hover {
+    filter: brightness(.95)
+}
+
+.vm-footer button:disabled {
+    opacity: .5;
+    cursor: not-allowed
+}
+
+.vm-footer mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px
+}
+
+.vm-panel-body .search-container {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.vm-panel-body .search-icon {
+    position: static;
+    transform: none
+}
+
+/* Already-redesigned pmaster template keeps its own pm-* styling where applicable */
+@media(max-width:1050px) {
+    .vm-workspace {
+        overflow: auto
+    }
+
+    .vm-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100%
+    }
+
+    .vm-panel {
+        min-height: 260px
+    }
+
+    .vm-list-area {
+        max-height: 400px
+    }
+}
+
+@media(max-width:750px) {
+    .vm-page {
+        height: calc(100dvh - 70px)
+    }
+
+    .vm-titlebar {
+        padding: 8px 12px
+    }
+
+    .vm-title-left h1 {
+        font-size: 16px
+    }
+
+    .vm-header-note {
+        display: none
+    }
+
+    .vm-workspace {
+        padding: 10px
+    }
+
+    .vm-panel-body {
+        padding: 10px
+    }
+
+    .vm-footer-right {
+        gap: 8px
+    }
+
+    .vm-footer button {
+        min-width: 94px;
+        padding: 0 12px
+    }
+}
+
+.code_center {
+    text-align: center !important;
+} 
+th {
+color: #315a87 !important;
+}

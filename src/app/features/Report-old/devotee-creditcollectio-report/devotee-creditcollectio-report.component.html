@@ -1,0 +1,152 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button
+  mat-icon-button
+  matTooltip="Export to Excel"
+  (click)="exportToExcel()"
+>
+  <mat-icon>grid_on</mat-icon>
+</button>
+  </div>
+
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+      <h2>
+        {{ "Report.Credit Collection" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <div class="devoteecreditdata" *ngIf="data.length > 0">
+          <!-- <h4 class="tabble-heading">
+            {{ "Report Name.Member Credit Collection" | translate }}
+          </h4> -->
+          <table>
+            <thead>
+              <tr>
+                <th class="billdate">{{ "BILLDATE" | translate }}</th>
+                <th class="billno">{{ "BILL NO" | translate }}</th>
+                <th class="vazhipaddate">
+                  {{ "Report Name.VAZHIPAD DATE" | translate }}
+                </th>
+                <!-- <th class="vazhipad">{{ "VAZHIPAD" | translate }}</th> -->
+                <th class="name">{{ "NAME" | translate }}</th>
+                <th class="mobileno">
+                  {{ "Report Name.MOBILE NO" | translate }}
+                </th>
+                <!-- <th>{{"QUANTITY" | translate }}</th>
+            <th>{{"RATE" | translate }}</th> -->
+                <th class="number amount">{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of data">
+                <td class="billdate">{{ member.BillDate }}</td>
+                <td class="billno">{{ member.BillNo }}</td>
+                <td class="vazhipaddate">{{ member.VazhiDate }}</td>
+                <!-- <td class="vazhipad">{{ member.Vazhipad }}</td> -->
+                <td class="name">{{ member.Name }}</td>
+
+                <td class="mobileno">{{ member.MobileNo }}</td>
+                <!-- <td class="number">{{ member.Rate  | number : "1.2-2" }}</td> -->
+                <td class="number amount">
+                  {{ member.Amount | number : "1.2-2" }}
+                </td>
+                <!-- <td >{{ getTransactionType(member.TrnMode) }}</td> -->
+              </tr>
+              <tr>
+                <td class="total" colspan="5">
+                  {{ "Report Name.TOTAL" | translate }}
+                </td>
+                <td class="total">{{ getGrandTotal() | number : "1.2-2" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div class="page-break" *ngIf="data.length > 0"></div> -->
+        <!-- <div class="allcreditdata" *ngIf="allCreditdata.length > 0">
+          <h4 class="tabble-heading">
+            {{ "Report Name.Devotee Credit Collection" | translate }}
+          </h4>
+
+          <table>
+            <thead>
+              <tr>
+                <th>{{ "BILLDATE" | translate }}</th>
+                <th>{{ "BILL NO" | translate }}</th>
+                <th>{{ "Report Name.VAZHIPAD DATE" | translate }}</th>
+                <th>{{ "VAZHIPAD" | translate }}</th>
+                <th>{{ "NAME" | translate }}</th>
+                <th>{{ "Report Name.MOBILE NO" | translate }}</th>
+
+                <th>{{ "AMOUNT" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of allCreditdata">
+                <td>{{ item.BillDate }}</td>
+                <td>{{ item.BillNo }}</td>
+                <td>{{ item.VazhiDate }}</td>
+                <td>{{ item.Vazhipad }}</td>
+                <td>{{ item.Name }}</td>
+                <td>{{ item.MobileNo }}</td>
+                <td class="number">{{ item.Amount | number : "1.2-2" }}</td>
+              </tr>
+              <tr>
+                <td colspan="6" class="total">
+                  {{ "Report Name.TOTAL" | translate }}:
+                </td>
+                <td class="total">{{ getTotalAmount() | number : "1.2-2" }}</td>
+              </tr>
+            </tbody>
+          </table>-->
+          <div *ngIf="data.length>0">
+            <p class="grandtotal">
+              {{ "Report Name.Total Collection" | translate }}:{{
+                 getGrandTotal() | number : "1.2-2"
+              }}
+            </p>
+          </div>
+        <!-- </div>
+      </div>  -->
+      <div
+        class="nodataFound"
+        *ngIf="data.length === 0 && allCreditdata.length === 0"
+      >
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+    <!-- <div class="grandtotal">
+      <p>
+        Total Amount:{{ getGrandTotal() | number : "1.2-2" }}
+      </p>
+    </div> -->
+  </div>
+</div>

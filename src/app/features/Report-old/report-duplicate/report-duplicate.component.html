@@ -1,0 +1,82 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+      <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename"
+      >
+        {{ templeName }}
+      </h3>
+      <h4
+        
+      >
+        {{ templeAddress }}
+      </h4>
+
+      <h2
+        
+      >
+        {{ "Report Name.report-duplicate" | translate }}
+      </h2>
+      <p
+       class="date" 
+      >
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr/>
+    </div>
+    <div class="body-print">
+      <div id="pdf-content" *ngIf="data.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>{{ "BILL NO" | translate }}</th>
+            <th>{{ "BILLDATE" | translate }}</th>
+            <th class="qty">{{ "PLACEHOLDER.COUNTERID" | translate }}</th>
+            <th>{{ "user" | translate }}</th>
+            <th class="qty">{{ "QUANTITY" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <td>{{ item.BillNo }}</td>
+            <td>{{ item.BillDate }}</td>
+            <td class="qty">{{ item.CounterId }}</td>
+            <td>{{ item.Cuser }}</td>
+            <td class="qty">{{ item.ct }}</td>
+            <!-- <td class="number">
+              {{ item.Amount | number : "1.2-2" }}
+            </td> -->
+          </tr>
+        </tbody>
+       
+      </table>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

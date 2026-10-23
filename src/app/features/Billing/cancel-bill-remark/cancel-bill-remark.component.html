@@ -1,0 +1,20 @@
+
+    <div mat-dialog-title class="dialog-title">
+      <mat-icon color="warn" class="dialog-icon">warning</mat-icon>
+      <span>Confirm Cancellation</span>
+    </div>
+    
+    <mat-dialog-content class="dialog-content">
+      <p>Please enter the reason for cancellation:</p>
+      
+      <mat-form-field appearance="fill" class="dialog-input">
+        <mat-label>Reason for Cancellation</mat-label>
+        <textarea matInput [(ngModel)]="cancellationReason" rows="3" placeholder="Enter your reason..."></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="OnCancelSubmit()">Submit</button>
+    </mat-dialog-actions>
+

@@ -1,0 +1,300 @@
+<app-header class="app-header no-print"></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="preview-page-container report-container">
+  <!-- TOP PREVIEW HEADER & ACTION BAR -->
+  <div class="preview-header-bar no-print">
+    <div class="preview-title-area">
+      <nav class="report-breadcrumb" aria-label="Breadcrumb">
+        <a class="breadcrumb-link" (click)="goBack()">Reports</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ "Time-Slot Based Report" | translate }}</span>
+      </nav>
+      <span class="report-badge no-print" *ngIf="data && data.length > 0">
+        {{ data.length }} {{ data.length === 1 ? 'record' : 'records' }}
+      </span>
+    </div>
+
+    <div class="preview-actions">
+      <!-- Common Columns Dropdown -->
+      <div class="column-picker-wrapper common-column-picker">
+        <button
+          type="button"
+          class="columns-btn"
+          (click)="toggleColumnDropdown($event)"
+          aria-label="Toggle Common Columns"
+        >
+          <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span class="columns-btn-text">Common Columns ({{ visibleColumnCount }}/{{ totalColumnCount }})</span>
+          <svg class="chevron-icon" [class.rotated]="showColumnDropdown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="column-menu-dropdown" *ngIf="showColumnDropdown" (click)="$event.stopPropagation()">
+          <div class="column-dropdown-header">
+            <span class="column-dropdown-title">Common Columns</span>
+            <span class="column-dropdown-count">{{ visibleColumnCount }}/{{ totalColumnCount }}</span>
+          </div>
+          <div class="column-dropdown-body">
+            <label class="column-menu-item" *ngFor="let col of columnList">
+              <input
+                type="checkbox"
+                [checked]="columns[col.key]"
+                (change)="toggleColumn(col.key)"
+              />
+              <span class="column-item-label">{{ col.label }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Back to previous page"
+        (click)="goBack()"
+        aria-label="Back"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="action-btn-text">Back</span>
+      </button>
+
+      <!-- Print Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Make PDF"
+        (click)="generatePDF()"
+        aria-label="Print"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span class="action-btn-text">Print</span>
+      </button>
+
+      <!-- Export to Excel Button -->
+      <button
+        type="button"
+        class="action-btn"
+        matTooltip="Export to Excel"
+        (click)="exportToExcel()"
+        aria-label="Export to Excel"
+      >
+        <svg class="action-icon" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        </svg>
+        <span class="action-btn-text">Excel</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Time-Slot Based Report" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+
+    <div class="body-print">
+      <div id="pdf-content">
+        <ng-container *ngIf="data.length > 0">
+          <div *ngFor="let mode of groupedData | keyvalue" class="vazhipad-group-block">
+            <p class="transaction tabble-heading">
+              {{ mode.key }}
+            </p>
+
+            <div *ngFor="let category of mode.value | keyvalue" class="timeslot-category-block">
+              <div class="timeslot-header-row">
+                <div class="timeslot-title-wrap">
+                  <p class="category">{{ category.key }}</p>
+                  <span class="timeslot-records no-print">({{ category.value.length }} records)</span>
+                </div>
+
+                <!-- Per-Report / Per-Timeslot Column Dropdown -->
+                <div class="column-picker-wrapper timeslot-column-picker no-print">
+                  <button
+                    type="button"
+                    class="columns-btn timeslot-columns-btn"
+                    [class.has-custom-columns]="hasTableCustomOverrides(getTableKey(mode.key, category.key))"
+                    (click)="toggleTableDropdown(getTableKey(mode.key, category.key), $event)"
+                    aria-label="Toggle columns for this report"
+                  >
+                    <svg class="columns-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                      <line x1="9" y1="3" x2="9" y2="21"></line>
+                      <line x1="15" y1="3" x2="15" y2="21"></line>
+                    </svg>
+                    <span class="columns-btn-text">
+                      Columns ({{ getTableVisibleColumnCount(getTableKey(mode.key, category.key)) }}/{{ totalColumnCount }})
+                    </span>
+                    <span
+                      *ngIf="hasTableCustomOverrides(getTableKey(mode.key, category.key))"
+                      class="custom-tag"
+                      title="Customized for this report"
+                    >Custom</span>
+                    <svg class="chevron-icon" [class.rotated]="openTableDropdownKey === getTableKey(mode.key, category.key)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+
+                  <!-- Dropdown Menu -->
+                  <div
+                    class="column-menu-dropdown timeslot-dropdown-panel"
+                    *ngIf="openTableDropdownKey === getTableKey(mode.key, category.key)"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="timeslot-dropdown-header">
+                      <span class="timeslot-dropdown-title">{{ category.key }}</span>
+                      <button
+                        *ngIf="hasTableCustomOverrides(getTableKey(mode.key, category.key))"
+                        type="button"
+                        class="reset-common-btn"
+                        (click)="resetTableColumns(getTableKey(mode.key, category.key), $event)"
+                      >
+                        Reset to Common
+                      </button>
+                    </div>
+
+                    <div class="timeslot-dropdown-body">
+                      <label class="column-menu-item" *ngFor="let col of columnList">
+                        <input
+                          type="checkbox"
+                          [checked]="isColumnVisible(getTableKey(mode.key, category.key), col.key)"
+                          (change)="toggleTableColumn(getTableKey(mode.key, category.key), col.key, $event)"
+                        />
+                        <span class="column-item-label">{{ col.label }}</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="transactionTable">
+                <thead>
+                  <tr>
+                    <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'billNo')">{{ "BILLNO" | translate }}</th>
+                    <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'name')">{{ "Name" | translate }}</th>
+                    <th *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'star')">{{ "STAR" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of (isPrinting ? category.value : getPaginatedEntries(getTableKey(mode.key, category.key), category.value))">
+                    <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'billNo')">{{ item.BillNo || item.value?.BillNo }}</td>
+                    <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'name')">{{ item.Name || item.value?.Name }}</td>
+                    <td *ngIf="isColumnVisible(getTableKey(mode.key, category.key), 'star')">{{ item.Star || item.value?.Star }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td [attr.colspan]="getTableVisibleColumnCount(getTableKey(mode.key, category.key))" class="total">
+                      {{ "Report Name.TOTAL" | translate }}:
+                      <span class="row-count-text no-print" *ngIf="category.value.length > 0">
+                        (Showing {{ getRangeStart(getTableKey(mode.key, category.key), category.value) }}–{{ getRangeEnd(getTableKey(mode.key, category.key), category.value) }} of {{ category.value.length }} records)
+                      </span>
+                      <span class="row-count-text print-only" *ngIf="isPrinting">
+                        ({{ category.value.length }} records)
+                      </span>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+              <!-- Pagination Toolbar for each Timeslot Table -->
+              <div class="table-pagination-bar no-print" *ngIf="category.value.length > 0">
+                <div class="pagination-info">
+                  <span class="rows-label">Rows per page:</span>
+                  <div class="select-container">
+                    <select
+                      class="page-size-select"
+                      [value]="getPageSize(getTableKey(mode.key, category.key))"
+                      (change)="onPageSizeChange(getTableKey(mode.key, category.key), $any($event.target).value)"
+                      aria-label="Rows per page"
+                    >
+                      <option [value]="5">5</option>
+                      <option [value]="10">10</option>
+                      <option [value]="25">25</option>
+                      <option [value]="50">50</option>
+                      <option [value]="100">100</option>
+                      <option [value]="200">200</option>
+                    </select>
+                  </div>
+                  <span class="pagination-divider">|</span>
+                  <span class="showing-label">
+                    Showing {{ getRangeStart(getTableKey(mode.key, category.key), category.value) }}–{{ getRangeEnd(getTableKey(mode.key, category.key), category.value) }} of {{ category.value.length }} records
+                  </span>
+                </div>
+
+                <div class="pagination-buttons">
+                  <button
+                    type="button"
+                    class="page-btn page-nav-btn"
+                    [disabled]="getCurrentPage(getTableKey(mode.key, category.key)) === 1"
+                    (click)="prevPage(getTableKey(mode.key, category.key))"
+                    aria-label="Previous Page"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+
+                  <button
+                    *ngFor="let p of getPages(getTableKey(mode.key, category.key), category.value)"
+                    type="button"
+                    class="page-btn page-num-btn"
+                    [class.active]="p === getCurrentPage(getTableKey(mode.key, category.key))"
+                    (click)="goToPage(getTableKey(mode.key, category.key), p)"
+                  >
+                    {{ p }}
+                  </button>
+
+                  <button
+                    type="button"
+                    class="page-btn page-nav-btn"
+                    [disabled]="getCurrentPage(getTableKey(mode.key, category.key)) === getTotalPages(getTableKey(mode.key, category.key), category.value)"
+                    (click)="nextPage(getTableKey(mode.key, category.key), category.value)"
+                    aria-label="Next Page"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div *ngIf="data.length === 0 && (!creditTransactionArray || creditTransactionArray.length === 0)" class="nodataFound">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

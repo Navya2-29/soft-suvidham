@@ -1,0 +1,310 @@
+<div class="card-body" style="background: white">
+    <button
+      class="btn btn-secondary rounded-circle back-btn"
+      
+    
+    >
+      <mat-icon   >arrow_back</mat-icon>
+    </button>
+    <div class="row">
+      <div class="col-md-5">
+        <h2 style="margin-left: 100px">{{"Thulabaram"|translate }}</h2>
+        <div >
+          <table class="table">
+            <tr>
+              <td colspan="2">
+                <input
+                  type="text"
+                  [placeholder]="'PLACEHOLDER.BILLNUMBER' | translate"
+                  formControlName="BillNo"
+                  readonly
+                  class="form-control sps"
+                  style="width: 150px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input
+                  type="text"
+                  
+                  [placeholder]="'PLACEHOLDER.NAME' | translate"
+                  formControlName="Name"
+                  class="form-control sps"
+                />
+              </td>
+              <td>
+                <select
+                  class="form-control"
+                  formControlName="Star"
+                  style="width: 100%; height: 30.6px"
+                >
+                  <option value="">{{"STAR" |translate}}</option>
+                  <ng-container *ngIf="lang=='en'">  
+                    <option>Select Star</option> <option
+                    *ngFor="let nakshtra of nakshatham"
+                    [value]="nakshtra.id"
+                  >
+                    {{ nakshtra.SM_NameEng }}
+                  </option>
+                  </ng-container>
+                  <ng-container *ngIf="lang=='ml'"> <option
+                    *ngFor="let nakshtra of nakshatham"
+                    [value]="nakshtra.id"
+                  >
+                    {{ nakshtra.SM_Name }}
+                  </option></ng-container>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <textarea
+                [placeholder]="'PLACEHOLDER.ADDRESS' | translate"
+                  formControlName="Address"
+                  class="form-control sps"
+                  rows="5"
+                ></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <input
+                  type="text"
+                  
+                  
+                  placeholder="select type"
+                  class="form-control sps"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td >
+                <select
+                  class="form-control"
+                  
+                  style="width: 100%; height: 30.6px"
+                 
+                >
+                  <option value="">Select Item</option>
+  
+                <!-- <ng-container *ngIf="lang=='ml'" >
+                  <option *ngFor="let item of itemMaster" [value]="item.NM_Id">
+                    {{ item.NM_RName }}
+                  </option>
+                </ng-container>
+                <ng-container  *ngIf="lang=='en'">  <option *ngFor="let item of itemMaster" [value]="item.NM_Id">
+                    {{ item.NM_Name }}
+                  </option>              </ng-container> -->
+  
+                </select>
+              </td>
+              <!-- <td><input type="checkbox">&nbsp;&nbsp;Kanikka</td> -->
+               <td><input type="checkbox" name="" id="">Exclude R.Amt</td>
+            </tr>
+            <tr>
+              <td>
+                  <label for="Qty">Rate</label>
+                  <input 
+                    type="text" 
+                    id="Qty" 
+                    formControlName="Qty" 
+                    placeholder="Rate"
+  
+                
+                    class="form-control sps">
+                </td>
+                <td>
+                  <label for="weight">Advance</label>
+                <input
+                  type="text"
+                  formControlName="weight"
+                  placeholder="Enter weight"
+                  class="form-control sps"
+                  
+                />
+              </td>
+              <td>
+                  <label for="weight">Weight</label>
+                <input
+                  type="text"
+                  formControlName="weight"
+                  placeholder="Enter weight"
+                  class="form-control sps"
+                  
+                />
+              </td>
+  
+              <!-- <td>
+                  <label for="unit">select Unit</label>
+                <select
+                  class="form-control"
+                  formControlName="unit"
+                  style="width: 100%; height: 30.6px"
+                  
+                >
+                  <option value="">Select Unit</option>
+                  <option value="KG">Kg</option>
+                  <option value="GM">Gm</option>
+                  <option value="MG">Mg</option>
+                  <option value="LTR">Ltr</option>
+                  <option value="NOS">No.s</option>
+                </select> -->
+              <!-- </td> -->
+              <!-- <td>
+                          Qty (Kg)<input type="number" class="form-control" placeholder="Qty" value="1" style="vertical-align: middle;text-align:center;">
+                      </td>
+                      <td>
+                          Qty (Gm)<input type="number" class="form-control" placeholder="Qty" value="1" style="vertical-align: middle;text-align:center;">
+                      </td>
+                      <td>
+                          Qty (Mg)<input type="number" class="form-control" placeholder="Qty" value="1" style="vertical-align: middle;text-align:center;">
+                      </td> -->
+            </tr>
+            <tr>
+              <!-- <td> -->
+              <!-- <input type="text" formControlName="ItemValue" placeholder="Item Value" class="form-control sps"> -->
+              <!-- </td> -->
+              <td>
+                <label for="ItemValue">Row Amount</label>
+                <input
+                  type="text"
+                  id="ItemValue"
+                  formControlName="ItemValue"
+                  placeholder="Item Value"
+                  class="form-control sps"
+                />
+              </td>
+              <td>
+                  <label for="ReceiptAmount">Receipt Amount</label>
+                  <input 
+                    type="text" 
+                    id="ReceiptAmount" 
+                    formControlName="ReceiptAmount" 
+                    placeholder="Receipt Amount" 
+                    class="form-control sps">
+                </td>
+  
+              <td>
+                <label for="ReceiptAmount">Totl Amount</label>
+
+                <input 
+                type="text" 
+                id="ReceiptAmount" 
+                formControlName="ReceiptAmount" 
+                placeholder="Receipt Amount" 
+                class="form-control sps">
+              </td>
+            </tr>
+            <tr>
+             
+  
+              <td>
+                <select
+                  class="form-control"
+                  style="width: 100%; height: 30.6px"
+                >
+                  <option value="">Select Payment mode</option>
+                  <option value="CS">{{"Cash" | translate}}</option>
+                  <option value="UP">UPI</option>
+                  
+                </select>
+              </td>
+              <td>
+                <button class="btn btn-primary" >Save</button>
+  
+                <button  class="btn btn-danger ml-2">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-7 search">
+        <div style="display: flex">
+          <!-- <input type="date" formControlName="searchDate"  class="form-control formdate" style="width:15%;"> -->
+          <!-- <button class="btn btn-primary" style="margin-right:15px;" (click)="onSearch()">Search</button> -->
+          <input
+            type="text"
+            formControlName="searchBillNO"
+            class="form-control sps"
+            placeholder="search by Bill No."
+            style="width: 25%"
+          />
+          <button class="btn btn-primary" >Search</button>
+        </div>
+        <div class="fixitems">
+          <table class="table">
+            <tr style="border-bottom: 2px solid #223d61">
+              <th>Sl No.</th>
+              <th>Date</th>
+              <th>Receipt No.</th>
+              <th>Name</th>
+              <th>Item</th>
+              <th>Weight</th>
+              <th>Qty</th>
+              <th>Receipt Amount</th>
+              <th>Transaction Mode</th>
+              <th></th>
+            </tr>
+  
+            <tr
+             
+            >
+              <!-- <td>{{ i + 1 }}</td>
+              <td class="left">{{ item.Billdate | date : "dd-MM-YYYY" }}</td>
+              <td class="left">{{ item.BillNo }}</td>
+              <td class="left">{{ item.Name }}</td>
+              <td class="left">{{getItemById(item.NM_Id)}}</td>
+             
+              <td>{{ item.weight }} {{ item.unit }}</td>
+              <td>{{ item.Qty }}</td>
+              <td>{{ item.Receipt_Amt }}</td>
+              <td>{{getTransactionType( item.TrnMode) }}</td> -->
+              <td>
+              <!-- <mat-icon title="Edit" class="small">edit</mat-icon> -->
+              <span
+                ><mat-icon
+                  title="Cancel bill"
+                  
+                  class="small"
+                  >delete</mat-icon
+                ></span
+              >
+              <!-- <span *ngIf="item.TrnStatus !== 'C'" title="Duplicate Print" class="material-icons small" (click)="duplicateBill(item)">print</span> -->
+            </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+<!--   
+  <div id="receipt" style="width: 6in; height: 4in; display: none; position: relative; font-size: 12px; font-family: Arial, sans-serif;">
+    <div style="position: absolute; left: 2.1cm; top: 3.9cm;">{{ itemName }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 3.4cm;">{{ todayDate | date: 'dd-MM-yyyy' }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 3.9cm;">{{ nadavaravForm.get('BillNo')?.value }}</div>
+    <div style="position: absolute; left: 0.5cm; top: 5cm;">{{ nadavaravForm.get('Name')?.value }}<p>{{nadavaravForm.get('Address')?.value }}</p></div>
+    <div style="position: absolute; left: 6.9cm; top: 5cm;">{{ getStarNameById(nadavaravForm.get('Star')?.value) }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 5cm;">{{ nadavaravForm.get('Qty')?.value }}</div>
+    <div style="position: absolute; left: 13cm; top: 5cm;">{{ nadavaravForm.get('ReceiptAmount')?.value  }}</div>
+    <div style="position: absolute;  left: 10.5cm; top: 8.4cm;">{{ nadavaravForm.get('ReceiptAmount')?.value  }}</div>
+  </div> -->
+  
+  <!-- <div  id="duplicateRecipt" style="width: 6in; height: 4in; display: none; position: relative; font-size: 12px; font-family: Arial, sans-serif;">
+    <div style="position: absolute; left: 2.1cm; top: 3.9cm;">{{getItemById(dupliacteBillData?.NM_Id) }}</div> 
+   <div style="position: absolute; left: 10.5cm; top: 3.4cm;">{{ dupliacteBillData?.Billdate | date : "dd-MM-YYYY" }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 3.9cm;">{{ dupliacteBillData?.BillNo }}</div>
+    <div style="position: absolute; left: 0.5cm; top: 5cm;">{{ dupliacteBillData?.Name }}</div>
+    <div style="position: absolute; left: 6.9cm; top: 5cm;">{{getStarNameById(dupliacteBillData?.Star) }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 5cm;">{{dupliacteBillData?.Qty }}</div>
+    <div style="position: absolute; left: 13cm; top: 5cm;">{{ dupliacteBillData?.Receipt_Amt  }}</div>
+    <div style="position: absolute; left: 10.5cm; top: 8.4cm;">{{ dupliacteBillData?.Receipt_Amt  }}</div>
+  </div> -->
+  
+  
+  

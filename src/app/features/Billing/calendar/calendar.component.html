@@ -1,0 +1,107 @@
+<main class="main">
+    <div class="">
+        <div class="model-content row">
+
+            <!-- Header -->
+            <div class="container card-header border-bottom-0" style="background:maroon;color:white;">
+
+                <span class="close" (click)="close()">&times;</span>
+
+                <div class="card-title text-white">
+
+                    <span class="calnav" (click)="prevMonth()">
+                        <i class="fa fa-chevron-left" title="Previous"></i>
+                        &nbsp;&nbsp;Previous
+                    </span>
+
+                    {{ monthLabel }} |
+                    {{ malMonth }} {{ malYear }}
+
+                    <span class="calnav" (click)="nextMonth()">
+                        &nbsp;&nbsp;Next
+                        <i class="fa fa-chevron-right calnav" title="Next"></i>
+                    </span>
+
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="container row">
+
+                <div class="col-md-8" style="border:0px solid blue;">
+
+                    <div style="border:0px solid orange;">
+
+                        <div>
+                            <div>
+                                <div>
+
+                                    <div>
+
+                                        <div>
+                                            <h4 style="color:maroon;">
+                                                Choose Your Pooja Date
+                                                &nbsp;&nbsp;
+                                                <i class="fa fa-chevron-right"></i>
+                                                &nbsp;&nbsp;
+
+                                                <span style="color:black;font-family:'Anek Malayalam';">
+                                                    {{ vazhipadName }}
+                                                </span>
+                                            </h4>
+                                        </div>
+
+                                        <!-- Calendar -->
+                                        <table class="table">
+
+                                            <tr class="weekday">
+                                                <th>Mon</th>
+                                                <th>Tue</th>
+                                                <th>Wed</th>
+                                                <th>Thu</th>
+                                                <th>Fri</th>
+                                                <th>Sat</th>
+                                                <th>Sun</th>
+                                            </tr>
+
+                                            <tr *ngFor="let week of weeks" class="weekday">
+
+                                                <td *ngFor="let day of week" (mouseenter)="onHover(day)"
+                                                    (mouseleave)="onLeave()" (click)="selectDate(day)" [ngClass]="{
+      'line': true,
+      'green': day?.status === 'green',
+      'gray': day?.status === 'gray'
+    }">
+
+                                                    <ng-container *ngIf="day; else emptyCell">
+
+                                                        <div class="date">{{ day.date }}</div>
+                                                        <div class="mal-naal">{{ day.naal }}</div>
+                                                        <div class="mal-date">{{ day.malDate }}</div>
+                                                        <div class="mal-thidhi">{{ day.thidhi }}</div>
+
+                                                        <!--  Hover tooltip -->
+                                                        <div class="hover-box" *ngIf="hoveredDay === day">
+                                                            {{ day.availableQty > 0 ? ('Available: ' + day.availableQty)
+                                                            : 'Full' }}
+                                                        </div>
+
+                                                    </ng-container>
+                                                    <ng-template #emptyCell>
+                                                        <div class="empty"></div>
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

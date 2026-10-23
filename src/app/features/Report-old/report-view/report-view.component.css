@@ -1,0 +1,93 @@
+.address{
+    margin: 0px;
+    padding: 0px;
+    text-transform: capitalize;
+}
+h2.transactions{
+    margin: 10px 0 0 0;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: Manjari;
+    font-size: 18px;
+    /* text-decoration: underline; */
+    font-weight: bold;
+    /* text-align: center; */
+
+}
+h2.category{
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: Manjari;
+padding:0px;
+    font-size: 16px;
+    margin:0;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+h3.subcategory{
+   font-family: Manjari;
+padding:0px;
+    font-size: 16px;
+    margin:0;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+/* General table layout */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  /* border: 1px solid #000; */
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+th.sino, td.sino {
+  width: 100px;
+}
+
+th.name, td.name {
+  width: 300px;
+  font-weight: bold;
+}
+
+th.star, td.star {
+  width: 200px;
+  font-weight: bold;
+}
+
+th.qty, td.qty {
+  width: 100px;
+}
+
+th.address, td.address {
+  width: 200px;
+}
+
+/* Hide print buttons on print */
+@media print {
+  .icon-container,
+  app-header {
+    display: none !important;
+  }
+
+  /* Ensure each time group starts on a new page */
+  .tabble-heading {
+    page-break-before: always;
+  }
+
+  /* Fit to page */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .app-header {
+    display: none !important;
+  }
+}

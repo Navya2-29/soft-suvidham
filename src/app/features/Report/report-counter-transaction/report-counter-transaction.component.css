@@ -1,0 +1,247 @@
+/* Base Layout & Headings */
+.counter-group-section {
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.counter-header-row {
+  margin-bottom: 12px;
+  border-bottom: 2px solid #029fb0;
+  padding-bottom: 6px;
+}
+
+.counter-heading {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.counter-tag {
+  font-family: Manjari, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.user-group-section {
+  margin-bottom: 20px;
+  margin-left: 12px;
+}
+
+.category-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 4px 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.category-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.user-heading {
+  margin: 0;
+  font-family: Manjari, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #04418c;
+}
+
+.vazhipad-records {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* Per-Table Column Visibility */
+.vazhipad-column-picker {
+  margin-left: auto;
+  flex-shrink: 0;
+  position: relative;
+  display: inline-flex;
+}
+
+.vazhipad-columns-btn {
+  padding: 5px 12px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #475569 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.vazhipad-columns-btn:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.vazhipad-columns-btn.has-custom-columns {
+  border-color: #029fb0 !important;
+  background: rgba(2, 159, 176, 0.08) !important;
+  color: #04418c !important;
+  font-weight: 600 !important;
+}
+
+.custom-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #029fb0 0%, #04418c 100%);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 2px;
+}
+
+.vazhipad-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 1000;
+  min-width: 200px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+}
+
+.vazhipad-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.vazhipad-dropdown-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.reset-common-btn {
+  background: none;
+  border: none;
+  color: #029fb0;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.vazhipad-dropdown-body {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 4px;
+}
+
+/* Table styles */
+.table-responsive-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.report-table th,
+.report-table td {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.report-table th {
+  background-color: #f8fafc;
+  color: #334155;
+  font-weight: 700;
+}
+
+.table-footer-row td {
+  background-color: #f1f5f9;
+  font-weight: bold;
+}
+
+/* Subtotal bars */
+.counter-subtotal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 24px;
+  padding: 10px 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.counter-subtotal-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.counter-subtotal-amount {
+  color: #166534;
+  font-size: 16px;
+}
+
+/* Print Rules */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .app-header,
+  .table-pagination-bar,
+  .vazhipad-records {
+    display: none !important;
+  }
+
+  body, html, .preview-page-container, .document-canvas {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .table-responsive-wrapper {
+    overflow: visible !important;
+  }
+
+  .document-sheet, #print-section {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .counter-group-section,
+  .user-group-section {
+    page-break-inside: avoid;
+  }
+}

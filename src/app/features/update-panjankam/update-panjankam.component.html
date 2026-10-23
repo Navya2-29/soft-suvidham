@@ -1,0 +1,91 @@
+<h2 mat-dialog-title class="dialog-header">
+  Update Panchangam
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+  <div class="form-grid">
+
+    <!-- DATE -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Date</mat-label>
+      <input matInput type="date" [(ngModel)]="data.edate" />
+    </mat-form-field>
+
+    <!-- ENGLISH MONTH -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>English Month</mat-label>
+      <mat-select [(ngModel)]="data.emon">
+        <mat-option *ngFor="let m of months" [value]="m.emonthEng">
+          {{ m.emonthEng }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- MALAYALAM DAY -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Malayalam Day</mat-label>
+      <input matInput [(ngModel)]="data.mday" />
+    </mat-form-field>
+
+    <!-- MALAYALAM MONTH -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Malayalam Month</mat-label>
+      <mat-select [(ngModel)]="data.mmon">
+        <mat-option *ngFor="let m of malayalamMonths" [value]="m.mmonEng">
+          {{ m.mmonEng }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- MALAYALAM YEAR -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Malayalam Year</mat-label>
+      <input matInput [(ngModel)]="data.myr" />
+    </mat-form-field>
+
+    <!-- THITHI -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Thithi</mat-label>
+      <mat-select [(ngModel)]="data.Thithi">
+        <mat-option *ngFor="let t of thithis" [value]="t.ThithiEng">
+          {{ t.ThithiEng }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- STAR 1 -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Star</mat-label>
+      <mat-select [(ngModel)]="data.nal">
+        <mat-option *ngFor="let s of stars" [value]="s.SM_NameEng">
+          {{ s.SM_NameEng }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- STAR 2 -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Star 2</mat-label>
+      <mat-select [(ngModel)]="data.nal1">
+        <mat-option *ngFor="let s of stars" [value]="s.SM_NameEng">
+          {{ s.SM_NameEng }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+
+  <button mat-button class="btn-cancel" (click)="onCancel()">
+    Cancel
+  </button>
+
+  <button mat-raised-button class="btn-primary" (click)="onUpdate()">
+    Update
+  </button>
+
+</mat-dialog-actions>

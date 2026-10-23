@@ -1,0 +1,112 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="panchangam-layout">
+  <!-- LEFT FILTER PANEL -->
+  <div class="left-panel">
+    <h3>Filter Type</h3>
+
+    <label class="radio-item">
+      <input
+        type="radio"
+        name="filterType"
+        value="all"
+        [(ngModel)]="selectedType"
+        (change)="onTypeChange()"
+      />
+      <span>All</span>
+    </label>
+
+    <label class="radio-item">
+      <input
+        type="radio"
+        name="filterType"
+        value="rahukalam"
+        [(ngModel)]="selectedType"
+        (change)="onTypeChange()"
+      />
+      <span>Rahu Kalam</span>
+    </label>
+
+    <label class="radio-item">
+      <input
+        type="radio"
+        name="filterType"
+        value="gulika"
+        [(ngModel)]="selectedType"
+        (change)="onTypeChange()"
+      />
+      <span>Gulika Kalam</span>
+    </label>
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="right-panel">
+    <!-- HEADER -->
+    <div class="header">
+      <h2>Panchangam</h2>
+
+      <div class="filters">
+        <input
+          type="text"
+          [(ngModel)]="year"
+          placeholder="Enter Year"
+          min="2002"
+          maxlength="4"
+        />
+
+        <select [(ngModel)]="selectedMonth">
+          <option value="">All Months</option>
+
+          <option *ngFor="let month of months" [value]="month.emonthEng">
+            {{ month.emonthEng }}
+          </option>
+        </select>
+        <select [(ngModel)]="selectedStar">
+          <option value="">All Stars</option>
+
+          <option *ngFor="let star of stars" [value]="star.id">
+            {{ getStarName(star) }}
+          </option>
+        </select>
+
+        <button class="btn primary" (click)="filterData()">Search</button>
+        <button class="btn outline" (click)="reset()">Reset</button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-container">
+      <table class="panchangam-table">
+        <thead>
+          <tr>
+            <th *ngFor="let col of displayedColumns">
+              {{ columnLabels[col] || col }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let item of data"
+            (click)="openEdit(item)"
+            style="cursor: pointer"
+          >
+            <td *ngFor="let col of displayedColumns">
+              <ng-container *ngIf="col === 'edate'; else normal">
+                {{ item[col] | date: "dd-MM-yyyy" }}
+              </ng-container>
+
+              <ng-template #normal>
+                {{ item[col] }}
+              </ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="data.length === 0">
+            <td [attr.colspan]="displayedColumns.length">No Data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

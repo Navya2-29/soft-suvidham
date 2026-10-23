@@ -1,0 +1,74 @@
+.body-print {
+  margin :20px 0;
+}
+
+.tabble-heading{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Manjari;
+  text-transform: uppercase;
+  color: rgb(8, 8, 49);
+}
+.vazhipad-cancel{
+  margin: 0;
+  padding: 0;
+}
+table{
+  margin-top: 10px;
+}
+
+.row-count-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.grandtotal {
+  text-align: right;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 16px 0 10px 0;
+}
+
+.grandtotal .overall-total {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.nodataFound {
+  text-align: center;
+  padding: 36px 20px;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Hide print buttons on print */
+@media print {
+  .no-print,
+  .preview-header-bar,
+  .table-pagination-bar,
+  .row-count-text,
+  .column-picker-wrapper,
+  .icon-container,
+  app-header {
+    display: none !important;
+  }
+
+  /* Fit to page */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-header {
+    display: none !important;
+  }
+}

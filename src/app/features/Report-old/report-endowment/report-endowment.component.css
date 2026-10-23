@@ -1,0 +1,25 @@
+.body-print table{
+  margin:20px 0;
+}
+td, th {
+  word-wrap: break-word; 
+  white-space: normal;   
+  overflow-wrap: break-word; 
+  max-width: 200px;
+}
+i{
+  text-transform: capitalize;
+}
+input[type="text"]:focus {
+  border: 2px solid rgb(32, 59, 94); 
+  outline: none;
+  background-color: #f0f4ff; 
+}
+.styled-search {
+  width: 300px;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}

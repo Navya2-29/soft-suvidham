@@ -1,0 +1,319 @@
+<app-header></app-header>
+
+<div class="vm-page">
+<header class="vm-titlebar"><div class="vm-title-left"><a class="vm-back" routerLink="/dashboard" aria-label="Back to dashboard"><mat-icon>arrow_back</mat-icon></a><span class="vm-title-symbol"><mat-icon>auto_awesome</mat-icon></span><div><h1>Item Master</h1><p>{{ templeName }}</p></div></div><span class="vm-header-note">Temple Management System</span></header>
+<main class="vm-workspace"><div class="vm-layout"><section class="vm-panel vm-editor"><div class="vm-panel-title"><mat-icon>edit_note</mat-icon><span>Item Master Details</span></div><div class="vm-panel-body">
+          <h1 style="font-weight: 500">Item Master</h1>
+          <div class="fixitems">
+            <form
+              [formGroup]="itemMasterForm"
+              (keydown.enter)="$event.preventDefault()"
+            >
+              <table class="table">
+                <tr>
+                  <td>
+                    Select Type <span class="text-danger">*</span>
+                    <select
+                      class="form-control sps"
+                      style="width: 100%"
+                      formControlName="ItemType"
+                    >
+                      <option value="">Select</option>
+                      <option value="Nadavaravu">Nadavaravu</option>
+                      <option value="Subscription">Subscription</option>
+                      <option value="Thulabaram">Thulabharam</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr
+                  *ngIf="
+                    itemMasterForm.get('ItemType')?.value === 'Subscription'
+                  "
+                >
+                  <td>
+                    Subscription Type <span class="text-danger">*</span>
+
+                    <select
+                      class="form-control sps"
+                      formControlName="NM_Category"
+                    >
+                      <option value="">Select</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                      <option value="lifetime">Lifetime</option>
+                    </select>
+
+                    <!-- Validation -->
+                    <div
+                      *ngIf="
+                        itemMasterForm.get('NM_Category')?.touched &&
+                        itemMasterForm.get('NM_Category')?.invalid
+                      "
+                      class="text-danger"
+                    >
+                      Subscription type is required
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Item Code<span class="text-danger">*</span
+                    ><input
+                      type="text"
+                      [readonly]="updateFlag"
+                      maxlength="3"
+                      (input)="onInputChange($event)"
+                      appUpperCase
+                      matInput
+                      formControlName="NM_Code"
+                      class="form-control sps"
+                      placeholder="Enter Code"
+                      style="width: 126px"
+                    />
+                  </td>
+                </tr>
+                <div
+                  *ngIf="
+                    itemMasterFormControl['NM_Code'].invalid &&
+                    (itemMasterFormControl['NM_Code'].dirty ||
+                      itemMasterFormControl['NM_Code'].touched)
+                  "
+                  class="pl-1 text-danger"
+                >
+                  <div
+                    *ngIf="
+                      itemMasterFormControl['NM_Code'].hasError('required')
+                    "
+                  >
+                    code is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      itemMasterFormControl['NM_Code'].invalid &&
+                      itemMasterFormControl['NM_Code'].hasError('maxlength')
+                    "
+                  >
+                    code must be 3 characters long.
+                  </div>
+                  <div
+                    *ngIf="itemMasterFormControl['NM_Code'].hasError('pattern')"
+                  >
+                    code must be include number or english alphabat.
+                  </div>
+                  <div *ngIf="showMaxLengthError" class="pl-1 text-danger">
+                    Code must be 3 characters long.
+                  </div>
+                </div>
+
+                <tr>
+                  <td>
+                    Item Name<span class="text-danger">*</span
+                    ><input
+                      type="text"
+                      appUpperCase
+                      formControlName="NM_Name"
+                      matInput
+                      class="form-control"
+                      placeholder="Enter Name"
+                    />
+                  </td>
+                </tr>
+                <div
+                  *ngIf="
+                    itemMasterFormControl['NM_Name'].invalid &&
+                    (itemMasterFormControl['NM_Name'].dirty ||
+                      itemMasterFormControl['NM_Name'].touched)
+                  "
+                  class="pl-1 text-danger"
+                >
+                  <div
+                    *ngIf="
+                      itemMasterFormControl['NM_Name'].hasError('required')
+                    "
+                  >
+                    name is required.
+                  </div>
+                  <div
+                    *ngIf="itemMasterFormControl['NM_Name'].hasError('pattern')"
+                  >
+                    name must be include english alphabat and spaces only.
+                  </div>
+                  <div
+                    *ngIf="
+                      itemMasterFormControl['NM_Name'].hasError('duplicateName')
+                    "
+                    class="text-danger"
+                  >
+                    Name already exists.
+                  </div>
+                </div>
+
+                <tr>
+                  <td>
+                    Item Regional Name<span class="text-danger">*</span
+                    ><input
+                      type="text"
+                      appUpperCase
+                      formControlName="NM_RName"
+                      matInput
+                      class="form-control"
+                      placeholder="Enter RName"
+                    />
+                  </td>
+                </tr>
+                <tr
+                  *ngIf="itemMasterForm.get('ItemType')?.value === 'Nadavaravu'"
+                >
+                  <td>
+                    Category<span class="text-danger">*</span
+                    ><select
+                      class="form-control sps"
+                      style="width: 100%"
+                      name=""
+                      id=""
+                      formControlName="category"
+                    >
+                      <option value="">Select Category</option>
+                      <option value="metal">Sprecious/Metal</option>
+                      <option value="nonmetal">
+                        Non Sprecious/ or Non Metal
+                      </option>
+                      <option value="others">Others</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Amount<span class="text-danger">*</span>
+                    <input
+                      type="number"
+                      formControlName="Amount"
+                      matInput
+                      class="form-control"
+                      placeholder="Enter RName"
+                      min="1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Account Head<span class="text-danger">*</span>
+                    <select
+                      class="form-control"
+                      style="width: 100%"
+                      formControlName="ACHeadCode"
+                    >
+                      <option value="">Select 1</option>
+                      <option value="123456">Select 2</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Account SubHead<span class="text-danger">*</span>
+                    <select
+                      class="form-control"
+                      style="width: 100%"
+                      formControlName="ACSubCode"
+                    >
+                      <option value="">Select 1</option>
+                      <option value="123456">Select 2</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Item Description<span class="text-danger">*</span
+                    ><textarea
+                      type="text"
+                      formControlName="NM_Description"
+                      class="form-control"
+                      placeholder="Enter Description"
+                      matInput
+                    ></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    
+                    
+                    
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </div>
+        </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Item Master List</span></div><div class="vm-list-area">
+          <div style="display: flex" class="search-container mt-3 vm-search-container">
+            <input
+              type="text"
+              class="form-control sps search-input"
+              (input)="onSearch()"
+              placeholder="search by Code or Name"
+              style="width: 36%"
+              [(ngModel)]="searchQuery"
+            />
+            <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+          </div>
+          <div class="fixitems prathishta">
+            <table class="table">
+              <tr style="border-bottom: 2px solid #223d61">
+                <!-- <th style="width:10px;background-color: #223d61;color:white;">Active</th> -->
+                <th class="code_center">Id</th>
+                <th class="code_center">code</th>
+                <th>Name</th>
+                <th></th>
+              </tr>
+              <tbody *ngIf="itemMaster && itemMaster.length > 0">
+                <tr *ngFor="let data of filtereditemMaster; let i = index">
+                  <td class="code_center">{{ data.NM_Id }}</td>
+                  <td class="code_center">{{ data.NM_Code }}</td>
+                  <td style="text-align: left">
+                    {{ data.NM_Name }}- {{ data.NM_RName }}
+                  </td>
+                  <td>
+                    <mat-icon
+                      title="Edit"
+                      class="small"
+                      style="vertical-align: middle"
+                      (click)="onEdit(data)"
+                      >edit</mat-icon
+                    >
+                    <mat-icon
+                      title="Delete"
+                      class="small"
+                      style="vertical-align: middle"
+                      (click)="onDelete(data.NM_Id)"
+                      >delete</mat-icon
+                    >
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr *ngIf="!filtereditemMaster || filtereditemMaster.length === 0">
+                  <td colspan="5">
+                    <div style="width: 100%" class="mt-3">
+                      <h4 class="text-center">No Records found</h4>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div></section></div></main>
+<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-danger ml-1" (click)="onReset()">
+                      cancel
+                    </button><button type="button" class="vm-save-btn"
+                      *ngIf="!updateFlag"
+                      class="btn btn-primary"
+                      (click)="onSubmit(itemMasterForm.value)"
+                    >
+                      save
+                    </button><button type="button" class="vm-save-btn"
+                      *ngIf="updateFlag"
+                      class="btn btn-primary"
+                      (click)="onUpdate(itemMasterForm.value)"
+                    >
+                      update
+                    </button></div></footer>
+</div>

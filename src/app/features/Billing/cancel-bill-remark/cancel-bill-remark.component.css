@@ -1,0 +1,31 @@
+
+  /* search.component.css */
+
+  .dialog-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .dialog-icon {
+    font-size: 28px;
+    color: #f44336; /* Material Red for warning */
+  }
+  
+  .dialog-content {
+    margin-top: 16px;
+  }
+  
+  .dialog-input {
+    width: 100%;
+  }
+  
+  mat-dialog-actions {
+    padding: 16px 3;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  

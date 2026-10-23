@@ -1,0 +1,41 @@
+.dialog-title {
+    font-size: 24px;
+    text-align: center;
+    color: #3f51b5; /* Use your primary theme color */
+  }
+  
+  .dialog-content {
+    padding: 20px;
+    text-align: center; /* Center the text */
+  }
+  
+  .dialog-message {
+    font-size: 18px;
+    color: #555; /* Dark gray for better readability */
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: center; /* Center the action buttons */
+    margin-top: 20px; /* Add space above the buttons */
+  }
+  
+  button {
+    margin: 0 10px; /* Add space between buttons */
+    padding: 10px 20px; /* Increase padding for better button size */
+    font-size: 16px; /* Increase font size for better readability */
+  }
+  
+  /* Style for the primary button */
+  button[color="primary"] {
+    background-color: #3f51b5; /* Primary color */
+    color: white;
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  /* Hover effect for buttons */
+  button:hover {
+    opacity: 0.8;  /* Slightly fade on hover */
+    transition: opacity 0.3s;  /* Smooth transition */
+  }
+  

@@ -1,0 +1,96 @@
+<app-spinner *ngIf="loading"></app-spinner>
+
+<main class="main">
+  <div class="background-pattern" aria-hidden="true"></div>
+  <div class="background-glow glow-one" aria-hidden="true"></div>
+  <div class="background-glow glow-two" aria-hidden="true"></div>
+
+  <div *ngIf="notification" class="alert-banner" role="status" aria-live="polite">
+    <div class="alert-icon-box"><mat-icon>campaign</mat-icon></div>
+    <div class="alert-text-wrapper">
+      <div class="alert-label">ANNOUNCEMENT</div>
+      <div class="alert-marquee"><span class="alert-text">{{ notification }}</span></div>
+    </div>
+    <button type="button" mat-icon-button class="close-btn"
+      aria-label="Close announcement" (click)="notification = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="content">
+    <section class="left-side" aria-label="Temple information">
+      <div class="left-pattern" aria-hidden="true"></div>
+      <div class="brand-content">
+        <div class="brand-top">
+          <div class="brand-badge"><mat-icon>account_balance</mat-icon><span>TEMPLE MANAGEMENT SYSTEM</span></div>
+        </div>
+        <div class="temple-details">
+          <div class="temple-logo-wrapper">
+            <div class="logo-halo" aria-hidden="true"></div>
+            <img [src]="getlogo()" class="temple-image" alt="Temple Logo" />
+          </div>
+          <div class="temple-name-wrapper"><h1 class="temple-name">{{ templeName }}</h1></div>
+          <div class="gold-divider" aria-hidden="true"><span></span><mat-icon>filter_vintage</mat-icon><span></span></div>
+          <p class="temple-subtitle">Smart Temple Management Solution</p>
+          <p class="temple-description">Simplifying temple operations through secure, efficient and intelligent counter management.</p>
+        </div>
+        <div class="brand-bottom"><div class="system-indicator"><span class="status-dot"></span><span>Counter Management Portal</span></div></div>
+      </div>
+    </section>
+
+    <section class="right-side" aria-label="Counter login">
+      <div class="version"><span class="version-dot"></span>Version 1.0</div>
+      <div class="login-content">
+        <div class="company-logo-wrapper">
+          <img src="assets/images/logo.jpg" class="company-logo" alt="Software Company Logo" />
+        </div>
+        <div class="login-heading">
+          <div class="welcome-tag"><mat-icon>verified_user</mat-icon>SECURE COUNTER ACCESS</div>
+          <h2>Login</h2>
+          <p>Please enter your login credentials to access your counter dashboard.</p>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message" role="alert">
+          <mat-icon>error_outline</mat-icon><span>{{ errorMessage }}</span>
+        </div>
+
+        <form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitLogin(loginForm.value)">
+          <mat-form-field appearance="fill" floatLabel="auto" class="line-field">
+            <mat-label>Login ID</mat-label>
+            <mat-icon matPrefix class="field-prefix">person_outline</mat-icon>
+            <input #usernameInput matInput formControlName="username" autocomplete="username"
+              (keydown.enter)="focusPassword()" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" floatLabel="auto" class="line-field">
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix class="field-prefix">lock_outline</mat-icon>
+            <input #passwordInput matInput [type]="hide ? 'password' : 'text'"
+              formControlName="password" autocomplete="current-password" />
+            <button type="button" mat-icon-button matSuffix class="password-toggle"
+              [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="!hide" (click)="hide = !hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button class="submit" [disabled]="loading">
+            <span class="submit-content">
+              <mat-icon>{{ loading ? 'hourglass_empty' : 'login' }}</mat-icon>
+              <span>{{ loading ? 'Signing In...' : 'Secure Login' }}</span>
+              <mat-icon *ngIf="!loading" class="submit-arrow">arrow_forward</mat-icon>
+            </span>
+          </button>
+        </form>
+
+        <div class="security-note"><mat-icon>shield</mat-icon><span>Authorized personnel access only. Your session is protected.</span></div>
+      </div>
+      <div class="login-bottom"><span class="bottom-line"></span><span>POWERED BY CUBIX SOFTWARE SOLUTIONS</span><span class="bottom-line"></span></div>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <p class="copy-right">© Copyright 2025 | Cubix Software Solutions</p>
+    <p class="last-updated"><mat-icon>update</mat-icon>Last Updated: {{ todayDate | date:'dd MMM yyyy' }}</p>
+  </footer>
+</main>

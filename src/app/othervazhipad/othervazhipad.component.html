@@ -1,0 +1,310 @@
+<div class="card-body" style="background:white;">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>മറ്റിനം വഴിപാട്</h2>
+            <table class="table">
+                <tr>
+                    <td colspan="2">
+                        <input type="text" placeholder="Bill No." class="form-control sps" style="width:150px;">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control formdate">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input matInput
+                      aria-label="vazhipad"
+                      [matAutocomplete]="auto"
+                      [formControl]="vazhipadCtrl" autofocus class="form-control sps" placeholder="Select Vazhipad">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          @for (vazhipad of filteredvazhipad | async; track vazhipad) {
+                            <mat-option [value]="vazhipad.name" style="padding-left:15px;padding-top:0px;">
+                              <!-- <img alt="" class="example-option-img" [src]="vazhipad.flag" height="25"> -->
+                              <span style="font-size:11pt;color:maroon;margin:0px;padding:0px;">{{vazhipad.name}}</span> 
+                              <!-- <small>Population: {{vazhipad.population}}</small> -->
+                            </mat-option>
+                          }
+                        </mat-autocomplete>
+                        
+                    </td>
+                    <td>
+                        <input type="date" class="form-control formdate">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" placeholder="Enter Name" class="form-control sps">
+                    </td>
+                    <td>
+                        <select class="form-control" style="width:100%;height:30.6px;">
+                            <option>Select Star</option>
+                            <option>Aswathy</option>
+                            <option>Bharany</option>
+                            <option>Makayiram</option>
+                            <option>Karthika</option>
+                            <option>Thiruvathira</option>
+                            <option>Punartham</option>
+                            <option>Pooyam</option>
+                          </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="text" placeholder="Address" class="form-control sps">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="text" placeholder="Remakrs" class="form-control sps">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="width:25%;">
+                        <input type="text" placeholder="Amount" class="form-control sps">
+                    </td>
+                    <td colspan="2" style="border:1px solid gray;padding:6px;text-align:center;vertical-align:middle;">
+                       <span style="font-weight:700;">Payment Method: &nbsp;&nbsp; </span>
+                       <select>
+                            <option>Cash</option>
+                            <option>DD</option>
+                            <option>MO</option>
+                            <option>UPI</option>
+                       </select>
+                       <input type="text" placeholder="Remakrs" placeholder="Enter Number - Cheque/DD/MO/UPI" class="form-control sps">
+                       
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right;padding:9px;">
+                        <button class="btn btn-primary">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-8 search">
+            <div style="display:flex;">
+                <input type="date" class="form-control formdate" style="width:15%;">
+                <button class="btn btn-primary" style="margin-right:15px;">Search</button>
+                <input type="text" class="form-control sps" placeholder="search by Bill No." style="width:25%;">
+                <button class="btn btn-primary">Search</button>
+            </div>
+            <div class="fixitems">
+                <table class="table">
+                    <tr style="border-bottom: 2px solid #223d61;">
+                        <th>Sl No.</th>
+                        <th>Bill No</th>
+                        <th>Bill Date</th>
+                        <th>Name</th>
+                        <th>Star</th>
+                        <th>Vazhipad Date</th>
+                        <th></th>
+                    </tr>
+                   
+                    <tr>
+                        <td>5</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td>15-02-2024</td>
+                        <td>RCPT.150/2024/85</td>
+                        <td>Reghuraman</td>
+                        <td>Rohini</td>
+                        <td> 15-02-2024</td>
+                         
+                        <mat-icon title="Edit" class="small">edit</mat-icon>
+                        <mat-icon title="Delete" class="small">delete</mat-icon>
+                    </tr>
+    
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+</div>

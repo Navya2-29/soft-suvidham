@@ -1,0 +1,140 @@
+.table-container {
+    max-width: 100%;
+
+    margin: 10px 100px;  /* Minimal left and right margins */
+    padding: 10px 20px; /* Add padding only on top and bottom for better spacing */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Enables horizontal scrolling when the table is wide */
+  }
+  
+  h2 {
+    margin-top: 20px;
+    color: #030303;
+    font-size: 1.5em;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  button {
+    display: block;
+    margin: 10px auto 20px; /* Center the button and add space */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .responsive-table {
+    width: 100%; /* Ensure the table takes up the full container width */
+    border-collapse: collapse;
+    table-layout: auto; /* Let the table adjust columns based on content */
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    min-width: 50px; /* Minimum width to prevent columns from shrinking */
+  }
+  
+  .responsive-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  .responsive-table th:nth-child(1),
+  .responsive-table td:nth-child(1) {
+    width: 12%; /* Adjusted width for 'Code' column */
+  }
+  .responsive-table th:nth-child(2),
+  .responsive-table td:nth-child(2) {
+    width: 12%; /* Adjusted width for 'Code' column */
+  }
+  
+  .responsive-table th:nth-child(4),
+  .responsive-table td:nth-child(4) {
+    width: 12%; /* Adjusted width for 'Amount' column */
+  }
+  
+  @media screen and (max-width: 768px) {
+    .responsive-table th,
+    .responsive-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .responsive-table th,
+    .responsive-table td {
+      padding: 6px;
+      font-size: 12px;
+    }
+  }
+  
+  .responsive-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .responsive-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+  
+    #printableTable,
+    #printableTable * {
+      visibility: visible;
+    }
+  
+    #printableTable {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+  
+    .responsive-table {
+      page-break-before: always;
+    }
+  }
+  
+/* Button container aligned to the right */
+.button-container {
+  
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Add spacing between buttons */
+  margin-bottom: 20px; /* Add some space below the buttons */
+  max-width: 100%;
+  padding-right: 10px;
+}
+
+.back-button, .print-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.back-button:hover, .print-button:hover {
+  background-color: #0056b3;
+}
+
+

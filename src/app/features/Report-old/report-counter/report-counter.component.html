@@ -1,0 +1,128 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="report-container">
+  <div class="icon-container">
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF" (click)="generatePDF()">
+      <span class="material-icons">print</span>
+    </button>
+    <button
+      mat-icon-button
+      matTooltip="Export to Excel"
+     (click)="exportToExcel()"
+    >
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <div>
+        <h3 class="templename">
+          {{ templeName }}
+        </h3>
+        <h4>
+          {{ templeAddress }}
+        </h4>
+
+        <h2>
+          {{ "Report Name.DAILY TEMPLE COLLECTION (COUNTER)" | translate }}
+        </h2>
+        <p class="date">
+          {{ formatDateToDDMMYYYY(fromDate) }} to
+          {{ formatDateToDDMMYYYY(toDate) }}
+        </p>
+        <hr />
+      </div>
+
+      <div class="body-print">
+        <div id="pdf-content" *ngIf="data.length > 0">
+          <div *ngFor="let counter of groupedData | keyvalue">
+            <p class="counter">{{"Counter" | translate}}: {{ counter.key }}</p>
+
+            <div *ngFor="let user of counter.value | keyvalue">
+              <p class="user">{{"user" | translate }}: {{ user.key }}</p>
+
+              <div *ngFor="let mode of user.value | keyvalue">
+                <p class="transaction transactiontype">
+                  {{ getTransactionType(mode.key) | translate }}
+                </p>
+
+                <table class="counterTable">
+                  <thead>
+                    <tr>
+                      <th>{{ "VAZHIPAD" | translate }}</th>
+                      <th>{{ "QUANTITY" | translate }}</th>
+                      <th class="number">{{ "RATE" | translate }}</th>
+                      <th class="number">{{ "AMOUNT" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mode.value">
+                      <td>{{ item.vazhipad }}</td>
+                      <td>{{ item.Qty }}</td>
+                      <td class="number">
+                        {{ item.Rate | number : "1.2-2" }}
+                      </td>
+                      <td class="number">
+                        {{ item.Amount | number : "1.2-2" }}
+                      </td>
+                    </tr>
+                    <!-- Transaction Mode Total -->
+                    <tr *ngIf="mode.value.length > 0">
+                      <td colspan="3" class="total">
+                       {{"Report Name.Total for" | translate }} {{ getTransactionType(mode.key) }}
+                      </td>
+                      <td class="total">
+                        {{
+                          getTotalForCuserTrnsMode(
+                            counter.key,
+                            user.key,
+                            mode.key
+                          ) | number : "1.2-2"
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Cuser-wise Total -->
+
+              <div class="total">
+                <h5 id="totalamount">
+                 {{"Report Name.Total for" | translate}} ({{ user.key }}):
+                  {{
+                    getTotalForCuser(counter.key, user.key) | number : "1.2-2"
+                  }}
+                </h5>
+              </div>
+            </div>
+
+            <!-- Counter-wise Total -->
+            <div class="total">
+              <h5 class="totalcounter">
+                {{"Report Name.Total for" | translate }} ({{"Counter" | translate }} {{ counter.key }}):
+                {{ getTotalForCounter(counter.key) | number : "1.2-2" }}
+              </h5>
+            </div>
+            <br />
+          </div>
+        </div>
+        <div class="grandtotal" *ngIf="data.length > 0">
+          <h1>{{"Report Name.GrandTotal" | translate }}: {{ "" + getGrandTotal() | number : "1.2-2" }}</h1>
+        </div>
+      </div>
+      <div class="nodataFound" *ngIf="data.length === 0">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

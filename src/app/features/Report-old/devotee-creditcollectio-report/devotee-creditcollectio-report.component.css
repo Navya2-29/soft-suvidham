@@ -1,0 +1,76 @@
+.body-print table{
+  margin :20px 0;
+}
+
+.tabble-heading{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: Manjari;
+  text-transform: uppercase;
+  color: rgb(8, 8, 49);
+  /* text-decoration: underline; */
+}
+.vazhipad-cancel{
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  /* border: 1px solid #000; */
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+th.sino, td.sino {
+  width: 100px;
+}
+
+th.name, td.name {
+  width: 300px;
+}
+
+th.star, td.star {
+  width: 200px;
+}
+
+th.qty, td.qty {
+  width: 100px;
+}
+
+th.address, td.address {
+  width: 200px;
+}
+
+/* Hide print buttons on print */
+@media print {
+  .icon-container,
+  app-header {
+    display: none !important;
+  }
+
+  /* Ensure each time group starts on a new page */
+  .tabble-heading {
+    page-break-before: always;
+  }
+
+  /* Fit to page */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .app-header {
+    display: none !important;
+  }
+}

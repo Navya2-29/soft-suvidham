@@ -1,0 +1,106 @@
+<app-header></app-header>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="report-container">
+  <div class="icon-container">
+      <input type="text" class="styled-search" placeholder="Search report..." (input)="onSearch($event)" />
+
+    <button
+      mat-icon-button
+      matTooltip="Back to previous page"
+      (click)="goBack()"
+    >
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button mat-icon-button matTooltip="Make PDF">
+      <span class="material-icons" (click)="generatePDF()">print</span>
+    </button>
+    <button
+  mat-icon-button
+  matTooltip="Export to Excel"
+  (click)="exportToExcel()"
+>
+  <mat-icon>grid_on</mat-icon>
+</button>
+  </div>
+  <div id="print-section">
+    <div class="header-print">
+      <h3 class="templename">
+        {{ templeName }}
+      </h3>
+      <h4>
+        {{ templeAddress }}
+      </h4>
+
+      <h2>
+        {{ "Devotee Ledger" | translate }}
+      </h2>
+      <p class="date">
+        {{ formatDateToDDMMYYYY(fromDate) }} to
+        {{ formatDateToDDMMYYYY(toDate) }}
+      </p>
+      <hr />
+    </div>
+    <div class="body-print">
+      <div id="pdf-content">
+        <ng-container *ngIf="data.length > 0">
+          <div *ngFor="let midGroup of groupedData | keyvalue">
+            <p class="transaction tabble-heading">{{getName(midGroup.key) }} (Id: {{ midGroup.key }})</p>
+            <p class="transaction tabble-heading">{{getMobileNumber(midGroup.key) }}</p>
+
+            <table class="transactionTable">
+              <thead>
+                 
+                <tr>
+                  <th>{{ "BILLNO" | translate }}</th>
+                  <th>{{ "BILLDATE" | translate }}</th>
+                  <th>{{ "VAZHIPAD" | translate }}</th>
+                  <!-- <th>{{ "NAME" | translate }}</th> -->
+                  <th>{{ "QUANTITY" | translate }}</th>
+                  <th class="number">{{ "RATE" | translate }}</th>
+                  <th class="number">{{ "AMOUNT" | translate }}</th>
+                  <th class="number">{{ "TOTAL" | translate }}</th>
+                  <th class="number">{{"Balance"| translate}}</th>
+                </tr>
+              </thead>
+          <tbody>
+  <!-- Opening Balance -->
+  <tr>
+    <td colspan="6"><b>Opening Balance</b></td>
+      <td class="number">{{ previousBalances[midGroup.key] <0?"Due amount":"Amount at Temple"}}</td>
+    <td class="number">{{getwholeNumber( previousBalances[midGroup.key])  || 0 | number : '1.2-2'}}</td>
+  </tr>
+
+  <!-- Transactions -->
+  <tr *ngFor="let row of getStatementRows(midGroup.key)">
+    <td><span *ngIf="row.isBillStart">{{ row.BillNo }}</span></td>
+    <td>{{ row.Billdate | date: "dd-MM-yyyy" }}</td>
+    <td>{{ row.Vazhipad ? row.Vazhipad : "Devotee collection" }}</td>
+    <td>{{ row.Qty === 0 ? '--' : (row.Qty | number:'1.2-2') }}</td>
+    <td class="number"> {{ row.Rate === 0 ? '--' : (row.Rate | number:'1.2-2') }}</td>
+    <td class="number"> {{ row.Amount === 0 ? '--' : (row.Amount | number:'1.2-2') }}</td>
+    <td class="number"><span *ngIf="row.isBillStart">{{row.Vazhipad?"-":"+"}}{{ getTotalForBill(row.BillNo)| number : "1.2-2" }}({{row.Vazhipad?"Dr":"Cr"}})</span></td>
+    <td class="number"><span *ngIf="row.isBillStart">{{ getwholeNumber(row.runningBalance) | number : "1.2-2" }}</span></td>
+  </tr>
+
+  <!-- Closing Balance -->
+  <tr>
+    <td colspan="6"><b>Closing Balance</b></td>
+    <td class="number">{{getStatementRows(midGroup.key)[getStatementRows(midGroup.key).length - 1]?.runningBalance>0?"Amount at Temple":"Due Amount"}}</td>
+    <td class="number">
+      {{ getwholeNumber(getStatementRows(midGroup.key)[getStatementRows(midGroup.key).length - 1]?.runningBalance) | number : "1.2-2"}}
+    </td>
+  </tr>
+</tbody>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+      
+
+      <div *ngIf="data.length === 0" class="nodataFound">
+        <h2></h2>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<!-- 200px responsive billing footer. Angular bindings and handlers preserved. -->
+<div class="bottom" role="region" aria-label="Billing and payment">
+  <div class="total">
+    <!-- QUICK SEARCH -->
+    <section class="billing-panel search-panel" aria-label="Find previous bill or devotee">
+      <div class="panel-heading">QUICK SEARCH</div>
+      <div class="search-line">
+        <div class="float-field">
+          <input type="text" class="billing-input" placeholder=" " [(ngModel)]="billNumber" aria-label="Bill number" />
+          <label>{{ 'PLACEHOLDER.BILLNUMBER' | translate }}</label>
+        </div>
+        <button type="button" class="small-btn" (click)="onFindBillNumber()">Find</button>
+      </div>
+      <div class="search-line">
+        <div class="float-field">
+          <input type="text" class="billing-input" placeholder=" " [(ngModel)]="mobileNumber" (ngModelChange)="updateMobile($event)" aria-label="Search mobile number" />
+          <label>{{ 'PLACEHOLDER.MOBILENUMBER' | translate }}</label>
+        </div>
+        <button type="button" class="small-btn" (click)="getNameAndStarByMobilenumber()">Find</button>
+      </div>
+      <div class="member-line">
+        <label class="member-check">
+          <input type="checkbox" [(ngModel)]="memberDevoteeCheck" />
+          <span>{{ 'Member' | translate }}</span>
+        </label>
+        <button type="button" class="small-btn devotee-btn" (click)="onFind()">Devotee Details</button>
+      </div>
+    </section>
+
+    <!-- TODAY COLLECTION -->
+    <section class="billing-panel collection-panel" aria-label="Today's collection">
+      <div class="panel-heading">{{ 'TODAYCOLLECTION' | translate }}</div>
+      <div class="collection-amount">₹ {{ (todayCollection ? todayCollection : 0) | number : '1.2-2' }}</div>
+      <div class="last-bill">
+        <span>{{ 'LastBillNo' | translate }}.</span>
+        <strong *ngIf="!isLockedShow">{{ theLastBillNo }}</strong>
+        <strong class="lock-text" *ngIf="isLockedShow">LOCK</strong>
+        <button *ngIf="isLockedShow" type="button" class="unlock-btn" (click)="vazhipadUnblocking()" title="Unlock billing" aria-label="Unlock billing">
+          <i class="fa-solid fa-unlock"></i> Unlock
+        </button>
+      </div>
+    </section>
+
+    <!-- CUSTOMER DETAILS -->
+    <section class="billing-panel customer-panel" aria-label="Customer details">
+      <div class="panel-heading">CUSTOMER DETAILS</div>
+      <form [formGroup]="customerdetailsForBillingForm" autocomplete="off">
+        <div class="customer-fields" [class.has-instrument]="!['CS', 'CR'].includes(customerdetailsForBillingForm.get('Trnsmode')?.value)">
+          <div class="field-stack">
+            <div class="gothram-wrap">
+              <div class="float-field">
+                <input type="text" matInput class="billing-input gothram" formControlName="Address3" [matAutocomplete]="autoGothram" placeholder=" " (keydown)="handleKeyDowns($event, 0, 0)" />
+                <label>{{ 'PLACEHOLDER.ADDRESS3' | translate }}</label>
+              </div>
+              <mat-autocomplete #autoGothram="matAutocomplete">
+                <mat-option *ngFor="let gothram of filteredGothrams | async" [value]="gothram.GC_Name">{{ gothram.GC_Name }}</mat-option>
+              </mat-autocomplete>
+            </div>
+            <div class="float-field">
+              <input type="text" formControlName="Address1" class="billing-input" #address2 placeholder=" " (keydown)="handleKeyDowns($event, 1, 0)" />
+              <label>{{ 'PLACEHOLDER.ADDRESS1' | translate }}</label>
+            </div>
+            <div class="float-field">
+              <input type="text" formControlName="Address2" class="billing-input" #address3 placeholder=" " (keydown)="handleKeyDowns($event, 2, 0)" />
+              <label>{{ 'PLACEHOLDER.ADDRESS2' | translate }}</label>
+            </div>
+          </div>
+          <div class="field-stack">
+            <div class="float-field">
+              <input type="text" formControlName="Mobile" maxlength="11" class="billing-input" #phone placeholder=" " (keydown)="handleKeyDowns($event, 1, 1)" [class.is-invalid]="customerdetailsForBillingForm.get('Mobile')?.invalid && customerdetailsForBillingForm.get('Mobile')?.touched" (input)="mobileSignal.set($any($event.target).value)" />
+              <label>{{ 'PLACEHOLDER.PHONE' | translate }}</label>
+            </div>
+            <div class="float-field">
+              <input type="email" formControlName="Email" class="billing-input" #email placeholder=" " (keydown)="handleKeyDowns($event, 2, 1)" />
+              <label>{{ 'PLACEHOLDER.EMAIL' | translate }}</label>
+            </div>
+            <div class="float-field">
+              <input type="text" formControlName="Pincode" class="billing-input" #pincode placeholder=" " (keydown)="handleKeyDowns($event, 0, 1)" />
+              <label>{{ 'PLACEHOLDER.PINCODE' | translate }}</label>
+            </div>
+          </div>
+          <div class="field-stack instrument-fields" *ngIf="!['CS', 'CR'].includes(customerdetailsForBillingForm.get('Trnsmode')?.value)">
+            <div class="float-field">
+              <input type="text" formControlName="Instno" class="billing-input" placeholder=" " [class.is-invalid]="customerdetailsForBillingForm.get('Instno')?.invalid && customerdetailsForBillingForm.get('Instno')?.touched" />
+              <label>{{ 'PLACEHOLDER.CHEQUENO' | translate }}</label>
+            </div>
+            <div class="float-field date-float" *ngIf="customerdetailsForBillingForm.get('Trnsmode')?.value === 'CH'">
+              <input type="date" formControlName="InstaDate" class="billing-input" aria-label="Cheque date" title="Cheque date" [class.is-invalid]="customerdetailsForBillingForm.get('InstaDate')?.invalid && customerdetailsForBillingForm.get('InstaDate')?.touched" />
+              <label>Cheque date</label>
+            </div>
+            <div class="float-field" *ngIf="customerdetailsForBillingForm.get('Trnsmode')?.value === 'CH'">
+              <input type="text" formControlName="InstBank" class="billing-input" placeholder=" " [class.is-invalid]="customerdetailsForBillingForm.get('InstBank')?.invalid && customerdetailsForBillingForm.get('InstBank')?.touched" />
+              <label>{{ 'PLACEHOLDER.BANKNAME' | translate }}</label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- PAYMENT -->
+    <section class="billing-panel payment-panel" aria-label="Payment">
+      <div class="panel-heading">PAYMENT</div>
+      <form [formGroup]="customerdetailsForBillingForm" autocomplete="off">
+        <div class="payment-top">
+          <div class="float-field">
+            <input type="text" formControlName="Givenamount" class="billing-input amount-given" placeholder=" " aria-label="Amount received" />
+            <label>Amount received</label>
+          </div>
+          <div class="balance">Balance: <strong>{{ balancecalculated }}</strong></div>
+        </div>
+        <div class="float-field select-float">
+          <select class="billing-input payment-mode" formControlName="Trnsmode" #paymentDropdown (change)="onPaymentModeChange($event)" aria-label="Payment mode">
+            <option value="CS">{{ 'Cash' | translate }}</option>
+            <option value="UP">{{ 'UPI' | translate }}</option>
+            <option value="DE">{{ 'Debit' | translate }}</option>
+            <option value="CR">{{ 'Credit' | translate }}</option>
+            <option value="CH">{{ 'Cheque' | translate }}</option>
+            <option value="MO">{{ 'Money order' | translate }}</option>
+            <option value="ON">{{ 'PLACEHOLDER.BANK' | translate }}</option>
+          </select>
+          <label>Payment mode</label>
+        </div>
+        <div class="pay-line">
+          <div class="pay-total" aria-label="Total bill amount">
+            <span>TOTAL</span><strong>₹ {{ totalAmount }}</strong>
+          </div>
+          <button type="button" class="pay-button" id="paybutton" #payButton
+            [disabled]="role == 'admin' || role == 'audit' || role == 'super' || receiptPrinrservice.isSubmitting()"
+            (focus)="onPayFocus()" (blur)="onPayBlur()" (click)="onSubmit()">
+            {{ receiptPrinrservice.isSubmitting() ? 'Processing...' : 'Pay' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

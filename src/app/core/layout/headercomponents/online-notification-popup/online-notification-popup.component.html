@@ -1,0 +1,43 @@
+<h2 mat-dialog-title class="dialog-title">
+  {{today |date:"dd-MM-yyyy"}} - Online vazhipad Details
+</h2>
+
+<mat-dialog-content *ngIf="orderDetails">
+  <table class="custom-table">
+    <tr>
+       <th>
+      <mat-checkbox
+        (change)="toggleAllRows($event)"
+        [checked]="isAllSelected()"
+      ></mat-checkbox>
+    </th>
+      <th>Vazhipad</th>
+      <th>Prathista</th>
+      <th>Name</th>
+      <th>Star/Gothram</th>
+
+      <!-- <th>Qty</th> -->
+    </tr>
+    <tr *ngFor="let item of orderDetails">
+      <td>
+      <mat-checkbox
+        (change)="toggleRow(item)"
+        [checked]="isSelected(item)"
+      ></mat-checkbox></td>
+      <td>{{item.Vazhipad}}</td>
+      <td>{{item.Prathista}}</td>
+      <td>{{item.Name}}</td>
+      
+      <td>{{item.Star?item.Star:item.Gothram?item.Gothram:"No star or gothram"}}</td>
+      <!-- <td>{{item}}</td> -->
+    </tr>
+  </table>
+
+  <div class="dropdown-action-container"></div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  
+  <button mat-button mat-dialog-close color="primary">Close</button>
+  <button mat-button mat-dialog-close color="primary" (click)="printSelectedRows()" >Print</button>
+</mat-dialog-actions>

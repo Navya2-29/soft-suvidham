@@ -1,0 +1,269 @@
+<h2 mat-dialog-title class="booking-header">
+  <span class="header-mark">✦</span>
+  <span>{{ 'Multi day Booking' | translate }}</span>
+</h2>
+
+<mat-dialog-content class="booking-content high">
+  <section class="lookup-bar" aria-label="Devotee lookup">
+    <div class="floating-field lookup-phone">
+      <input id="multiday-mobile" type="text" class="form-control" placeholder=" "
+             [(ngModel)]="mobileNumber" />
+      <label for="multiday-mobile">{{ 'PLACEHOLDER.MOBILENUMBER' | translate }}</label>
+    </div>
+    <label class="member-check">
+      <input type="checkbox" [(ngModel)]="memberDevoteeCheck" />
+      <span>{{ 'Member' | translate }}</span>
+    </label>
+    <button type="button" class="action-btn search-devotee" (click)="getNameAndStarByMobilenumber()">
+      <mat-icon>search</mat-icon><span>Search for Devotee</span>
+    </button>
+  </section>
+
+  <div class="booking-grid">
+    <section class="panel booking-panel">
+      <div class="panel-head"><mat-icon>event_note</mat-icon><span>{{ 'VAZHIPAD' | translate }} Details</span></div>
+      <div class="panel-body">
+        <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+          <div class="form-grid primary-grid">
+            <div class="floating-field span-two">
+              <input id="multiday-vazhipad" type="text" matInput class="form-control" placeholder=" "
+                     formControlName="Vazhipad" [matAutocomplete]="auto" #vazhipadInput
+                     (focus)="selectText($event)"
+                     (keydown.enter)="moveFocus(vazhipadInput, rateInput)"
+                     [ngClass]="{'invalid-control': form.get('Vazhipad')?.invalid && form.get('Vazhipad')?.touched}" />
+              <label for="multiday-vazhipad">{{ 'PLACEHOLDER.VAZHIPAD' | translate }}</label>
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+                @for (option of filteredOptions | async; track option) {
+                  <mat-option *ngIf="lang == 'en'" [value]="option.VM_Name">{{ option.VM_Code }} - {{ option.VM_Name }}</mat-option>
+                  <mat-option *ngIf="lang != 'en'" [value]="option.VM_RName">{{ option.VM_Code }} - {{ option.VM_RName }}</mat-option>
+                }
+              </mat-autocomplete>
+            </div>
+            <div class="floating-field">
+              <input id="multiday-rate" #rateInput type="text" class="form-control" placeholder=" "
+                     formControlName="Rate" appNumber [readOnly]="rateChange === 'N'"
+                     (keydown.enter)="moveFocus(rateInput, prathistaInput)"
+                     (keydown.arrowleft)="moveleftarrowFocus(vazhipadInput)"
+                     [ngClass]="{'invalid-control': form.get('Rate')?.invalid && form.get('Rate')?.touched}" />
+              <label for="multiday-rate">{{ 'RATE' | translate }}</label>
+            </div>
+            <div class="floating-field is-select">
+              <select id="multiday-prathista" #prathistaInput class="form-control"
+                      formControlName="Prethista"
+                      (keydown.enter)="moveFocus(prathistaInput, startDateInput)"
+                      (keydown.arrowleft)="moveleftarrowFocus(rateInput)"
+                      [ngClass]="{'invalid-control': form.get('Prethista')?.invalid && form.get('Prethista')?.touched}">
+                <ng-container *ngIf="lang == 'en'">
+                  <option *ngFor="let prathishta of prathishtaOptions" [value]="prathishta.PM_Name">{{ prathishta.PM_Name }}</option>
+                </ng-container>
+                <ng-container *ngIf="lang == 'ml'">
+                  <option *ngFor="let prathishta of prathishtaOptions" [value]="prathishta.PM_RegName">{{ prathishta.PM_RegName }}</option>
+                </ng-container>
+              </select>
+              <label for="multiday-prathista">{{ 'PRATHISTA' | translate }}</label>
+            </div>
+          </div>
+
+          <div class="section-divider"><span>Booking schedule</span></div>
+          <div class="form-grid schedule-grid">
+            <div class="date-cell">
+              <div class="floating-field is-date">
+                <input id="multiday-start" #startDateInput type="date" class="form-control"
+                       formControlName="VazhipadDate" [attr.min]="minDate"
+                       [readOnly]="form.get('VM_Receipt')?.value === 'Y'"
+                       (keydown.enter)="moveFocus(startDateInput, noOfDaysInput)"
+                       (keydown.arrowleft)="moveleftarrowFocus(prathistaInput)" />
+                <label for="multiday-start">{{ 'START DATE' | translate }}</label>
+              </div>
+              <div class="date-caption">{{ getMalayalamDate(form.get('VazhipadDate')?.value) }}</div>
+            </div>
+            <div class="floating-field">
+              <input id="multiday-days" #noOfDaysInput type="number" class="form-control" placeholder=" "
+                     formControlName="NoOfDays" [min]="1" appNumber
+                     (focus)="noOfDaysInput.select()"
+                     (keydown.enter)="moveFocus(noOfDaysInput, qtyInput)"
+                     (keydown.arrowleft)="moveleftarrowFocus(startDateInput)" />
+              <label for="multiday-days">{{ 'NUMBER OF DAYS' | translate }}</label>
+            </div>
+            <div class="floating-field">
+              <input id="multiday-qty" #qtyInput type="number" class="form-control" placeholder=" "
+                     formControlName="Qty" [min]="1" appNumber
+                     (focus)="qtyInput.select()" (input)="qtyChange()"
+                     (keydown.enter)="moveFocus(qtyInput, timeInput)"
+                     (keydown.arrowleft)="moveleftarrowFocus(noOfDaysInput)"
+                     [ngClass]="{'is-invalid': form.get('Qty')?.invalid}" />
+              <label for="multiday-qty">{{ 'QUANTITY' | translate }}</label>
+            </div>
+            <div class="date-cell">
+              <div class="floating-field is-date">
+                <input id="multiday-end" type="date" class="form-control"
+                       formControlName="EndDate" [attr.min]="form.get('VazhipadDate')?.value"
+                       (change)="onEndDateChange()" />
+                <label for="multiday-end">{{ 'END DATE' | translate }}</label>
+              </div>
+              <div class="date-caption">{{ getMalayalamDate(form.get('EndDate')?.value) }}</div>
+            </div>
+            <div class="floating-field is-select">
+              <select id="multiday-time" #timeInput class="form-control" formControlName="VTime"
+                      (keydown.enter)="moveFocusToName(0)"
+                      (keydown.arrowleft)="moveleftarrowFocus(qtyInput)">
+                <option *ngFor="let time of vazhipadtime" [value]="time.id">{{ 'OPTIONS.' + time.key | translate }}</option>
+              </select>
+              <label for="multiday-time">{{ 'TIME' | translate }}</label>
+            </div>
+          </div>
+
+          <div class="devotee-heading">
+            <strong>Devotees</strong>
+            <button type="button" class="add-devotee" (click)="addDevotee()" [disabled]="VM_MaxNo > 0">
+              <mat-icon>add_circle_outline</mat-icon><span>Add devotee</span>
+            </button>
+          </div>
+          <div class="devotee-list" formArrayName="devotees">
+            <div class="devotee-row" *ngFor="let devotee of devotees.controls; let i = index" [formGroupName]="i">
+              <button type="button" class="remove-devotee" (click)="removeDevotee(i)" aria-label="Remove devotee">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+              <div class="floating-field">
+                <input #nameInput type="text" class="form-control" placeholder=" " appUpperCase
+                       formControlName="Name" (blur)="validateDevoteeName()"
+                       (keydown.enter)="moveFocusToStar(i)"
+                       (keydown.arrowleft)="handleArrowKeys($event, i, 'Name')"
+                       (keydown.arrowup)="handleArrowKeys($event, i, 'Name')"
+                       (keydown.arrowdown)="handleArrowKeys($event, i, 'Name')"
+                       [ngClass]="{'invalid-control': devotee.get('Name')?.invalid && devotee.get('Name')?.touched}" />
+                <label>{{ 'PLACEHOLDER.NAME' | translate }}</label>
+              </div>
+              <div class="floating-field is-select">
+                <select #starInput class="form-control" formControlName="Star"
+                        (keydown.enter)="handleEnterOnStar($event, i)"
+                        (keydown.arrowleft)="handleArrowKeys($event, i, 'Star')"
+                        (keydown.arrowright)="handleArrowKeys($event, i, 'Star')"
+                        [ngClass]="{'invalid-control': devotee.get('Star')?.invalid && devotee.get('Star')?.touched}">
+                  <option value="">{{ 'Select' | translate }}</option>
+                  <ng-container *ngIf="lang == 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_NameEng }}</option>
+                  </ng-container>
+                  <ng-container *ngIf="lang == 'ml'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_Name }}</option>
+                  </ng-container>
+                </select>
+                <label>{{ 'STAR' | translate }}</label>
+              </div>
+              <div class="floating-field" *ngIf="form.get('multiName')?.value === 'Y'">
+                <input type="text" class="form-control" placeholder=" " formControlName="Name2" />
+                <label>{{ 'Name2' | translate }}</label>
+              </div>
+              <div class="floating-field is-select" *ngIf="form.get('multiName')?.value === 'Y'">
+                <select class="form-control" formControlName="Star2">
+                  <option value="">{{ 'Select' | translate }}</option>
+                  <ng-container *ngIf="lang == 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_NameEng }}</option>
+                  </ng-container>
+                  <ng-container *ngIf="lang != 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id">{{ nakshtra.SM_Name }}</option>
+                  </ng-container>
+                </select>
+                <label>{{ 'STAR' | translate }} 2</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel filter-panel">
+      <div class="panel-head"><mat-icon>tune</mat-icon><span>{{ 'Filter Options' | translate }}</span></div>
+      <div class="panel-body">
+        <form [formGroup]="multidayFilterForm" class="filter-form">
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="Star">
+              <option value="">-{{ 'Select' | translate }}-</option>
+              <ng-container *ngIf="lang == 'en'">
+                <option *ngFor="let nakshtra of nakshthraforfiltering" [value]="nakshtra.SM_NameEng">{{ nakshtra.SM_NameEng }}</option>
+              </ng-container>
+              <ng-container *ngIf="lang != 'en'">
+                <option *ngFor="let nakshtra of nakshthraforfiltering" [value]="nakshtra.SM_NameEng">{{ nakshtra.SM_Name }}</option>
+              </ng-container>
+            </select>
+            <label>{{ 'starwise' | translate }}</label>
+          </div>
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="MalMonth">
+              <option value="">-{{ 'Select' | translate }}-</option>
+              <ng-container *ngIf="lang == 'en'">
+                <option *ngFor="let month of malayalamMonthList" [value]="month.mmonEng">{{ month.mmonEng }}</option>
+              </ng-container>
+              <ng-container *ngIf="lang != 'en'">
+                <option *ngFor="let month of malayalamMonthList" [value]="month.mmonEng">{{ month.mmon }}</option>
+              </ng-container>
+            </select>
+            <label>{{ 'Malayalam Monthwise' | translate }}</label>
+          </div>
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="EngMonth">
+              <option value="">-{{ 'Select' | translate }}-</option>
+              <option value="SUNDAY">{{ 'Day.SUNDAY' | translate }}</option>
+              <option value="MONDAY">{{ 'Day.MONDAY' | translate }}</option>
+              <option value="TUESDAY">{{ 'Day.TUESDAY' | translate }}</option>
+              <option value="WEDNESDAY">{{ 'Day.WEDNESDAY' | translate }}</option>
+              <option value="THURSDAY">{{ 'Day.THURSDAY' | translate }}</option>
+              <option value="FRIDAY">{{ 'Day.FRIDAY' | translate }}</option>
+              <option value="SATURDAY">{{ 'Day.SATURDAY' | translate }}</option>
+            </select>
+            <label>{{ 'daywise' | translate }}</label>
+          </div>
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="MalDay">
+              <option value="">0</option>
+              <option *ngFor="let day of MlayalamDays" [value]="day">{{ day }}</option>
+            </select>
+            <label>{{ 'Malayalam Datewise' | translate }}</label>
+          </div>
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="EngishDay">
+              <option value="">0</option>
+              <option *ngFor="let day of EnglishDays" [value]="day">{{ day }}</option>
+            </select>
+            <label>{{ 'English Datewise' | translate }}</label>
+          </div>
+          <div class="floating-field is-select">
+            <select class="form-control" formControlName="Thithi">
+              <option value="">-{{ 'Select' | translate }}-</option>
+              <ng-container *ngIf="lang == 'en'">
+                <option *ngFor="let thithi of thithiList" [value]="thithi.ThithiEng">{{ thithi.ThithiEng }}</option>
+              </ng-container>
+              <ng-container *ngIf="lang != 'en'">
+                <option *ngFor="let thithi of thithiList" [value]="thithi.ThithiEng">{{ thithi.Thithi }}</option>
+              </ng-container>
+            </select>
+            <label>{{ 'Thithi' | translate }}</label>
+          </div>
+          <div class="filter-buttons">
+            <button type="button" class="action-btn secondary" (click)="onCancelClick()">Cancel</button>
+            <button type="button" class="action-btn primary" (click)="onSearchClick()"><mat-icon>search</mat-icon>Search</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel day-panel">
+      <div class="panel-head"><mat-icon>calendar_month</mat-icon><span>{{ 'Day List' | translate }}</span></div>
+      <div class="panel-body day-body">
+        <div class="daylist">
+          <label class="day-item" *ngFor="let day of updatedDayList; let i = index">
+            <input type="checkbox" [(ngModel)]="day.selected" (change)="onCheckboxChange(i)" />
+            <span>{{ day.date }}</span>
+          </label>
+          <div class="empty-days" *ngIf="updatedDayList.length == 0">No day found</div>
+        </div>
+        <div class="day-summary"><span>{{ 'Total Days Selected:' | translate }}</span><strong>{{ getSelectedDaysCount() }}</strong></div>
+      </div>
+    </section>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="menuend booking-actions">
+  <button type="button" mat-button [mat-dialog-close]="true" class="close" (click)="cancel()">Cancel</button>
+  <button type="button" mat-button class="proceed" (click)="onSubmit()">Proceed <mat-icon>arrow_forward</mat-icon></button>
+</mat-dialog-actions>
