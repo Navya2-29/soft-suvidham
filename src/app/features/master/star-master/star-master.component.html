@@ -126,13 +126,10 @@
             </table>
           </div>
         </div></section></div></main>
-<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-secondary ml-1" (click)="onCancel()">
-                    Cancel
-                  </button><button type="button" class="vm-save-btn"
-                    class="btn btn-primary"
-                    (click)="onUpdate()"
-                    [disabled]="!selectedStar"
-                  >
-                    Update
-                  </button></div></footer>
+<footer class="vm-footer">
+  <div class="vm-footer-right">
+    <button type="button" class="vm-cancel-btn" (click)="onCancel()"><mat-icon>close</mat-icon> Cancel</button>
+    <button type="button" class="vm-save-btn" (click)="onUpdate()" [disabled]="!selectedStar"><mat-icon>check</mat-icon> Update</button>
+  </div>
+</footer>
 </div>

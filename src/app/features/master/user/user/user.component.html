@@ -119,7 +119,7 @@
         <button type="button" class="us-btn us-cancel" (click)="reset()"><mat-icon>close</mat-icon> Cancel</button>
         <!-- Buttons live outside form, so use click handlers exactly as before -->
         <button *ngIf="!updateFlag" type="button" class="us-btn us-save" (click)="onSubmit()"><mat-icon>save</mat-icon> Save</button>
-        <button *ngIf="updateFlag" type="button" class="us-btn us-save" (click)="onUpdate()"><mat-icon>save</mat-icon> Update</button>
+        <button *ngIf="updateFlag" type="button" class="us-btn us-save" (click)="onUpdate()"><mat-icon>check</mat-icon> Update</button>
       </div>
     </footer>
   </section>

@@ -149,7 +149,11 @@
             </table>
           </div>
         </div></section></div></main>
-<footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-secondary ml-1" (click)="onReset()">Cancel</button><button type="button" class="vm-save-btn" *ngIf="!updateFlag" class="btn btn-primary"
-                    (click)="onSubmit(cmasterForm.value)"  >Save</button><button type="button" class="vm-save-btn" *ngIf="updateFlag" class="btn btn-primary"
-                    (click)="onUpdate(cmasterForm.value)"  >Update</button></div></footer>
+<footer class="vm-footer">
+  <div class="vm-footer-right">
+    <button type="button" class="vm-cancel-btn" (click)="onReset()"><mat-icon>close</mat-icon> Cancel</button>
+    <button type="button" class="vm-save-btn" *ngIf="!updateFlag" (click)="onSubmit(cmasterForm.value)"><mat-icon>save</mat-icon> Save</button>
+    <button type="button" class="vm-save-btn" *ngIf="updateFlag" (click)="onUpdate(cmasterForm.value)"><mat-icon>check</mat-icon> Update</button>
+  </div>
+</footer>
 </div>
