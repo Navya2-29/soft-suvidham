@@ -62,53 +62,80 @@
                        </table>
                       </form>
                 </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Vihidham Master List</span></div><div class="vm-list-area">
-                  <div style="display:flex;" class="search-container mt-3 vm-search-container">
-                    <input type="text" class="form-control sps search-input" (input)="onSearch()"
-                      placeholder="Search by Vihidham type" style="width:36%;" [(ngModel)]="searchQuery" >
-                    <!-- <button class="btn btn-primary" (click)="onSearch(searchQuery)">Search</button> -->
-                    <mat-icon class="search-icon" (click)="onSearch()" >search</mat-icon>
-                    <button (click)="gotoVihidhamPrintPage()" class="btn btn-primary" style="margin-left: 320px;" >Vihidham List</button>
+                  <div style="display: flex" class="search-container mt-3 vm-search-container">
+                    <input
+                      type="text"
+                      class="form-control sps search-input"
+                      (input)="onSearch()"
+                      placeholder="Search by Vihidham type"
+                      style="width: 36%"
+                      [(ngModel)]="searchQuery"
+                    />
+                    <mat-icon class="search-icon" (click)="onSearch()"
+                      >search</mat-icon
+                    >
+                    <button (click)="gotoVihidhamPrintPage()" class="btn btn-primary" style="margin-left: auto;">Vihidham List</button>
                   </div>
-                    <div class="fixitems prathishta">
-                        <table class="table">
-                            <tr style="border-bottom: 2px solid #223d61;">
-                              <!-- <th style="width:10px;background-color: #223d61;color:white;">Active</th>   -->
-                              
-                              <th style="text-align:left;">Vazhipad</th>
-                              <th >Vihidham Type</th>
-                             
-                              <th >Rate</th>
-                              <th >From date</th>
-                              <th >To date</th>
-                              <th></th>
-                            </tr>
-                            <tbody *ngIf="!showNoRecordsMessage &&vihidhamMaster && vihidhamMaster.length > 0">
-                              <tr *ngFor="let data of filteredVihidhamMaster">
-                                <!-- <td style="background-color: #87b6f3;"><input type="Checkbox" style="vertical-align: middle;width:12px;" checked></td> -->
-                              <td style="text-align:left;">{{getVazhipadNameById(data.VazhId)}}</td>
-                              <td style="text-align:left;">{{data.VC_Name}}</td>
-                              <td >{{data.Rate}}</td>
-                              <td>{{data.FDate | date:'dd-MM-yyyy' }}</td>
-                              <td>{{data.ToDate  | date:'dd-MM-yyyy' }}</td>
-                              
-                              <td>
-                                <mat-icon title="Edit" class="small" style="vertical-align: middle;" (click)="onEdit(data)" >edit</mat-icon>
-                                <mat-icon title="Delete" class="small" style="vertical-align: middle;" (click)="onDeleteCheck(data)" >delete</mat-icon>
-                              </td>
-                              
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr *ngIf="!vihidhamMaster || vihidhamMaster.length === 0 || showNoRecordsMessage">
-                                <td colspan="5">
-                                  <div style="width: 100%;" class="mt-3">
-                                    <h4 class="text-center">No Records found</h4>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                    </div>
+                  <div class="fixitems prathishta">
+                    <table class="table blocking">
+                      <thead style="border-bottom: 2px solid #223d61">
+                        <th style="text-align: left">Vazhipad</th>
+                        <th style="text-align: left">Vihidham Type</th>
+                        <th style="text-align: left">Rate</th>
+                        <th style="text-align: left">From date</th>
+                        <th style="text-align: left">To date</th>
+                        <th></th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of filteredVihidhamMaster">
+                          <td class="table-cell-left wrap-text" style="text-align: left">
+                            {{ getVazhipadNameById(data.VazhId) }}
+                          </td>
+                          <td class="table-cell-left wrap-text" style="text-align: left">
+                            {{ data.VC_Name }}
+                          </td>
+                          <td style="text-align: left">
+                            {{ data.Rate }}
+                          </td>
+                          <td style="text-align: left">
+                            {{ data.FDate | date : "dd-MM-yyyy" }}
+                          </td>
+                          <td style="text-align: left">
+                            {{ data.ToDate | date : "dd-MM-yyyy" }}
+                          </td>
+                          <td style="text-align: left; padding-left: 3px">
+                            <mat-icon
+                              title="Edit"
+                              class="small pt-2"
+                              (click)="onEdit(data)"
+                              >edit</mat-icon
+                            >
+                            <mat-icon
+                              title="Delete"
+                              class="small pt-2"
+                              (click)="onDeleteCheck(data)"
+                              >delete</mat-icon
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr
+                          *ngIf="
+                            !vihidhamMaster ||
+                            vihidhamMaster.length === 0 ||
+                            showNoRecordsMessage
+                          "
+                        >
+                          <td colspan="6">
+                            <div style="width: 100%" class="mt-3">
+                              <h4 class="text-center">No Records found</h4>
+                            </div>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div></section></div></main>
 <footer class="vm-footer"><div class="vm-footer-right"><button type="button" class="vm-cancel-btn" class="btn btn-danger ml-1" (click)="onReset()">cancel</button><button type="button" class="vm-save-btn" class="btn btn-primary" *ngIf="!updateFlag"
                             (click)="onSubmit(vihidhamMasterForm.value)">save</button><button type="button" class="vm-save-btn" *ngIf="updateFlag" class="btn btn-primary"
