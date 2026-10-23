@@ -82,36 +82,66 @@
             </table>
           </form>
         </div></section><section class="vm-panel vm-list-panel"><div class="vm-panel-title"><mat-icon>list_alt</mat-icon><span>Vihidham Category Master List</span></div><div class="vm-list-area">
-          <div style="display:flex;" class="search-container mt-3 vm-search-container">
-            <input type="text" class="form-control sps search-input" (input)="onSearch()"
-              placeholder="search by Code or Name" style="width:36%;" [(ngModel)]="searchQuery">
-            <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+          <div style="display: flex" class="search-container mt-3 vm-search-container">
+            <input
+              type="text"
+              class="form-control sps search-input"
+              (input)="onSearch()"
+              placeholder="search by Code or Name"
+              style="width: 36%"
+              [(ngModel)]="searchQuery"
+            />
+            <mat-icon class="search-icon" (click)="onSearch()"
+              >search</mat-icon
+            >
           </div>
           <div class="fixitems prathishta">
-            <table class="table">
-              <thead style="border-bottom: 2px solid #223d61;">
-                <!-- <th>Id</th> -->
-                <th>code</th>
-                <th>Name</th>
+            <table class="table blocking">
+              <thead style="border-bottom: 2px solid #223d61">
+                <th style="text-align: left" class="code_center">Code</th>
+                <th style="text-align: left">Name</th>
                 <th></th>
               </thead>
-              <tbody *ngIf="cmaster && cmaster.length > 0">
-                <tr *ngFor="let data of filteredCmaster ; let i=index">
-                  <!-- <td>{{data.VC_ID}}</td> -->
-                  <td style="text-align:left;padding-left: 20px;">{{data.VC_Code}}</td>
-                  <td style="text-align:left;width:50%" class="wrap-text">{{data.VC_Name}}-{{data.VC_RegName}}</td>
-                  <td>
-                    <mat-icon title="Edit" class="small" style="vertical-align: middle;"
-                      (click)="onEdit(data)">edit</mat-icon>
-                    <mat-icon title="Delete" class="small" style="vertical-align: middle;"
-                      (click)="onDelete(data.VC_ID)">delete</mat-icon>
+              <tbody>
+                <tr *ngFor="let data of filteredCmaster">
+                  <td
+                    class="table-cell-left code_center"
+                    style="text-align: left; padding-left: 10px"
+                  >
+                    {{ data.VC_Code }}
+                  </td>
+                  <td
+                    class="table-cell-left wrap-text"
+                    style="text-align: left"
+                  >
+                    {{ data.VC_Name }} - {{ data.VC_RegName }}
+                  </td>
+                  <td style="text-align: left; padding-left: 3px">
+                    <mat-icon
+                      title="Edit"
+                      class="small pt-2"
+                      (click)="onEdit(data)"
+                      >edit</mat-icon
+                    >
+                    <mat-icon
+                      title="Delete"
+                      class="small pt-2"
+                      (click)="onDelete(data.VC_ID)"
+                      >delete</mat-icon
+                    >
                   </td>
                 </tr>
               </tbody>
               <tfoot>
-                <tr *ngIf="!cmaster || cmaster.length === 0">
-                  <td colspan="5">
-                    <div style="width: 100%;" class="mt-3">
+                <tr
+                  *ngIf="
+                    !filteredCmaster ||
+                    filteredCmaster.length === 0 ||
+                    showNoRecordsMessage
+                  "
+                >
+                  <td colspan="3">
+                    <div style="width: 100%" class="mt-3">
                       <h4 class="text-center">No Records found</h4>
                     </div>
                   </td>
