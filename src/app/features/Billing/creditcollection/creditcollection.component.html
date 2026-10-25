@@ -102,19 +102,19 @@
       <div class="cc-table-scroll">
         <table class="cc-table">
           <thead><tr>
-            <th>{{ 'Report Name.SINO' | translate }}</th>
+            <th class="code_center">{{ 'Report Name.SINO' | translate }}</th>
             <th>{{ 'BILL NO' | translate }}.</th>
             <th>{{ 'Report Name.Bill Date' | translate }}</th>
             <th>{{ 'Credits.Name' | translate }}</th>
             <th>{{ 'Credits.Mobile Number' | translate }}</th>
             <th>{{ 'Vazhipad' | translate }}</th>
             <th>{{ 'Qty' | translate }}</th>
-            <th>{{ 'Rate' | translate }}</th>
-            <th>{{ 'Report Name.TOTAL' | translate }}</th>
+            <th class="cc-numeric">{{ 'Rate' | translate }}</th>
+            <th class="cc-numeric">{{ 'Report Name.TOTAL' | translate }}</th>
           </tr></thead>
           <tbody>
             <tr *ngFor="let data of filteredData; let i = index">
-              <td><span class="cc-index">{{ i + 1 }}</span></td>
+              <td class="code_center"><span class="cc-index">{{ i + 1 }}</span></td>
               <td><strong>{{ data.BillNo }}</strong></td>
               <td>{{ data.BillDate | date:'dd/MM/yyyy' }}</td>
               <td>{{ data.Name }}<small *ngIf="data.Name2">{{ data.Name2 }}</small></td>

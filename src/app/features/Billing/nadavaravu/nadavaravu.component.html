@@ -135,7 +135,7 @@
         <table class="nv-table">
           <thead>
             <tr>
-              <th>{{ 'Report Name.SINO' | translate }}.</th>
+              <th class="code_center">{{ 'Report Name.SINO' | translate }}.</th>
               <th>{{ 'Date' | translate }}</th>
               <th>{{ 'Receipt No' | translate }}.</th>
               <th>{{ 'Name' | translate }}</th>
@@ -144,12 +144,12 @@
               <th>{{ 'Quantity' | translate }}</th>
               <th>{{ 'Receipt Amount' | translate }}</th>
               <th>{{ 'Transaction Mode' | translate }}</th>
-              <th>Actions</th>
+              <th class="code_center">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of filteredData; let i = index" [class.nv-cancelled]="item.TrnStatus === 'C'">
-              <td><span class="nv-index">{{ i + 1 }}</span></td>
+              <td class="code_center"><span class="nv-index">{{ i + 1 }}</span></td>
               <td>{{ item.Billdate | date:'dd-MM-yyyy' }}</td>
               <td><strong>{{ item.BillNo }}</strong></td>
               <td>{{ item.Name }}</td>

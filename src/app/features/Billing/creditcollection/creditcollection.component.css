@@ -337,22 +337,32 @@
   background: #fff
 }
 
+.code_center {
+  text-align: center !important;
+}
+
+th {
+  color: #315a87 !important;
+}
+
 .cc-table th {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: #f3f7fd;
-  color: #315a87;
+  background: #f3f7fd !important;
+  color: #315a87 !important;
   font-size: 11px;
   text-align: left;
-  padding: 15px 10px;
+  padding: 12px 10px;
   border-bottom: 1px solid #dbe7f8;
-  font-weight: 750
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: .05em;
 }
 
 .cc-table td {
   color: #43556e;
-  padding: 13px 10px;
+  padding: 11px 10px;
   border-bottom: 1px solid #e7eef8;
   font-size: 11px;
   vertical-align: middle
@@ -371,18 +381,20 @@
 
 .cc-table td strong {
   font-weight: 750;
-  color: #284260
+  color: #273e5a
 }
 
 .cc-index {
   display: inline-grid;
   place-items: center;
-  width: 23px;
+  min-width: 25px;
   height: 25px;
+  padding: 0 6px;
   border-radius: 5px;
   background: #e8f1ff;
-  color: #155a9f;
-  font-weight: 750
+  color: #155da5;
+  font-weight: 750;
+  font-size: 11px;
 }
 
 .cc-numeric {
