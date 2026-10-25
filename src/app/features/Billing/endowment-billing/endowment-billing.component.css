@@ -15,26 +15,29 @@
 .endo-panel-title small{color:#6d8db3;font-size:12px;font-weight:700;white-space:nowrap}
 .endo-panel-content{padding:18px;min-width:0;flex:1}
 .endo-section-label{font-size:12px;font-weight:800;letter-spacing:1px;color:#6b88ac;margin:5px 0 15px}
-.endo-member-row{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:22px}
-.endo-mobile{flex:1 1 175px}.endo-check{display:flex;align-items:center;gap:7px;padding-bottom:12px;color:#355c88;cursor:pointer;font-size:13px;white-space:nowrap}
-.endo-check input,.endo-day input{accent-color:#2565b6;width:16px;height:16px}
+.endo-member-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.endo-member-row .endo-field{margin-bottom:0}
+.endo-mobile{flex:1 1 220px;min-width:0}
+.endo-check{display:inline-flex;align-items:center;gap:8px;height:43px;padding:0 4px;color:#355c88;cursor:pointer;font-size:13.5px;font-weight:600;white-space:nowrap;user-select:none;margin:0}
+.endo-check input,.endo-day input{accent-color:#2565b6;width:17px;height:17px;margin:0;cursor:pointer}
 .endo-field{min-width:0;display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
 .endo-field label{font-weight:700;color:#326bad;font-size:13px;margin:0;line-height:1.25}
+.endo-main-fields .endo-field label,.endo-date-fields .endo-field label,.endo-payment-grid .endo-field label{min-height:20px;display:flex;align-items:center;gap:4px;white-space:nowrap}
 .endo-field .form-control{display:block;width:100%;min-width:0;height:43px;border:1px solid #d1e1f7!important;border-radius:11px!important;padding:8px 12px!important;font-size:13px;color:#213e60;background:#fff;box-shadow:none!important;line-height:1.3}
 .endo-field .form-control:focus{border-color:#3e82d1!important;box-shadow:0 0 0 3px rgba(51,124,205,.11)!important;outline:none}
 .endo-field .form-control::placeholder{color:#8a9eb6;opacity:1}
 .endo-grid{display:grid;gap:0 12px}.endo-main-fields{grid-template-columns:minmax(0,1.8fr) minmax(85px,.65fr) minmax(130px,1fr)}
 .endo-date-fields{grid-template-columns:repeat(5,minmax(0,1fr))}
-.endo-btn{border:0;border-radius:9px;min-height:41px;padding:9px 13px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font:700 13px 'Anek Malayalam',Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.endo-btn{border:0;border-radius:11px;min-height:43px;height:43px;padding:9px 16px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font:700 13px 'Anek Malayalam',Arial,sans-serif;cursor:pointer;white-space:nowrap}
 .endo-btn mat-icon{font-size:19px;width:19px;height:19px}
-.endo-btn-search{background:#155b9c;color:#fff}.endo-btn-search:hover{background:#094a85}
+.endo-btn-search{background:#155b9c;color:#fff;height:43px;min-height:43px;padding:0 18px;border-radius:11px}.endo-btn-search:hover{background:#094a85}
 .endo-btn-light{background:#e7eefc;color:#245b94}.endo-btn-light:hover{background:#d7e4f9}
 .endo-subheading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 0 10px;padding-top:12px;border-top:1px solid #e8eff9;color:#6b88ac;font-size:12px;letter-spacing:.8px;font-weight:800}
 .endo-add{display:inline-flex;align-items:center;gap:5px;background:#e3f2ff;border:1px solid #cbe3fa;border-radius:8px;color:#1764a8;cursor:pointer;padding:7px 11px;font-weight:700;font-size:12px}
 .endo-add mat-icon{font-size:18px;height:18px;width:18px}.endo-add:disabled{opacity:.5;cursor:not-allowed}
 .endo-table-scroll{max-height:240px;overflow:auto;border:1px solid #e0eafa;border-radius:11px}
 .endo-devotee-table{width:100%;border-collapse:collapse;min-width:410px}
-.endo-devotee-table th{position:sticky;top:0;z-index:1;background:#f0f5fd;color:#315c90;padding:11px 9px;text-align:left;font-size:12px;white-space:nowrap}
+.endo-devotee-table th{position:sticky;top:0;z-index:1;background:#f3f7fd!important;color:#315a87!important;padding:11px 10px;text-align:left;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;border-bottom:1px solid #dbe7f8}
 .endo-devotee-table td{padding:8px;border-top:1px solid #e5eef9}.endo-devotee-table .form-control{height:37px;padding:6px 8px!important;border:1px solid #d5e2f5;border-radius:8px;width:100%;min-width:0;font-size:12px}
 .endo-remove{border:0;background:#fff1f1;color:#cc3544;border-radius:7px;padding:6px;display:inline-flex;cursor:pointer}
 .endo-remove mat-icon{font-size:19px;width:19px;height:19px}
