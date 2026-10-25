@@ -85,7 +85,7 @@
             <thead>
               <tr>
                 <th>Name</th><th>Email</th><th>Mobile</th><th>Role</th>
-                <th *ngIf="currentRole=='super'">Password</th><th>Actions</th>
+                <th *ngIf="currentRole=='super'">Password</th><th class="code_center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -95,7 +95,7 @@
                 <td>{{ item.Umobile }}</td>
                 <td><span class="us-role-chip">{{ item.Role }}</span></td>
                 <td *ngIf="currentRole=='super'" class="us-password-cell">{{ item.UPwd }}</td>
-                <td>
+                <td class="code_center">
                   <div class="us-row-actions">
                     <button type="button" class="us-action us-edit" (click)="onEdit(item)" title="Edit user" aria-label="Edit user"><mat-icon>edit</mat-icon></button>
                     <button type="button" class="us-action us-delete" (click)="onDelete(item.UId)" title="Delete user" aria-label="Delete user"><mat-icon>delete_outline</mat-icon></button>
