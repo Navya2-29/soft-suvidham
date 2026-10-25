@@ -104,35 +104,39 @@
         </div>
         <div class="pm-record-scroll">
           <table class="pm-records">
-            <thead>
+            <thead style="border-bottom: 2px solid #223d61">
               <tr>
                 <th class="code_center">Code</th>
                 <th>Name</th>
-                <th>Image</th>
-                <th class="pm-actions-heading">Actions</th>
+                <th></th>
               </tr>
             </thead>
             <tbody *ngIf="!showNoRecordsMessage && pmaster && pmaster.length > 0">
               <tr *ngFor="let data of filteredPmaster; let i = index">
-                <td class="code_center"><span class="pm-code-pill">{{ data.PM_Code }}</span></td>
-                <td>
-                  <div class="pm-record-name">{{ data.PM_Name }}</div>
-                  <div class="pm-regional-name">{{ data.PM_RegName }}</div>
+                <td class="code_center pm-code-cell">{{ data.PM_Code }}</td>
+                <td class="pm-name-cell">
+                  {{ data.PM_Name }}<ng-container *ngIf="data.PM_RegName">-{{ data.PM_RegName }}</ng-container>
                 </td>
-                <td><img class="pm-thumb" *ngIf="data.PM_Image" [src]="data.PM_Image" alt="Prathishta" /><span
-                    class="pm-no-image" *ngIf="!data.PM_Image">No image</span></td>
-                <td class="pm-actions">
-                  <button type="button" class="pm-icon-btn pm-edit" title="Edit" aria-label="Edit Prathishta"
-                    (click)="onEdit(data)"><mat-icon>edit</mat-icon></button>
-                  <button type="button" class="pm-icon-btn pm-delete" title="Delete" aria-label="Delete Prathishta"
-                    (click)="onDeleteCheck(data.PM_ID)"><mat-icon>delete_outline</mat-icon></button>
+                <td class="pm-actions-cell">
+                  <mat-icon
+                    title="Edit"
+                    class="pm-icon-action pm-edit-action"
+                    (click)="onEdit(data)"
+                    >edit</mat-icon
+                  >
+                  <mat-icon
+                    title="Delete"
+                    class="pm-icon-action pm-delete-action"
+                    (click)="onDeleteCheck(data.PM_ID)"
+                    >delete</mat-icon
+                  >
                 </td>
               </tr>
             </tbody>
             <tbody
               *ngIf="!pmaster || pmaster.length === 0 || showNoRecordsMessage || (filteredPmaster && filteredPmaster.length === 0)">
               <tr>
-                <td colspan="4" class="pm-no-results"><mat-icon>search_off</mat-icon>
+                <td colspan="3" class="pm-no-results"><mat-icon>search_off</mat-icon>
                   <p>No records found</p>
                 </td>
               </tr>
