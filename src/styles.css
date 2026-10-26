@@ -139,6 +139,29 @@ app-menuitems {
   overflow: hidden;
 }
 
+/* TARGET SEARCH BY BILL NUMBER DIALOG */
+.cdk-overlay-pane:has(app-search-by-bill-number) .mat-mdc-dialog-container,
+.cdk-overlay-pane:has(.dialog-header-banner) .mat-mdc-dialog-container {
+  overflow: hidden !important;
+  border-radius: 16px !important;
+}
+
+.cdk-overlay-pane:has(app-search-by-bill-number) .mat-mdc-dialog-surface,
+.cdk-overlay-pane:has(.dialog-header-banner) .mat-mdc-dialog-surface {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.cdk-overlay-pane:has(app-search-by-bill-number) app-search-by-bill-number {
+  display: block;
+  width: 100%;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
 /* MOBILE */
 
 @media (max-width: 600px) {

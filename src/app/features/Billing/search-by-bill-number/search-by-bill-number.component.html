@@ -1,15 +1,23 @@
-<h2 mat-dialog-title class="dialog-header-banner">
-  <div class="header-main-title">
-    <mat-icon class="header-icon">receipt</mat-icon>
-    <span class="header-label">Bill Number -</span>
-    <span class="header-bill-no">{{ lastBillNo }}</span>
+<div mat-dialog-title class="dialog-header-banner">
+  <div class="header-left-section">
+    <div class="header-temple-icon">
+      <mat-icon class="header-icon">receipt_long</mat-icon>
+    </div>
+    <div class="header-title-block">
+      <h2 class="header-main-title">
+        Bill Number - <span class="header-bill-no">{{ lastBillNo }}</span>
+      </h2>
+      <p class="header-subtitle">
+        Counter {{ CounterId }} &nbsp;•&nbsp; User: {{ userName }}
+      </p>
+    </div>
   </div>
   <div class="header-counter-badge">
     <span class="counter-text">Counter - {{ CounterId }}</span>
     <span class="user-text">({{ userName }})</span>
   </div>
-</h2>
-<div class="header-gold-line"></div>
+</div>
+
 
 <div class="toolbar-strip">
   <div class="status-indicator-box">
@@ -255,10 +263,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="dialog-actions-footer">
-  <button mat-button [mat-dialog-close]="true" class="btn-footer-close">
-    <mat-icon class="footer-btn-icon">close</mat-icon>
-    <span>Close</span>
-  </button>
   <div class="footer-action-buttons">
     <button mat-button class="btn-footer-action btn-receipt" (click)="openReceipt()">
       <mat-icon class="footer-btn-icon">receipt_long</mat-icon>
@@ -277,6 +281,11 @@
       <span>Duplicate Bill</span>
     </button>
   </div>
+
+  <button mat-button [mat-dialog-close]="true" class="btn-footer-close">
+    <mat-icon class="footer-btn-icon">close</mat-icon>
+    <span>Close</span>
+  </button>
 </mat-dialog-actions>
 
 
