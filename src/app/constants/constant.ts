@@ -12,7 +12,8 @@ export const Constant = {
   // BASE_URL: 'https://counter.annanagarayyappatemple.org/apis/api/KshetramAPI/',
   //  BASE_URL: 'https://sv.kshethrasuvidham.com/apis/api/KshetramAPI/',
 
-
+ 
+  
   METHODS: {
     GET_MASTER: 'ViewMasters',
     DELETE_MASTER: 'DeleteMasters',
