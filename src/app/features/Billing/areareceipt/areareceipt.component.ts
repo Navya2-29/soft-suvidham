@@ -85,6 +85,8 @@ export class AreareceiptComponent implements OnInit {
   filteredOptions: any[] = [];
   starFilteredOption: any[] = [];
   prathistaFilteredOption: any[] = [];
+  devoteeNameFilteredOption: any[][] = [];
+  devoteeList: any[] = [];
   nakshatham: any[] = [];
   VMList: any[] = [];
   totalAmount: number = 0;
@@ -190,6 +192,7 @@ export class AreareceiptComponent implements OnInit {
   ngOnInit(): void {
     this.getAllvazhipad();
     this.getNakshthram();
+    this.getDevoteeMaster();
     // this.addRow(0);
     this.dateToSet = this.datePipe.transform(this.tomorrowDate, 'yyyy-MM-dd');
     this.subscription = this.eventService.clickEvent$.subscribe(() => {
@@ -399,6 +402,7 @@ export class AreareceiptComponent implements OnInit {
       this.vazhipadinfo.push(this.createRow());
       this.setupAutocomplete(0);
       this.setupStarAutocomplete(0);
+      this.setupDevoteeNameAutocomplete(0);
       this.updateTotalAmount();
       return;
     }
@@ -454,6 +458,7 @@ export class AreareceiptComponent implements OnInit {
     this.vazhipadinfo.insert(index + 1, newRow);
     this.setupAutocomplete(index + 1);
     this.setupStarAutocomplete(index + 1);
+    this.setupDevoteeNameAutocomplete(index + 1);
     this.updateTotalAmount();
     setTimeout(() => {
       this.focusOnNewRow(); // Focus on the newly created row's text box
@@ -470,11 +475,15 @@ export class AreareceiptComponent implements OnInit {
   removeRow(index: number) {
     if (this.vazhipadinfo.length > 1) {
       this.vazhipadinfo.removeAt(index);
+      if (this.devoteeNameFilteredOption.length > index) {
+        this.devoteeNameFilteredOption.splice(index, 1);
+      }
       this.updateTotalAmount();
       // this.updateSlno();
       this.notification.success('Data deleted successfully');
       this.setupAutocomplete(this.indexForAutoComplete);
       this.setupStarAutocomplete(this.indexForAutoComplete);
+      this.setupDevoteeNameAutocomplete(this.indexForAutoComplete);
       this.removeMultidayData(index);
     } else {
       this.resetForm();
@@ -660,6 +669,75 @@ export class AreareceiptComponent implements OnInit {
     return filteredList;
   }
 
+  setupDevoteeNameAutocomplete(index: number): void {
+    const row = this.vazhipadinfo.at(index) as FormGroup;
+    if (!row) {
+      return;
+    }
+    const control = row.get('Name');
+    control?.valueChanges
+      .pipe(
+        startWith(control.value || ''),
+        map((value) => this._filterDevoteeName(value)),
+      )
+      .subscribe((filteredOptions) => {
+        this.devoteeNameFilteredOption[index] = filteredOptions;
+      });
+  }
+
+  private _filterDevoteeName(value: string | null | undefined): any[] {
+    if (!value || typeof value !== 'string') {
+      return [];
+    }
+
+    const trimmed = value.trim();
+    if (trimmed.length < 1) {
+      return [];
+    }
+
+    const filterValue = trimmed.toLowerCase();
+    const normalizedFilterValue = trimmed.normalize('NFC').toLowerCase();
+
+    return this.devoteeList.filter((option) => {
+      const name = (option.Name || '').trim().toLowerCase();
+      const normalizedName = (option.Name || '').trim().normalize('NFC').toLowerCase();
+      return (
+        name.startsWith(filterValue) ||
+        normalizedName.startsWith(normalizedFilterValue)
+      );
+    });
+  }
+
+  onDevoteeNameSelect(event: MatAutocompleteSelectedEvent, index: number): void {
+    const selectedName = event.option.value;
+    const selectedRow = this.vazhipadinfo.at(index) as FormGroup;
+    if (!selectedRow) return;
+
+    selectedRow.get('Name')?.setValue(selectedName);
+
+    const match = this.devoteeList.find(
+      (item) => (item.Name || '').trim().toLowerCase() === (selectedName || '').trim().toLowerCase(),
+    );
+
+    if (match) {
+      const starIdentifier = (match.StarName || match.Star || '').toString().trim().toLowerCase();
+      if (starIdentifier) {
+        const starMatch = this.nakshatham.find(
+          (s) =>
+            s.SM_Id?.toString() === match.Star?.toString() ||
+            (s.SM_Name || '').trim().toLowerCase() === starIdentifier ||
+            (s.SM_RName || '').trim().toLowerCase() === starIdentifier,
+        );
+        if (starMatch) {
+          selectedRow.patchValue({
+            Star: starMatch.SM_Id.toString(),
+            starName: this.lang === 'ml' ? starMatch.SM_RName : starMatch.SM_Name,
+          });
+        }
+      }
+    }
+  }
+
   getAllvazhipad() {
     this.masterservice.getAllActiveVazhipad().subscribe((data) => {
       this.VMList = data.map((item) => ({
@@ -683,6 +761,54 @@ export class AreareceiptComponent implements OnInit {
         SM_Code: item.SM_Code,
         SM_RName: item.SM_Name,
       }));
+    });
+  }
+
+  getDevoteeMaster(): void {
+    const payLoad = { Type: 'DevoteeMaster', Code: '' };
+    this.masterservice.getMaster(payLoad).subscribe({
+      next: (data: any[]) => {
+        if (Array.isArray(data)) {
+          const seen = new Set<string>();
+          const list: any[] = [];
+          data.forEach((item: any) => {
+            const rawName = (item.Name || item.name || item.DevoteeName || '').trim();
+            if (rawName) {
+              const key = rawName.toLowerCase();
+              if (!seen.has(key)) {
+                seen.add(key);
+                list.push({
+                  Name: rawName,
+                  Star: item.Star || item.star || '',
+                  StarName: item.StarName || item.starName || '',
+                  MID: item.MID || item.Mid || '',
+                });
+              }
+            }
+            if (Array.isArray(item.relativesDetails)) {
+              item.relativesDetails.forEach((r: any) => {
+                const rName = (r.Name || r.name || '').trim();
+                if (rName) {
+                  const rKey = rName.toLowerCase();
+                  if (!seen.has(rKey)) {
+                    seen.add(rKey);
+                    list.push({
+                      Name: rName,
+                      Star: r.Star || r.star || '',
+                      StarName: r.StarName || r.starName || '',
+                      MID: item.MID || item.Mid || '',
+                    });
+                  }
+                }
+              });
+            }
+          });
+          this.devoteeList = list;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching devotee master:', err);
+      },
     });
   }
 
@@ -1463,6 +1589,7 @@ export class AreareceiptComponent implements OnInit {
   resetForm() {
     this.form.reset();
     this.vazhipadinfo.clear();
+    this.devoteeNameFilteredOption = [];
     this.addRow(-1);
     this.updateTotalAmount();
     this.multidayBooking = [];
@@ -1918,6 +2045,7 @@ export class AreareceiptComponent implements OnInit {
       this.vazhipadinfo.insert(index, newRow);
       this.setupAutocomplete(index);
       this.setupStarAutocomplete(index);
+      this.setupDevoteeNameAutocomplete(index);
       this.updateTotalAmount();
       setTimeout(() => {
         this.focusOnNewRow();
@@ -2046,6 +2174,9 @@ export class AreareceiptComponent implements OnInit {
   data.forEach((item: any, index: number) => {
     const row = this.createRow();
     this.vazhipadinfo.push(row);
+    this.setupAutocomplete(index);
+    this.setupStarAutocomplete(index);
+    this.setupDevoteeNameAutocomplete(index);
 
     // ✅ Patch basic values FIRST
     row.patchValue({

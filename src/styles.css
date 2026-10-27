@@ -500,3 +500,114 @@ app-menuitems {
   height: 20px;
   color: #a2b1c4;
 }
+
+/* ========================================================
+   MASTER FOOTER CANCEL & SAVE BUTTONS (MATCHING PMASTER)
+======================================================== */
+.vm-footer,
+.pm-footer,
+.us-footer {
+  flex-shrink: 0 !important;
+  min-height: 56px !important;
+  padding: 8px 15px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: linear-gradient(105deg, #079eae 0%, #05739c 36%, #144a99 75%, #355be1 100%) !important;
+  box-sizing: border-box !important;
+}
+
+.vm-footer-right,
+.pm-footer-right,
+.us-footer-actions {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.vm-footer button,
+.pm-footer button,
+.us-footer button,
+.vm-cancel-btn,
+.vm-save-btn,
+.pm-footer-cancel,
+.pm-footer-submit,
+.us-btn.us-cancel,
+.us-btn.us-save {
+  min-width: 110px !important;
+  min-height: 39px !important;
+  height: 39px !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  padding: 0 20px !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  line-height: normal !important;
+  transition: filter 0.15s ease, transform 0.1s ease !important;
+  box-sizing: border-box !important;
+}
+
+.vm-cancel-btn,
+.pm-footer-cancel,
+.us-btn.us-cancel {
+  background: #ffffffa6 !important;
+  color: #116497 !important;
+}
+
+.vm-save-btn,
+.pm-footer-submit,
+.us-btn.us-save {
+  background: #ffffff !important;
+  color: #135ab0 !important;
+}
+
+.vm-footer button:hover,
+.pm-footer button:hover,
+.us-footer button:hover,
+.vm-cancel-btn:hover,
+.vm-save-btn:hover,
+.pm-footer-cancel:hover,
+.pm-footer-submit:hover,
+.us-btn.us-cancel:hover,
+.us-btn.us-save:hover {
+  filter: brightness(0.96) !important;
+}
+
+.vm-footer button:disabled,
+.pm-footer button:disabled,
+.us-footer button:disabled,
+.vm-cancel-btn:disabled,
+.vm-save-btn:disabled,
+.pm-footer-cancel:disabled,
+.pm-footer-submit:disabled,
+.us-btn.us-save:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+}
+
+.vm-footer button mat-icon,
+.pm-footer button mat-icon,
+.us-footer button mat-icon,
+.vm-cancel-btn mat-icon,
+.vm-save-btn mat-icon,
+.pm-footer-cancel mat-icon,
+.pm-footer-submit mat-icon,
+.us-btn.us-cancel mat-icon,
+.us-btn.us-save mat-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 18px !important;
+  margin: 0 !important;
+}
+

@@ -1,215 +1,228 @@
-<h2 mat-dialog-title style="background: #223d61; color: white">
-  Bill Number -{{ lastBillNo }}
-  <span style="background: #223d61; color: rgb(229, 241, 54)">Counter - {{ CounterId }}({{ userName }})</span>
+<h2 mat-dialog-title class="dialog-header-banner">
+  <div class="header-main-title">
+    <mat-icon class="header-icon">receipt</mat-icon>
+    <span class="header-label">Bill Number -</span>
+    <span class="header-bill-no">{{ lastBillNo }}</span>
+  </div>
+  <div class="header-counter-badge">
+    <span class="counter-text">Counter - {{ CounterId }}</span>
+    <span class="user-text">({{ userName }})</span>
+  </div>
 </h2>
-<div class="cancel-container" style="font-family: Manjari">
-  <h3 class="status" [ngClass]="TrnStatus === 'C' ? 'cancelled' : 'success'">
-    Status :<span [ngClass]="TrnStatus === 'C' ? 'cancelled' : 'success'">{{
-      TrnStatus === "S" ? "Success" : "Cancelled"
-      }}</span>
-  </h3>
-  <button class=" btn btn-primary" *ngIf="TrnStatus === 'S'" (click)="deactivateVazhipad()">
-    {{activevazhipad=="Y"?"Deactivate Vazhipad":"Activate Vazhipad"}}
-  </button>
-  <button class="cancel btn btn-primary" *ngIf="TrnStatus === 'S' && role != 'staff'" (click)="cancellTheBill()">
-    Cancel Bill
-  </button>
+<div class="header-gold-line"></div>
+
+<div class="toolbar-strip">
+  <div class="status-indicator-box">
+    <span class="status-label">Status :</span>
+    <span class="status-pill" [ngClass]="TrnStatus === 'C' ? 'cancelled' : 'success'">
+      <span class="status-dot"></span>
+      <span class="status-text">{{ TrnStatus === "S" ? "Success" : "Cancelled" }}</span>
+    </span>
+  </div>
+  <div class="toolbar-btn-group">
+    <button type="button" class="btn-top-action btn-toggle-vazhipad" *ngIf="TrnStatus === 'S'" (click)="deactivateVazhipad()">
+      <mat-icon class="btn-icon">{{ activevazhipad == 'Y' ? 'event_busy' : 'event_available' }}</mat-icon>
+      <span class="btn-text">{{ activevazhipad == "Y" ? "Deactivate Vazhipad" : "Activate Vazhipad" }}</span>
+    </button>
+    <button type="button" class="btn-top-action btn-cancel-bill" *ngIf="TrnStatus === 'S' && role != 'staff'" (click)="cancellTheBill()">
+      <mat-icon class="btn-icon">cancel</mat-icon>
+      <span class="btn-text">Cancel Bill</span>
+    </button>
+  </div>
 </div>
-<mat-dialog-content class="high" style="font-family: Manjari">
-  <div class="container" style="font-family: Manjari">
-    <div class="row openmenu">
-      <div class="col-md-12" style="font-family: Manjari">
-        <div class="" style="font-family: Manjari">
-          <div class="mat-elevation-z8" style="font-family: Manjari">
-            <table mat-table [dataSource]="dataSource" matSort style="font-family: Manjari">
-              <ng-container matColumnDef="Diety" style="width: 250px">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "PRATHISTA" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.Prathista }}</td>
-              </ng-container>
-              <!-- ID Column -->
-              <ng-container matColumnDef="Vazhipad">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "VAZHIPAD" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.Vazhipad }}</td>
-              </ng-container>
 
-              <ng-container matColumnDef="Name">
-                <th mat-header-cell *matHeaderCellDef>
-                  {{ "NAME" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">
-                  <!-- <ng-container  else viewName"> -->
-                  <p>
-                    <input matInput [readonly]="!row.isEditing" class="form-control" [(ngModel)]="row.Name" disabled
-                      placeholder="Enter Name" />
-                  </p>
-                  <p>
-                    <input matInput class="form-control" [(ngModel)]="row.Name2" placeholder="Enter Name2" disabled
-                      *ngIf="row.Name2 && row.Name2.trim() !== ''" />
-                  </p>
+<mat-dialog-content class="search-dialog-content">
+  <div class="billing-table-card">
+    <div class="table-responsive-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="custom-billing-table">
+        <!-- Deity / Prathista Column -->
+        <ng-container matColumnDef="Diety">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell">
+            {{ "PRATHISTA" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell deity-cell">{{ row.Prathista }}</td>
+        </ng-container>
 
-                  <!-- </ng-container> -->
-                  <!-- <ng-template #viewName><p>{{ row.Name }}</p><p *ngIf="row.Name2">{{ row.Name2 }}</p></ng-template> -->
-                </td>
-              </ng-container>
+        <!-- Vazhipad Column -->
+        <ng-container matColumnDef="Vazhipad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell">
+            {{ "VAZHIPAD" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell vazhipad-cell">{{ row.Vazhipad }}</td>
+        </ng-container>
 
-              <!-- Name Column -->
-              <ng-container matColumnDef="Star">
-                <th mat-header-cell *matHeaderCellDef>
-                  {{ "STAR" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">
-                  <ng-container *ngIf="row.isEditing; else viewStar">
-                    <p>
-                      <select [(ngModel)]="row.Star" class="form-control">
-                        <!-- <option *ngFor="let star of nakshatham" [value]="star.id">
-                      {{ star.SM_NameEng }}
-                    </option> -->
-                        <ng-container *ngIf="lang == 'en'">
-                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
-                            {{ nakshtra.SM_NameEng }}
-                          </option>
-                        </ng-container>
-                        <ng-container *ngIf="lang != 'en'">
-                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
-                            {{ nakshtra.SM_Name }}
-                          </option>
-                        </ng-container>
-                      </select>
-                    </p>
-                    <p *ngIf="row.Star2 && row.Star2 != '0'">
-                      <select [(ngModel)]="row.Star2" class="form-control">
-                        <ng-container *ngIf="lang == 'en'">
-                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
-                            {{ nakshtra.SM_NameEng }}
-                          </option>
-                        </ng-container>
-                        <ng-container *ngIf="lang != 'en'">
-                          <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
-                            {{ nakshtra.SM_Name }}
-                          </option>
-                        </ng-container>
-                      </select>
-                    </p>
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef class="table-header-cell">
+            {{ "NAME" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell name-cell">
+            <div class="name-fields-wrap">
+              <input matInput [readonly]="!row.isEditing" class="form-control table-input" [(ngModel)]="row.Name" disabled
+                placeholder="Enter Name" />
+              <input matInput class="form-control table-input secondary-input" [(ngModel)]="row.Name2" placeholder="Enter Name2" disabled
+                *ngIf="row.Name2 && row.Name2.trim() !== ''" />
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Star Column -->
+        <ng-container matColumnDef="Star">
+          <th mat-header-cell *matHeaderCellDef class="table-header-cell">
+            {{ "STAR" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell star-cell">
+            <ng-container *ngIf="row.isEditing; else viewStar">
+              <div class="star-fields-wrap">
+                <select [(ngModel)]="row.Star" class="form-control table-select">
+                  <ng-container *ngIf="lang == 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
+                      {{ nakshtra.SM_NameEng }}
+                    </option>
                   </ng-container>
-                  <ng-template #viewStar>
-                    <p>{{ getStarbyId(row.Star) }}</p>
-                    <p *ngIf="row.Star2">
-                      {{ getStarbyId(row.Star2) }}
-                    </p>
-                  </ng-template>
-                </td>
-              </ng-container>
+                  <ng-container *ngIf="lang != 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
+                      {{ nakshtra.SM_Name }}
+                    </option>
+                  </ng-container>
+                </select>
+                <select *ngIf="row.Star2 && row.Star2 != '0'" [(ngModel)]="row.Star2" class="form-control table-select secondary-select">
+                  <ng-container *ngIf="lang == 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
+                      {{ nakshtra.SM_NameEng }}
+                    </option>
+                  </ng-container>
+                  <ng-container *ngIf="lang != 'en'">
+                    <option *ngFor="let nakshtra of nakshatham" [value]="nakshtra.id" disabled>
+                      {{ nakshtra.SM_Name }}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+            </ng-container>
+            <ng-template #viewStar>
+              <div class="star-read-wrap">
+                <span class="star-text">{{ getStarbyId(row.Star) }}</span>
+                <span class="star-text secondary-star" *ngIf="row.Star2">{{ getStarbyId(row.Star2) }}</span>
+              </div>
+            </ng-template>
+          </td>
+        </ng-container>
 
-              <!-- Fruit Column -->
+        <!-- Date Column -->
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell">
+            {{ "DATE" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell date-cell">
+            <input matInput type="date" class="form-control table-input date-input" [readonly]="!row.isEditing || !isPast(row.EvazDate)"
+              [(ngModel)]="row.EvazDate" />
+          </td>
+        </ng-container>
 
-              <ng-container matColumnDef="Date" style="width: 250px">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "DATE" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">
-                  <input matInput type="date" [readonly]="!row.isEditing || !isPast(row.EvazDate)"
-                    [(ngModel)]="row.EvazDate" />
-                  <!-- {{ row.EvazDate | date : "dd-MM-yyyy" }} -->
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="Qty">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "QUANTITY" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.Qty }}</td>
-              </ng-container>
-              <ng-container matColumnDef="Rate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "RATE" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.Rate }}</td>
-              </ng-container>
-              <ng-container matColumnDef="Amount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  {{ "AMOUNT" | translate }}
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.Amount }}</td>
-              </ng-container>
+        <!-- Qty Column -->
+        <ng-container matColumnDef="Qty">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell text-center">
+            {{ "QUANTITY" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell qty-cell text-center">{{ row.Qty }}</td>
+        </ng-container>
 
-              <ng-container matColumnDef="Actions">
-                <th mat-header-cell *matHeaderCellDef>#</th>
-                <td mat-cell *matCellDef="let row">
-                  <button mat-button color="primary" *ngIf="!row.isEditing" (click)="editRow(row)">
-                    Edit
-                  </button>
-                  <button mat-button color="accent" *ngIf="row.isEditing" (click)="saveRow(row)">
-                    Save
-                  </button>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              <tr class="mat-footer-row">
-                <td colspan="7" style="text-align: right; font-weight: bold">
-                  Total Amount:
-                </td>
-                <td>{{ getTotalAmount() }}</td>
-              </tr>
-              <!-- Row shown when there is no matching data. -->
-              <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">
-                  No data matching the filter
-                </td>
-              </tr>
-            </table>
-            <table>
-              <tr colspan="8"></tr>
-              <tr>
-                <td style="
-                    font-weight: bold;
-                    text-align: right;
-                    padding-right: 150px;
-                    color: rgb(22, 102, 65);
-                  ">
-                  {{ "Report Name.TOTAL" | translate }}: {{ billTotalAmount }}
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <!-- Rate Column -->
+        <ng-container matColumnDef="Rate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell text-right">
+            {{ "RATE" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell rate-cell text-right">{{ row.Rate }}</td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="Amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header-cell text-right">
+            {{ "AMOUNT" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="table-cell amount-cell text-right">{{ row.Amount }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef class="table-header-cell text-center">#</th>
+          <td mat-cell *matCellDef="let row" class="table-cell actions-cell text-center">
+            <button mat-button class="btn-cell-edit" *ngIf="!row.isEditing" (click)="editRow(row)">
+              Edit
+            </button>
+            <button mat-button class="btn-cell-save" *ngIf="row.isEditing" (click)="saveRow(row)">
+              Save
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-data-row"></tr>
+
+        <!-- Table Footer Row -->
+        <tr class="mat-footer-row table-footer-row">
+          <td colspan="7" class="footer-label-cell">
+            Total Amount:
+          </td>
+          <td colspan="2" class="footer-value-cell">{{ getTotalAmount() }}</td>
+        </tr>
+
+        <!-- No Data Row -->
+        <tr class="mat-row empty-data-row" *matNoDataRow>
+          <td class="mat-cell" colspan="9">
+            No data matching the filter
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Total Display Card -->
+    <div class="billing-total-bar">
+      <div class="total-pill-card">
+        <span class="total-pill-label">{{ "Report Name.TOTAL" | translate }}:</span>
+        <span class="total-pill-value">₹ {{ billTotalAmount || getTotalAmount() }}</span>
       </div>
     </div>
   </div>
-  <form [formGroup]="updateTransMode">
-    <div class="input-section">
-      <!-- Textboxes for input -->
 
-      <div *ngIf="updateTransMode.get('Trnsmode')?.value != 'CS'">
-        <label>{{ "ID" | translate }}</label>
-        <input matInput class="form-control" formControlName="InstaNo"
+  <!-- Update Payment Mode Section -->
+  <div class="payment-mode-panel">
+    <div class="panel-header-title">
+      <mat-icon class="panel-icon">payment</mat-icon>
+      <span>{{ "PAYMENT" | translate }} / {{ "Mode" | translate }}</span>
+    </div>
+    <form [formGroup]="updateTransMode" class="payment-form-row">
+      <div class="payment-input-group" *ngIf="updateTransMode.get('Trnsmode')?.value != 'CS'">
+        <label class="payment-label">{{ "ID" | translate }}</label>
+        <input matInput class="form-control payment-input" formControlName="InstaNo"
           [placeholder]="'PLACEHOLDER.CHEQUENO' | translate" [class.is-invalid]="
             updateTransMode.get('InstaNo')?.invalid &&
             updateTransMode.get('InstaNo')?.touched
           " />
       </div>
-      <div *ngIf="updateTransMode.get('Trnsmode')?.value === 'CH'">
-        <label>{{ "DATE" | translate }}</label>
-        <input type="date" matInput class="form-control" formControlName="InstaDate" placeholder="Date"
+
+      <div class="payment-input-group" *ngIf="updateTransMode.get('Trnsmode')?.value === 'CH'">
+        <label class="payment-label">{{ "DATE" | translate }}</label>
+        <input type="date" matInput class="form-control payment-input" formControlName="InstaDate" placeholder="Date"
           [class.is-invalid]="
             updateTransMode.get('InstaDate')?.invalid &&
             updateTransMode.get('InstaDate')?.touched
           " />
       </div>
-      <div *ngIf="updateTransMode.get('Trnsmode')?.value === 'CH'">
-        <label>{{ "PLACEHOLDER.BANKNAME" | translate }}</label>
-        <input matInput class="form-control" formControlName="InstaBank"
+
+      <div class="payment-input-group" *ngIf="updateTransMode.get('Trnsmode')?.value === 'CH'">
+        <label class="payment-label">{{ "PLACEHOLDER.BANKNAME" | translate }}</label>
+        <input matInput class="form-control payment-input" formControlName="InstaBank"
           [placeholder]="'PLACEHOLDER.BANKNAME' | translate" [class.is-invalid]="
             updateTransMode.get('InstaBank')?.invalid &&
             updateTransMode.get('InstaBank')?.touched
           " />
       </div>
-      <div *ngIf="updateTransMode.get('Trnsmode')?.value === 'CR'">
-        <label>{{ "PLACEHOLDER.PHONE" | translate }}</label>
-        <input matInput class="form-control" formControlName="MobileNo"
+
+      <div class="payment-input-group" *ngIf="updateTransMode.get('Trnsmode')?.value === 'CR'">
+        <label class="payment-label">{{ "PLACEHOLDER.PHONE" | translate }}</label>
+        <input matInput class="form-control payment-input" formControlName="MobileNo"
           [placeholder]="'PLACEHOLDER.MOBILENUMBER' | translate" [class.is-invalid]="
             updateTransMode.get('MobileNo')?.invalid &&
             updateTransMode.get('MobileNo')?.touched
@@ -217,9 +230,9 @@
       </div>
 
       <!-- Dropdown for selecting an option -->
-      <div>
-        <label>{{ "Mode" | translate }}</label>
-        <select matNativeControl class="form-control" formControlName="Trnsmode">
+      <div class="payment-input-group mode-select-wrap">
+        <label class="payment-label">{{ "Mode" | translate }}</label>
+        <select matNativeControl class="form-control payment-select" formControlName="Trnsmode">
           <option value="CS">{{ "Cash" | translate }}</option>
           <option value="UP">{{ "UPI" | translate }}</option>
           <option value="DE">{{ "Debit" | translate }}</option>
@@ -229,27 +242,41 @@
           <option value="ON">{{ "Online" | translate }}</option>
         </select>
       </div>
-      <div *ngIf="role != 'staff'">
-        <label style="color: white"></label><button class="btn btn-primary" (click)="onEditTransmode()">
+
+      <div class="payment-btn-wrap" *ngIf="role != 'staff'">
+        <label class="payment-label label-spacer">&nbsp;</label>
+        <button type="button" class="btn-update-transmode" (click)="onEditTransmode()">
+          <mat-icon class="btn-icon-sm">check_circle</mat-icon>
           Update Payment Mode
         </button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions class="menuend">
-  <button mat-button [mat-dialog-close]="true" class="close">Close</button>
-  <button (click)="openReceipt()">Go to Receipt</button>
-  <button mat-button class="proceed" [disabled]="TrnStatus == 'C'" (click)="printPage()">
-    Make PDF
-  </button>
-  <button (click)="openWhatsAppWeb()" mat-button class="proceed" [disabled]="TrnStatus == 'C'">
-    Share on WhatsApp Web
-  </button>
 
-  <button mat-button class="proceed" [disabled]="TrnStatus == 'C'" (click)="onProceed()">
-    Duplicate Bill
+<mat-dialog-actions class="dialog-actions-footer">
+  <button mat-button [mat-dialog-close]="true" class="btn-footer-close">
+    <mat-icon class="footer-btn-icon">close</mat-icon>
+    <span>Close</span>
   </button>
+  <div class="footer-action-buttons">
+    <button mat-button class="btn-footer-action btn-receipt" (click)="openReceipt()">
+      <mat-icon class="footer-btn-icon">receipt_long</mat-icon>
+      <span>Go to Receipt</span>
+    </button>
+    <button mat-button class="btn-footer-action btn-pdf" [disabled]="TrnStatus == 'C'" (click)="printPage()">
+      <mat-icon class="footer-btn-icon">picture_as_pdf</mat-icon>
+      <span>Make PDF</span>
+    </button>
+    <button mat-button class="btn-footer-action btn-whatsapp" [disabled]="TrnStatus == 'C'" (click)="openWhatsAppWeb()">
+      <mat-icon class="footer-btn-icon">share</mat-icon>
+      <span>Share on WhatsApp Web</span>
+    </button>
+    <button mat-button class="btn-footer-action btn-duplicate" [disabled]="TrnStatus == 'C'" (click)="onProceed()">
+      <mat-icon class="footer-btn-icon">content_copy</mat-icon>
+      <span>Duplicate Bill</span>
+    </button>
+  </div>
 </mat-dialog-actions>
 
 

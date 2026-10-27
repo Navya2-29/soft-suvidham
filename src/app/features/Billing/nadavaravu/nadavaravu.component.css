@@ -324,17 +324,27 @@
   background: white
 }
 
+.code_center {
+  text-align: center !important;
+}
+
+th {
+  color: #315a87 !important;
+}
+
 .nv-table th {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: #f3f7fd;
-  color: #315a87;
+  background: #f3f7fd !important;
+  color: #315a87 !important;
   font-size: 11px;
   text-align: left;
-  padding: 15px 10px;
+  padding: 12px 10px;
   border-bottom: 1px solid #dbe7f8;
-  font-weight: 750
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: .05em;
 }
 
 .nv-table td {
@@ -362,12 +372,14 @@
 .nv-index {
   display: inline-grid;
   place-items: center;
-  width: 23px;
+  min-width: 25px;
   height: 25px;
+  padding: 0 6px;
   border-radius: 5px;
   background: #e8f1ff;
-  color: #155a9f;
-  font-weight: 750
+  color: #155da5;
+  font-weight: 750;
+  font-size: 11px;
 }
 
 .nv-numeric {

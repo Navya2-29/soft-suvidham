@@ -141,7 +141,7 @@
         <table class="fc-table">
           <thead>
             <tr>
-              <th>{{ 'Report Name.SINO' | translate }}</th>
+              <th class="code_center">{{ 'Report Name.SINO' | translate }}</th>
               <th>{{ 'BILLDATE' | translate }}</th>
               <th>{{ 'BILL NO' | translate }}</th>
               <th>{{ 'feecollection.Item' | translate }}</th>
@@ -152,7 +152,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of devoteeFeeeCollectiondetails; let i = index">
-              <td><span class="fc-index">{{ i + 1 }}</span></td>
+              <td class="code_center"><span class="fc-index">{{ i + 1 }}</span></td>
               <td>{{ item.BillDate }}</td>
               <td><strong>{{ item.BillNo }}</strong></td>
               <td>{{ item.NM_Name }}</td>
